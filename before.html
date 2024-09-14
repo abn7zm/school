@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>يجب معرفة أنه</title>
+    <style>
+        body {font-family: Arial, sans-serif; direction: rtl; margin: 0; padding: 0; text-align: center; background-color: #f4f4f4;}
+        header {background-color: #009db2; height: 140px; width: 100%; position: relative; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-sizing: border-box;}
+        .back-button {background-color: #009db2; color: white; padding: 10px 20px; border: 2px solid white; cursor: pointer; display: flex; align-items: center; text-decoration: none; font-size: 16px; transition: all 0.3s ease;}
+        .back-button:hover {background-color:#007b8e; transition: 0.45s ease;}
+        .back-button img {margin-left: 5px;}
+        .logo {width: 100px; transition: width 0.3s ease;}
+        .logo img {width: 100%; height: auto;}
+        h1 {margin: 20px 0; font-size: 24px; transition: font-size 0.3s ease;}
+        .content {padding: 20px;}
+        .instructions {text-align: right; margin-bottom: 20px; font-size: 18px; line-height: 1.6; transition: font-size 0.3s ease;}
+        .orange {color: orange;}
+        .warning {color: #d9534f; display: block; margin: 10px 0;}
+        .checkbox-label {display: flex; align-items: center; font-size: 18px; cursor: pointer; text-align: right;}
+        .checkbox-label input {margin-right: 10px;}
+        .checkbox-container {margin-top: 20px; text-align: right; font-size: 16px; transition: font-size 0.3s ease;}
+        .checkbox-container input[type="checkbox"] {margin-left: 10px; transform: scale(1.2);}
+        .continue-button {display: block; margin: 20px auto; padding: 10px 20px; background-color: #cccccc; color: white; border: none; cursor: not-allowed; text-decoration: none; font-size: 16px; border-radius: 5px; transition: background-color 0.3s ease;}
+        .continue-button.active {background-color: #009db2; cursor: pointer; text-decoration: none; transition: 0.45s ease;}
+        .continue-button.active:hover {background-color: #007a8c;} 
+        @media (max-width: 768px) {.logo {width: 70px;} .instructions {font-size: 16px;} .continue-button, .back-button {font-size: 14px; padding: 8px 16px;} h1 {font-size: 20px;}}
+        @media (min-width: 1200px) {.back-button {padding: 20px 40px; font-size: 20px;} .logo {width: 150px;} h1 {font-size: 36px;} .instructions {font-size: 22px;} .checkbox-container {font-size: 20px;} .continue-button {font-size: 20px; padding: 15px 30px;}}
+        ::-webkit-scrollbar {width: 12px;}
+        ::-webkit-scrollbar-track {background: #cccccc; border-radius: 10px;}
+        ::-webkit-scrollbar-thumb {background-color: #009db2; border-radius: 10px; border: 3px solid #f4f4f4;}
+        ::-webkit-scrollbar-thumb:hover {background-color: #007b8e;}
+        .scrollbar {scrollbar-color: #009db2 #cccccc; scrollbar-width: thin;}
+    </style>
+</head>
+<body>
+<header>
+    <a href="student_home.html" class="back-button">
+        <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="arrow" width="20">عودة
+    </a>
+    <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" class="logo" alt="Logo">
+</header>
+<h1>يجب معرفة أنه:</h1>
+<div class="content">
+    <div class="instructions">
+        <strong style="font-size: 22px;">تنبيه هام:</strong> يتم استخدام البيانات المقدمة في هذا النموذج فقط لأغراض التواصل مع إدارة المدرسة لمعالجة الشكاوى والاقتراحات.<br>
+        <strong>يتم التعامل مع جميع البيانات بسرية تامة</strong>، ولن يتم مشاركتها مع أي جهة خارجية دون إذن مسبق.<br><br>
+        <strong style="font-size: 20px;">تقديم شكوى:</strong><br> عند تقديم شكوى، يجب عليك إدخال جميع بياناتك الشخصية بدقة، مع العلم أن الحقول المميزة بـ<span class="orange" style="font-size: 18px;">(*)</span> إلزامية. إذا كنت تفضل الحفاظ على سرية هويتك، يمكنك عدم تعبئة الحقول غير الإلزامية. <span class="warning" style="font-size: 18px;">{إذا تم إدخال البيانات بشكل غير صحيح، فإنك تتحمل مسؤولية عدم استجابة الإدارة}</span>.<br>
+        <strong>نرجو التأكد من صحة البيانات قبل الإرسال</strong> لضمان سرعة معالجة طلبك.<br><br>
+        <strong style="font-size: 20px;">تقديم اقتراح:</strong><br> يمكنك تقديم اقتراح دون الحاجة إلى ذكر اسمك، أو يمكنك إضافة اسمك إذا أردت توضيح هويتك. نؤكد على أهمية تقديم اقتراحات بناءة تسهم في تحسين البيئة التعليمية.<br>
+        <span class="warning" style="font-size: 18px;">إرسال شكوى كاذبة أو استخدام الموقع لأغراض غير جادة قد يترتب عليه اتخاذ إجراءات صارمة، بما في ذلك استدعاء الطالب للمسائلة وتطبيق اللوائح بحقه.</span><br><br>
+        <strong style="font-size: 22px;">مزيد من المعلومات:</strong><br> تلتزم المدرسة باتخاذ كافة الإجراءات اللازمة لحماية سرية المعلومات الشخصية المقدمة من قبل المستخدمين. هدفنا هو معالجة الشكاوى والاقتراحات بشكل فعال، وتحسين البيئة التعليمية بما يحقق مصلحة الطلاب والمجتمع المدرسي.<br>
+        <strong style="color: #d9534f; font-size: 18px;">أي محاولة لإساءة استخدام هذا النظام سيتم التعامل معها بجدية، وفقًا للوائح المعمول بها في المدرسة.</strong>
+    </div>
+    <div class="checkbox-container">
+        <label for="agree" class="checkbox-label">
+            <span>لقد قمت بقراءة ما ورد بالنص</span>
+            <input type="checkbox" id="agree" name="agree">
+        </label>
+    </div>
+    <a href="student_cry.html" id="continueBtn" class="continue-button">متابعة</a>
+</div>
+<script>
+    const checkbox = document.getElementById('agree');
+    const continueBtn = document.getElementById('continueBtn');
+    continueBtn.classList.remove('active');
+    continueBtn.style.cursor = 'not-allowed';
+    continueBtn.style.pointerEvents = 'none';
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            continueBtn.classList.add('active');
+            continueBtn.style.cursor = 'pointer';
+            continueBtn.style.pointerEvents = 'auto';
+        } else {
+            continueBtn.classList.remove('active');
+            continueBtn.style.cursor = 'not-allowed';
+            continueBtn.style.pointerEvents = 'none';
+        }
+    });
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'F12') {
+            event.preventDefault();
+            return false;
+        }
+    });
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+    });
+    console.log = function() {};
+    console.warn = function() {};
+    console.error = function() {};
+    console.info = function() {};
+    console.debug = function() {};
+</script>
+</body>
+</html>
