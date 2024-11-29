@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد ثانوية ابن حزم</title>
+    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
+
+</head>
+<body>
+
+    <header class="header">
+        <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="شعار" class="logo">
+    </header>
+
+    <div class="background">
+        
+    </div>
+
+    <div class="form-container">
+        <h2 class="new">إنشاء حساب جديد</h2>
+
+        <form id="createAccountForm">
+            <input type="text" id="fullName" name="name" placeholder="اسم صاحب الهوية الثلاثي" pattern="[أ-ي ]+" title="يرجى إدخال الحروف العربية فقط" required>
+            <div class="error-message" id="fullNameError">يرجى كتابة الاسم الثلاثي بشكل صحيح</div>
+
+            <input type="text" id="idNumber" name="id" placeholder="رقم الهوية" maxlength="15" required>
+            <div class="error-message" id="idError">يتكون رقم الهوية من 10 أرقام فقط</div>
+
+            <div class="password-container">
+                <input type="password" id="password" name="pass" placeholder="كلمة المرور" required>
+                <button type="button" id="togglePasswordButton">
+                    <img src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png" alt="إظهار" id="showIcon" class="toggle-icon">
+                    <img src="https://cdn4.iconfinder.com/data/icons/liny/24/eye-off-line-512.png" alt="إخفاء" id="hideIcon" class="toggle-icon" style="display: none;">
+                </button>
+            </div>
+            <div class="error-message" id="passwordError">يجب كتابة كلمة مرور</div>
+            
+            <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور" required>
+            <div class="error-message" id="confirmPasswordError">كلمتا المرور غير متطابقتين</div>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="privacyPolicy" required>
+                <label for="privacyPolicy">
+                    <a href="PRIVACY POLICY.HTML" target="_blank" class="privacy-policy-link">الموافقة على سياسة الخصوصيه</a>
+                </label>
+            </div>
+            <div class="error-message" id="policyError">يجب الموافقه على سياسة الخصوصيه</div>
+            
+            <button type="submit" id="createAccountButton" disabled>إنشاء حساب</button>
+        </form>
+
+        <div class="success-message" id="successMessage">تم انشاء حسابك بنجاح</div>
+        <div class="error-message" id="idCheckMessage">انت لست مسجلا ً في النظام الرجاء مراجعة إدارة المدرسة</div>
+    </div>
+ 
+    <div class="half-circle"></div>
+    <div class="content"></div>
+
+    <a href="index.html" class="return-home-button">العودة
+        <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Arrow" class="button-icon">
+    </a>
+
+
+</body>
+<style>
+    body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    overflow-x: hidden;
+    background-size: cover;
+}
+
+.background {
+    height: 100%;
+    background: linear-gradient(135deg, #009db2 25%, #007a8c 25%, #007a8c 50%, #ffffff 50%, #ffffff 75%, #484646 75%);
+    background-size: cover;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto;
+    padding: 10px;
+    z-index: 10; 
+}
+
+.logo {
+    height: 8vw;
+    width: auto;
+}
+
+.new {
+    color: #ffffff;
+}
+
+.form-container {
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 400px;
+    background-color: #484646;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    z-index: 1;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    margin: 12px 0;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    box-sizing: border-box;
+    text-align: right;
+    font-size: 16px;
+    background-color: #afafaf;
+    user-select: none;
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#togglePasswordButton {
+    padding: 5px;
+    background-color: #009db2;
+    color: white;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 6%;
+    transition: background-color 0.45s ease;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-icon {
+    height: 20px;
+    width: 20px;
+}
+
+#togglePasswordButton:hover {
+    background-color: #007a8c;
+}
+
+.error-message {
+    background-color: #706d6d;
+    color: #ffffff;
+    padding: 10px;
+    border: 1px solid #484646;
+    border-radius: 5px;
+    display: none;
+    margin-top: -10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.success-message {
+    color: rgb(66, 202, 66);
+    display: none;
+    margin-top: 20px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px;
+    color: #ffffff;
+    margin-left: 70px;
+}
+
+.checkbox-container input {
+    margin-left: 30px;
+}
+
+.privacy-policy-link {
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+.privacy-policy-link:hover {
+    text-decoration: underline;
+}
+
+button {
+    padding: 12px 20px;
+    background-color: #009db2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.45s ease;
+}
+
+button:hover {
+    background-color: #007a8c;
+}
+
+button:disabled {
+    background-color: #ccc;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.return-home-button {
+    position: absolute;
+    top: 40px; 
+    right: 78px;  
+    padding: 10px 18px;
+    background-color: #007a8c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid white; 
+    transition: background-color 0.45s ease;
+    font-size: 20px;
+    z-index: 1000;
+}
+
+
+.return-home-button:hover {
+    background-color: #484646;
+}
+
+.button-icon {
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+#idCheckMessage {
+    margin-top: 20px;
+    color: #ffffff;
+    display: none;
+    text-align: center;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 425px) {
+    .background {
+        background-size: 110% 110%; 
+        background-position: center; 
+    }
+
+    .logo {
+        height: 12vw; 
+    }
+
+    .form-container {
+        max-width: 90%; 
+        padding: 20px;
+    }
+    
+    .return-home-button {
+        top: 10px;
+        right: 10px;
+        font-size: 16px; 
+    }
+}
+
+::placeholder {
+    color: #ffffff;
+}
+
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const idNumber = document.getElementById('idNumber');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const privacyPolicy = document.getElementById('privacyPolicy');
+    const createAccountButton = document.getElementById('createAccountButton');
+    const successMessage = document.getElementById('successMessage');
+    const togglePasswordButton = document.getElementById('togglePasswordButton');
+    const showIcon = document.getElementById('showIcon');
+    const hideIcon = document.getElementById('hideIcon');
+    const fullName = document.getElementById('fullName');
+    const idCheckMessage = document.getElementById('idCheckMessage');
+
+    if (!idNumber || !password || !confirmPassword || !privacyPolicy || !createAccountButton || !togglePasswordButton || !showIcon || !hideIcon || !fullName || !idCheckMessage) {
+        console.error('One or more elements are missing from the DOM.');
+        return;
+    }
+
+function validateIDNumber(showError = true) {
+    const idError = document.getElementById('idError');
+    const idValue = idNumber.value.trim();
+
+    if (idValue === '') {
+        if (showError) {
+            idError.style.display = 'block';
+            idError.textContent = 'يجب كتابة رقم الهوية أو الإدخال المطلوب';
+        }
+        return false;
+    }
+
+  
+    if (idValue.length < 2 || idValue.length > 15) {
+        if (showError) {
+            idError.style.display = 'block';
+            idError.textContent = 'يجب أن يكون الإدخال بين 2 و 15 حرفًا أو رمزًا';
+        }
+        return false;
+    } else {
+        idError.style.display = 'none';
+        return true;
+    }
+}
+
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+
+
+    function checkIDNumberInSystem() {
+        const idNumberValue = idNumber.value.trim();
+        
+
+        if (idNumberValue === '') {
+            idCheckMessage.style.display = 'none';
+            createAccountButton.disabled = true;
+            return;
+        }
+        
+        fetch('tl$&12psps935aofm!^uffge$FS3$klp1@.txt')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                const ids = data.split('\n').map(id => id.trim()).filter(id => id !== '');
+                if (!ids.includes(idNumberValue)) {
+                    idCheckMessage.style.display = 'block';
+                    createAccountButton.disabled = true; 
+                } else {
+                    idCheckMessage.style.display = 'none';
+                    validateForm(); 
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function validatePassword(showError = true) {
+        const passwordError = document.getElementById('passwordError');
+        if (password.value.trim() === '') {
+            if (showError) {
+                passwordError.style.display = 'block';
+                passwordError.textContent = 'يجب كتابة كلمة مرور';
+            }
+            return false;
+        }
+        if (password.value.length < 0) {
+            if (showError) {
+                passwordError.style.display = 'block';
+                passwordError.textContent = 'يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل';
+            }
+            return false;
+        } else {
+            passwordError.style.display = 'none';
+            return true;
+        }
+    }
+
+    function validateConfirmPassword(showError = true) {
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        if (confirmPassword.value.trim() === '') {
+            if (showError) {
+                confirmPasswordError.style.display = 'block';
+                confirmPasswordError.textContent = 'يجب تأكيد كلمة المرور';
+            }
+            return false;
+        }
+        if (password.value !== confirmPassword.value) {
+            if (showError) {
+                confirmPasswordError.style.display = 'block';
+                confirmPasswordError.textContent = 'كلمتا المرور غير متطابقتين';
+            }
+            return false;
+        } else {
+            confirmPasswordError.style.display = 'none';
+            return true;
+        }
+    }
+
+    function validatePrivacyPolicy(showError = true) {
+        const policyError = document.getElementById('policyError');
+        if (!privacyPolicy.checked) {
+            if (showError) {
+                policyError.style.display = 'block';
+                policyError.textContent = 'يجب الموافقة على سياسة الخصوصية';
+            }
+            return false;
+        } else {
+            policyError.style.display = 'none';
+            return true;
+        }
+    }
+
+    function validateFullName(showError = true) {
+        const fullNameError = document.getElementById('fullNameError');
+        const nameParts = fullName.value.trim().split(/\s+/);
+        if (nameParts.length !== 3 || !/^[أ-ي\s]+$/.test(fullName.value)) {
+            if (showError) {
+                fullNameError.style.display = 'block';
+                fullNameError.textContent = 'يرجى كتابة الاسم الثلاثي بشكل صحيح';
+            }
+            return false;
+        } else {
+            fullNameError.style.display = 'none';
+            return true;
+        }
+    }
+
+    function validateForm() {
+        const idValid = validateIDNumber(false);
+        const passwordValid = validatePassword(false);
+        const confirmPasswordValid = validateConfirmPassword(false);
+        const privacyPolicyValid = validatePrivacyPolicy(false);
+        const fullNameValid = validateFullName(false);
+
+        const isValid = idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid;
+        createAccountButton.disabled = !isValid;
+    }
+
+    function handleInput() {
+        validateIDNumber(false);
+        checkIDNumberInSystem(); 
+        validatePassword(false);
+        validateConfirmPassword(false);
+        validateFullName(false);
+        validatePrivacyPolicy(false);
+        validateForm();
+    }
+
+    idNumber.addEventListener('input', handleInput);
+    password.addEventListener('input', handleInput);
+    confirmPassword.addEventListener('input', handleInput);
+    fullName.addEventListener('input', handleInput);
+
+    privacyPolicy.addEventListener('change', handleInput);
+
+    togglePasswordButton.addEventListener('click', function() {
+        if (password.type === 'password') {
+            password.type = 'text';
+            confirmPassword.type = 'text';
+            showIcon.style.display = 'none';
+            hideIcon.style.display = 'inline';
+        } else {
+            password.type = 'password';
+            confirmPassword.type = 'password';
+            showIcon.style.display = 'inline';
+            hideIcon.style.display = 'none';
+        }
+    });
+
+    createAccountButton.addEventListener('click', function(event) {
+        event.preventDefault(); 
+
+        const idValid = validateIDNumber(true);
+        const passwordValid = validatePassword(true);
+        const confirmPasswordValid = validateConfirmPassword(true);
+        const privacyPolicyValid = validatePrivacyPolicy(true);
+        const fullNameValid = validateFullName(true);
+
+        if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid) {
+            fetch('https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'name': fullName.value,
+                    'id': idNumber.value,
+                    'pass': password.value
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data submitted successfully');
+                    successMessage.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 500);
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                successMessage.style.display = 'none';
+            });
+        }
+    });
+
+    idNumber.addEventListener('input', function (e) {
+     
+        if (this.value.length > 15) {
+            this.value = this.value.slice(0, 10);
+        }
+    });
+});
+document.addEventListener('keydown', function(event) {
+
+    if (event.key === 'F12') {
+        event.preventDefault();
+        return false;
+    }
+})
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+
+
+</script>
+</html>

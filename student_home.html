@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرئيسيه طالب</title>
+    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var userName = localStorage.getItem('userName');
+            if (userName) {
+                document.getElementById('userName').textContent = userName;
+            } else {
+                alert('لم يتم العثور على اسم المستخدم.');
+                window.location.href = 'student_login.html'; 
+            }
+        });
+
+        function stopBack() {
+            window.history.go(1);
+        }
+
+        fetch('quran.txt')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                console.log(text);
+                const lines = text.split('\n');
+                const randomLine = lines[Math.floor(Math.random() * lines.length)];
+                document.getElementById('random-line').textContent = randomLine;
+            })
+            .catch(error => console.error('Error loading file:', error));
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'F12') {
+                event.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+
+        console.log = function() {};
+        console.warn = function() {};
+        console.error = function() {};
+        console.info = function() {};
+        console.debug = function() {};
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden; 
+        }
+
+        .top-bar {
+            width: auto;
+            background-color: #14b9d0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: #ffffff; 
+            box-sizing: border-box; 
+        }
+
+        .top-bar-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px; 
+            margin-right: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .buttons button {
+            background-color: #79D7E4;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .buttons button img {
+            height: 20px;
+        }
+
+        .top-bar img.profile {
+            height: 60px;
+            filter: none;
+            margin-left: 10px;
+        }
+
+        .user-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-container h2 {
+            margin: 0;
+            color: #fff;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .main-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 100px 0;
+            flex-wrap: wrap;
+        }
+
+        .main-buttons a {
+            text-decoration: none;
+        }
+
+        .main-buttons button {
+            background-color: #484646;
+            color: #fff;
+            width: 250px;
+            height: 250px;
+            border: none;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .main-buttons button img {
+            height: 150px;
+        }
+
+        .quran {
+            margin: 50px 0;
+        }
+
+        .footer {
+            background-color: #484646;
+            color: #fff;
+            padding: 20px;
+            width: 100%;
+            text-align: right;
+            border-radius: 0px;
+            margin-top: auto;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+        }
+
+        .footer p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+        .end {
+            text-align: center;
+        }
+
+        .b{
+            transition: ease 0.45s;
+        }
+
+        .b:hover{
+            background-color: #6ec1cc;
+            transition: ease 0.45s;
+        }
+        .bu {
+            transition: ease 0.45s;
+        }
+
+        .bu:hover {
+            background-color: #009db2 ;
+            transition: ease 0.45s;
+        }
+        a {
+            text-decoration: none;
+        }
+        @media (min-width: 1200px) {
+            .top-bar {
+                padding: 20px 40px;
+            }
+
+            .logo img {
+                height: 80px;
+            }
+
+            .buttons button {
+                font-size: 18px;
+                padding: 15px;
+            }
+
+            .main-buttons button {
+                width: 300px;
+                height: 300px;
+            }
+
+            .main-buttons button img {
+                height: 180px;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .top-bar {
+                padding: 15px 30px;
+            }
+
+            .logo img {
+                height: 70px;
+            }
+
+            .buttons button {
+                font-size: 17px;
+                padding: 12px;
+            }
+
+            .main-buttons button {
+                width: 280px;
+                height: 280px;
+            }
+
+            .main-buttons button img {
+                height: 170px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .top-bar {
+                padding: 10px 20px;
+            }
+
+            .logo img {
+                height: 60px;
+            }
+
+            .buttons button {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .main-buttons button {
+                width: 250px;
+                height: 250px;
+            }
+
+            .main-buttons button img {
+                height: 150px;
+            }
+        }
+
+        @media (min-width: 576px) and (max-width: 767px) {
+            .top-bar {
+                padding: 10px 15px;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .buttons button {
+                font-size: 15px;
+                padding: 8px;
+            }
+
+            .main-buttons button {
+                width: 220px;
+                height: 220px;
+            }
+
+            .main-buttons button img {
+                height: 130px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .top-bar {
+                padding: 10px 10px;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            .buttons button {
+                font-size: 14px;
+                padding: 6px;
+            }
+
+            .main-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .main-buttons button {
+                width: 200px;
+                height: 200px;
+            }
+
+            .main-buttons button img {
+                height: 120px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #cccccc;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #009db2;
+            border-radius: 10px;
+            border: 3px solid #f4f4f4;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #007b8e;
+        }
+
+        .scrollbar {
+            scrollbar-color: #009db2 #cccccc;
+            scrollbar-width: thin;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="logo">
+                <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo">
+            </div>
+
+            <div class="buttons">
+                <a href="index.html"><button class="b">
+                    <img src="https://i.postimg.cc/TY15M5LP/logout.png" alt="Logout">
+                    تسجيل الخروج
+                </button></a>
+
+                <a href="support2.html"><button class="b">الدعم الفني</button></a>
+                <a href="vis_student.html"><button class="b">التحديثات</button></a>
+            </div>
+        </div>
+
+        <div class="user-container">
+            <h2><span class="userName" id="userName"></span></h2>
+            <img class="profile" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image">
+        </div>
+    </div>
+
+    <div class="main-buttons">
+        <a href="student_date.html"><button class="bu">
+            <img src="https://i.postimg.cc/MKsyHss0/detep.png" alt="Button 1">
+        </button></a>
+        <a href="student_ads.html"><button class="bu"> 
+            <img src="https://i.postimg.cc/zBZJjrfC/adsp.png" alt="Button 2">
+        </button></a>
+        <a href="before.html"><button class="bu">
+            <img src="https://i.postimg.cc/bJ73rm3N/cryp.png" alt="Button 3">
+        </button></a>
+    </div>
+
+    <div id="random-line" class="quran"></div>
+
+    <div class="footer">
+        <p>معلومات الاتصال</p>
+        <p>+966 539084645</p>
+        <p>rsanjalawi007@gmail.com</p>
+        <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
+        <p class="end">© جميع الحقوق الفكريه و التطبيقيه محفوظه بأسم ثانوية ابن حزم التعليمية</p>
+    </div>
+
+</body>
+</html>

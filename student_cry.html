@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قسم الشكاوى طالب</title>
+    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
+</head>
+<body>
+    <img class="logo" src="https://i.postimg.cc/nrQwRjHx/logo.png" alt="Logo">
+
+    <div class="container">
+        <form id="complaintForm" onsubmit="submitForm(event)">
+            <div class="input-group">
+                <input type="text" id="name" placeholder="الاسم الثلاثي">
+                <input type="text" id="id" placeholder="رقم الهوية">
+            </div>
+            <div class="input-group">
+                <input type="text" id="phone" placeholder="رقم الهاتف">
+                <select id="class" name="class" onchange="updateShobaOptions()">
+                    <option value="" disabled selected>الفصل</option>
+                    <option value="اول ثانوي">اول ثانوي</option>
+                    <option value="ثاني ثانوي">ثاني ثانوي</option>
+                    <option value="ثالث ثانوي">ثالث ثانوي</option>
+                </select>
+                <select id="shoba" name="shoba">
+                    <option value="" disabled selected>الشعبة</option>
+                </select>
+            </div>
+            <input class="cs" type="text" id="subject" placeholder="عنوان الشكوى / الاقتراح *" required>
+            <br><br>
+            <textarea id="complaint" placeholder="  الشكوى / الاقتراح.... *" required></textarea>
+            <button type="submit">إرسال</button>
+            <p id="responseMessage"></p>
+        </form>
+    </div>
+
+    <a href="student_home.html" class="return-home-button">العودة
+        <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Arrow" class="button-icon">
+    </a>
+
+    <div class="solid-section" dir="rtl">
+        <p class="p1">: معلومات الاتصال</p>
+        <p dir="ltr">+966 539084645</p>
+        <p>rsanjalawi007@gmail.com</p>
+        <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
+        <br>
+        <p class="p1">: المساعدة</p>
+        <a href="support2.html"><p>الدعم الفني</p></a>
+        <div class="copy" dir="ltr">
+            © جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية
+        </div>
+        <div class="copy" dir="ltr">
+            2024 - 2023
+        </div>
+    </div>
+
+    <script>
+        function updateShobaOptions() {
+            const classSelect = document.getElementById('class');
+            const shobaSelect = document.getElementById('shoba');
+            const selectedClass = classSelect.value;
+
+            let shobaOptions = [];
+
+            if (selectedClass === 'اول ثانوي') {
+                shobaOptions = ['101', '102', '103', '104'];
+            } else if (selectedClass === 'ثاني ثانوي') {
+                shobaOptions = ['201', '202', '203'];
+            } else if (selectedClass === 'ثالث ثانوي') {
+                shobaOptions = ['301', '302', '303'];
+            }
+
+            shobaSelect.innerHTML = '<option value="" disabled selected>الشعبة</option>';
+            shobaOptions.forEach(function(shoba) {
+                const option = document.createElement('option');
+                option.value = shoba;
+                option.text = shoba;
+                shobaSelect.appendChild(option);
+            });
+        }
+
+        document.getElementById('phone').addEventListener('input', function (e) {
+            this.value = this.value.replace(/\D/g, '');
+
+            if (this.value.length > 10) {
+                this.value = this.value.slice(0, 10);
+            }
+        });
+
+        function submitForm(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const id = document.getElementById('id').value;
+            const phone = document.getElementById('phone').value;
+            const classValue = document.getElementById('class').value;
+            const shoba = document.getElementById('shoba').value;
+            const subject = document.getElementById('subject').value;
+            const complaint = document.getElementById('complaint').value;
+
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('id', id);
+            formData.append('phone', phone);
+            formData.append('class', classValue);
+            formData.append('shoba', shoba);
+            formData.append('subject', subject);
+            formData.append('complaint', complaint);
+
+            fetch('https://script.google.com/macros/s/AKfycbwlWpn9cBcrIvdfkvB4mqgoPnJgh37muGtlRqQkmQb1SOJmFhsUawCzQOla8yHEc1qktA/exec', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                const responseMessage = document.getElementById('responseMessage');
+                responseMessage.textContent = data;
+                responseMessage.style.color = 'green';
+                responseMessage.style.display = 'block';
+            })
+            .catch(error => {
+                const responseMessage = document.getElementById('responseMessage');
+                responseMessage.textContent = 'حدث خطأ، حاول مرة أخرى';
+                responseMessage.style.color = 'red';
+                responseMessage.style.display = 'block';
+            });
+        }
+
+        document.addEventListener('keydown', function(event) {
+    // تعطيل F12
+    if (event.key === 'F12') {
+        event.preventDefault();
+        return false;
+    }
+})
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+
+    </script>
+
+    <style>
+        /* أساليب أساسية */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #f5f5f5;
+    direction: rtl;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden; /* منع التمرير الأفقي */
+}
+
+/* تصميم النموذج */
+.container {
+    background-color: #484646;
+    border-radius: 15px;
+    padding: 30px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin: 200px auto;
+}
+
+/* تصميم الصورة */
+.logo {
+    left: 10px;
+    width: 13%;
+    z-index: 1;
+    position: absolute;
+    top: 10px;
+}
+
+/* تصميم الزر */
+button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+    background-color: #14b9d0;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* تصميم النص */
+.solid-section {
+    background-color: #484646;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #ffffff;
+    text-align: right;
+    font-size: 16px;
+    position: relative;
+    top: 120px;
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+    
+  }
+
+
+.copy {
+    text-align: center;
+    font-size: 16px;
+}
+
+/* زر العودة إلى الصفحة الرئيسية */
+.return-home-button {
+    position: absolute;
+    top: 40px;
+    right: 66px;
+    padding: 10px 18px;
+    background-color: #007a8c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.45s ease;
+    font-size: 20px;
+    z-index: 1000;
+}
+
+.return-home-button:hover {
+    background-color: #484646;
+}
+
+.button-icon {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+/* تصميم الإدخالات */
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    resize: none;
+    box-sizing: border-box;
+    font-size: 14px;
+    height: 100px;
+    margin-bottom: 15px;
+}
+
+.cs {
+    width: 100%;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    resize: none;
+    box-sizing: border-box;
+    font-size: 14px;
+    height: 10px;
+    margin-bottom: 15px;
+}
+
+/* تحسينات عامة */
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* نقاط توقف للتكبير */
+@media (min-width: 1920px) {
+    .logo {
+        width: 6%;
+    }
+
+    .container {
+        padding: 40px;
+    }
+
+    button {
+        font-size: 18px;
+    }
+
+    .solid-section {
+        padding: 30px;
+        font-size: 18px;
+    }
+
+    .copy {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .logo {
+        width: 8%;
+    }
+
+    .container {
+        padding: 35px;
+    }
+
+    button {
+        font-size: 17px;
+    }
+
+    .solid-section {
+        padding: 28px;
+        font-size: 17px;
+    }
+
+    .copy {
+        font-size: 17px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .logo {
+        width: 10%;
+    }
+
+    .container {
+        padding: 30px;
+    }
+
+    button {
+        font-size: 16px;
+    }
+
+    .solid-section {
+        padding: 25px;
+        font-size: 16px;
+    }
+
+    .copy {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .logo {
+        width: 12%;
+    }
+
+    .container {
+        padding: 25px;
+    }
+
+    button {
+        font-size: 15px;
+    }
+
+    .solid-section {
+        padding: 22px;
+        font-size: 15px;
+    }
+
+    .copy {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 768px) {
+    .logo {
+        width: 14%;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+
+    .solid-section {
+        padding: 20px;
+        font-size: 14px;
+    }
+
+    .copy {
+        font-size: 14px;
+    }
+}
+
+/* نقاط توقف للتصغير */
+@media (max-width: 768px) {
+    .logo {
+        width: 20%;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    button {
+        font-size: 12px;
+    }
+
+    .solid-section {
+        padding: 15px;
+        font-size: 12px;
+    }
+
+    .copy {
+        font-size: 12px;
+    }
+    .return-home-button {
+       right: 0;
+       margin-right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 25%;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    button {
+        font-size: 10px;
+    }
+
+    .solid-section {
+        padding: 10px;
+        font-size: 10px;
+    }
+
+    .copy {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .logo {
+        width: 30%;
+    }
+
+    .container {
+        padding: 8px;
+    }
+
+    button {
+        font-size: 9px;
+    }
+
+    .solid-section {
+        padding: 8px;
+        font-size: 9px;
+    }
+
+    .copy {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 320px) {
+    .logo {
+        width: 35%;
+    }
+
+    .container {
+        padding: 6px;
+    }
+
+    button {
+        font-size: 8px;
+    }
+
+    .solid-section {
+        padding: 6px;
+        font-size: 8px;
+    }
+
+    .copy {
+        font-size: 8px;
+    }
+}
+
+
+
+
+    </style>
+</body>
+</html>

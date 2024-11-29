@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء اختبارك</title>
+    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png">
+    <style>
+        /* الألوان والتصميم العام */
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4C5053, #00BBDA);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            height: 100vh; /* إضافة هذه الخاصية لجعل الجسم يغطي الشاشة بالكامل */
+        }
+
+        /* الأشكال الدائرية كزخارف */
+        body::before,
+        body::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        body::before {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 20%;
+            box-shadow: 
+                0 0 50px rgba(255, 255, 255, 0.2),
+                0 0 100px rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        body::after {
+            width: 200px;
+            height: 200px;
+            bottom: 15%;
+            right: 25%;
+            box-shadow: 
+                0 0 30px rgba(255, 255, 255, 0.3),
+                0 0 60px rgba(255, 255, 255, 0.15);
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-20px) translateX(10px);
+            }
+        }
+
+        /* تصميم المربع ليكون في وسط الشاشة */
+        .container {
+            max-width: 600px;
+            width: 100%; /* تأكيد على أن العرض لا يتجاوز العرض المحدد */
+            padding: 20px;
+            background: rgba(247, 248, 250, 0.95); /* شفافية بسيطة */
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 2;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* لضمان أن المربع في المنتصف */
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #00BBDA;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            z-index: 1000; /* لضمان ظهور الزر فوق باقي المحتوى */
+        }
+
+        .back-btn:hover {
+            background-color: #008ba8;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: #00BBDA;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 10px 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        a {
+            color: #00BBDA;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 20px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #00BBDA;
+        }
+
+        .submit-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #02a1bd;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #008ba8;
+        }
+
+        .info-icon {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            width: 24px;
+            height: 24px;
+            background-color: #00BBDA;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 14px;
+            line-height: 24px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .tooltip {
+            display: none;
+            position: absolute;
+            top: 30px;
+            left: -50px;
+            width: 220px;
+            background-color: #fff;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .info-icon:hover .tooltip {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زر العودة -->
+    <a href="teacher.html" class="back-btn">⬅ العودة</a>
+
+    <div class="container">
+        <!-- عنوان الصفحة -->
+        <h1>انشاء اختبار قدرات</h1>
+
+        <!-- التعليمات -->
+        <p>
+            اضغط على الرابط التالي لإنشاء نموذج اختبار قدرات:
+            <a href="https://forms.google.com" target="_blank">
+                  إنشاء نموذج الاختبار
+            </a>
+            <span class="info-icon">i
+                <span class="tooltip">
+                    سيتم توجيهك إلى موقع قوقل فورمز التابع لشركة قوقل وهو موقع يمكنك من إنشاء نماذج اختبارات ونشرها.
+                </span>
+            </span>
+        </p>
+        <p>
+            بعد الانتهاء من تصميم النموذج، الرجاء نسخ الرابط الخاص به ولصقه في الحقل أدناه.
+        </p>
+
+        <!-- الحقل لإدخال الرابط -->
+        <input type="text" placeholder="أدخل رابط الاختبار هنا..." id="test-link">
+        <input type="text" placeholder="ادخل عنوان النموذج هنا ..." id="test-title">
+        <!-- زر الإرسال -->
+        <button class="submit-btn" onclick="submitTest()">إرسال الرابط</button>
+    </div>
+
+    <script>
+        // كود JavaScript لمعالجة زر الإرسال
+        function submitTest() {
+            const link = document.getElementById('test-link').value;
+            const title = document.getElementById('test-title').value;
+
+            if (!link || !title) {
+                alert('الرجاء إدخال رابط الاختبار والعنوان!');
+                return;
+            }
+
+            // إرسال البيانات إلى Google Sheets عبر POST
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyEjKe8Nm_xUBRXohj-MUiCcl2IEqTi9wzZJcWwul3P1fc0d5krDsAy6Iy0riwV_73f/exec';  // الرابط الذي حصلت عليه
+
+            const formData = new FormData();
+            formData.append('link', link);
+            formData.append('title', title);
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('تم إرسال البيانات بنجاح');
+                
+                // تفريغ الحقول بعد الإرسال
+                document.getElementById('test-link').value = '';
+                document.getElementById('test-title').value = '';
+            })
+            .catch(error => {
+                alert('حدث خطأ: ' + error.message);
+            });
+        }
+
+        document.addEventListener('keydown', function(event) {
+    // تعطيل F12
+    if (event.key === 'F12') {
+        event.preventDefault();
+        return false;
+    }
+})
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+
+    </script>
+
+</body>
+</html>

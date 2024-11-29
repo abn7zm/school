@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png">
+    <style>
+        /* إعدادات عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            background-image: linear-gradient(to bottom, #007a8c, #009db2);
+            color: #484646;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* الحاوية الرئيسية */
+        .main-container {
+            width: 90%;
+            max-width: 900px;
+            background: white;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* رأس الصفحة */
+        .header {
+            background: #007a8c;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+            border-radius: 0; /* إزالة منحنيات الزوايا */
+        }
+
+        /* زر العودة */
+        .back-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #ffffff;
+            color: #007a8c;
+            border: 2px solid #007a8c;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-button:hover {
+            background: #007a8c;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* المحتوى */
+        .content {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .content h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #007a8c;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            width: 200px;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 2px solid #007a8c;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .card span {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* إشعار إضافي */
+        .notification {
+            margin-top: 30px;
+            padding: 15px;
+            background: #009db2;
+            color: white;
+            border-radius: 0; /* جعل الزوايا قائمة */
+            animation: slideIn 1.5s ease-in-out;
+        }
+
+        /* الفوتر */
+        .footer {
+            background: #484646;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            animation: slideInReverse 1.5s ease-in-out;
+        }
+
+        /* تأثيرات */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInReverse {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- رأس الصفحة -->
+        <div class="header">
+            <button class="back-button" onclick="window.location.href='index.html'">عودة</button>
+            نظام تسجيل الدخول
+        </div>
+
+        <!-- المحتوى الرئيسي -->
+        <div class="content">
+            <h1>اختر طريقة تسجيل الدخول</h1>
+            <div class="buttons-container">
+                <div class="card" onclick="window.location.href='qyas_st.html'">
+                    <img src="https://i.postimg.cc/sDrNkKJQ/8-removebg-preview.png" alt="طالب">
+                    <span>طالب</span>
+                </div>
+                <div class="card" onclick="window.location.href='qyas_te.html'">
+                    <img src="https://i.postimg.cc/Vk7ZbwPn/9-removebg-preview.png" alt="معلم">
+                    <span>معلم</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- إشعار إضافي -->
+        <div class="notification">
+            يرجى اختيار الفئة المناسبة قبل المتابعة. تأكد من إدخال بيانات صحيحة.
+        </div>
+
+        <!-- الفوتر -->
+        <div class="footer">
+            حقوق الملكية والفكرة والتطبيقية تابعة لثانوية ابن حزم©<br>
+            ويمنع تقليد الفكرة دون إذن ورقي من إدارة ثانوية ابن حزم.
+        </div>
+    </div>
+
+    <script>            document.addEventListener('keydown', function(event) {
+        // تعطيل F12
+        if (event.key === 'F12') {
+            event.preventDefault();
+            return false;
+        }
+    })
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+    });
+    console.log = function() {};
+    console.warn = function() {};
+    console.error = function() {};
+    console.info = function() {};
+    console.debug = function() {};
+    </script>
+</body>
+</html>
