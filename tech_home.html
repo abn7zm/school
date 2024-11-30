@@ -81,6 +81,12 @@ console.error = function() {};
 console.info = function() {};
 console.debug = function() {};
 
+
+        // هذا الكود سيقوم بإزالة الحدث الذي يعطل زر الفأرة الأيمن
+document.removeEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+
     </script>
 
 
