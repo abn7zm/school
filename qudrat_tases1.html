@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تاسيس قدرات كمي</title>
+    <link rel="icon" href="https://i.imghippo.com/files/iJhm9520ofU.png">
+    <style>
+        /* تثبيت الصفحة ومنع التحريك */
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            font-family: "Tahoma", sans-serif;
+            background-color: #e8f6f9;
+            color: #484646;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        header {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            display: flex;
+            justify-content: flex-end; /* نقل الزر إلى أقصى اليمين */
+            padding: 15px;
+            background-color: #009db2;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.8s ease-out;
+        }
+        header button {
+            background-color: #ffffff;
+            color: #009db2;
+            border: 2px solid #007a8c;
+            padding: 10px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        header button:hover {
+            background-color: #007a8c;
+            color: #ffffff;
+            transform: scale(1.1); /* تأثير تكبير عند التمرير */
+        }
+        .video-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            animation: fadeIn 1s ease-in;
+        }
+        iframe {
+            width: 80%;
+            max-width: 960px;
+            aspect-ratio: 16/9;
+            border: 6px solid #007a8c;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: zoomIn 0.7s ease-in-out;
+        }
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .controls button {
+            background-color: #009db2;
+            color: #ffffff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .controls button:hover {
+            background-color: #007a8c;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            transform: scale(1.1); /* تكبير الأزرار عند التمرير */
+        }
+        .counter {
+            font-size: 22px;
+            margin-top: 10px;
+            color: #484646;
+            animation: fadeIn 1s ease-in;
+        }
+
+        /* الحركات */
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button onclick="goToPage()">عودة</button>
+    </header>
+    <div class="video-container">
+        <iframe id="videoPlayer" src="https://www.youtube.com/embed/hBV3WNSoLBo" allowfullscreen></iframe>
+        <div class="counter" id="videoCounter">فيديو رقم: 1</div>
+        <div class="controls">
+            <button onclick="previousVideo()">السابق</button>
+            <button onclick="nextVideo()">التالي</button>
+        </div>
+    </div>
+
+    <script>
+        const videoLinks = [
+            "https://www.youtube.com/embed/hBV3WNSoLBo",
+            "https://www.youtube.com/embed/MXadk0B-od8",
+            "https://www.youtube.com/embed/kSI3ej4_BQY",
+            "https://www.youtube.com/embed/2ltv4MxeOHo",
+            "https://www.youtube.com/embed/GCMZcXSYx20",
+            "https://www.youtube.com/embed/mPVD39HfG8M",
+            "https://www.youtube.com/embed/IDqMO6DIER4",
+            "https://www.youtube.com/embed/cDdr57tqVgI",
+            "https://www.youtube.com/embed/ZbJlMQ4zX8Q",
+            "https://www.youtube.com/embed/H7bJmIj7YEE",
+            "https://www.youtube.com/embed/pHkm7ShelJQ",
+            "https://www.youtube.com/embed/Yy0TFj6FzC8",
+            "https://www.youtube.com/embed/qP82PsE2cZI",
+            "https://www.youtube.com/embed/N_tqJ3sM-88",
+            "https://www.youtube.com/embed/KgYYbzkesZA",
+            "https://www.youtube.com/embed/eOg2FgSecjQ",
+            "https://www.youtube.com/embed/MCeLGFCMaBA",
+            "https://www.youtube.com/embed/bANmI6ZqgrI",
+            "https://www.youtube.com/embed/HzwG8fy8nHs",
+            "https://www.youtube.com/embed/JEaLrzjqEyI",
+            "https://www.youtube.com/embed/xj8WFmKf5LY",
+            "https://www.youtube.com/embed/Su0I9F_8qZ0",
+            "https://www.youtube.com/embed/zrktpTo-H-E",
+            "https://www.youtube.com/embed/qJhTh1-xMfI",
+            "https://www.youtube.com/embed/AF9pLpQjlng",
+            "https://www.youtube.com/embed/tK3fWpOyukI",
+            "https://www.youtube.com/embed/B9QZTMR78Kk",
+            "https://www.youtube.com/embed/zAdrXo-RyHA",
+            "https://www.youtube.com/embed/W2BRnZYhFgc",
+            "https://www.youtube.com/embed/o_s-qNlEBKQ",
+            "https://www.youtube.com/embed/a2ighzFIjG8",
+            "https://www.youtube.com/embed/FEdQAWKwdaY",
+            "https://www.youtube.com/embed/nsHUvAQwVWY",
+            "https://www.youtube.com/embed/HsKL0qCyz9I",
+            "https://www.youtube.com/embed/n9NWkuP_EK4",
+            "https://www.youtube.com/embed/O0WWZd-Bt3o",
+            "https://www.youtube.com/embed/Q6__wqQm7PE",
+            "https://www.youtube.com/embed/NY4WVW6_ijE",
+            "https://www.youtube.com/embed/GyYKjVEnRsY",
+            "https://www.youtube.com/embed/q4FRjR_9EvE",
+            "https://www.youtube.com/embed/GxyRV0uVmZ8",
+            "https://www.youtube.com/embed/5OddXLUUznA",
+            "https://www.youtube.com/embed/GePqWMQqHoI",
+            "https://www.youtube.com/embed/R9mU_MkzSV0",
+            "https://www.youtube.com/embed/ADaaFoTelss",
+            "https://www.youtube.com/embed/0Z549HJJ3RI",
+            "https://www.youtube.com/embed/5YqpQxEKmQU",
+            "https://www.youtube.com/embed/2F3rYJgPZNY",
+            "https://www.youtube.com/embed/3a18IZrpgRw",
+            "https://www.youtube.com/embed/0dUAu_I6M1I",
+            "https://www.youtube.com/embed/MHjsTFL_oQM"
+        ];
+    
+        let currentVideoIndex = 0;
+    
+        function updateVideo() {
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoCounter = document.getElementById('videoCounter');
+            videoPlayer.src = videoLinks[currentVideoIndex];
+            videoCounter.textContent = `فيديو رقم: ${currentVideoIndex + 1}`;
+        }
+    
+        function previousVideo() {
+            if (currentVideoIndex > 0) {
+                currentVideoIndex--;
+                updateVideo();
+            }
+        }
+      
+
+        function nextVideo() {
+            if (currentVideoIndex < videoLinks.length - 1) {
+                currentVideoIndex++;
+                updateVideo();
+            }
+        }
+    
+        function goToPage() {
+            window.location.href = "qudrat.html"; // الانتقال إلى الصفحة #
+        }
+
+
+        document.addEventListener('keydown', function(event) {
+    // تعطيل F12
+    if (event.key === 'F12') {
+        event.preventDefault();
+        return false;
+    }
+})
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+    </script>
+    
+</body>
+</html>

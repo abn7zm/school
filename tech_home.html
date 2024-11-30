@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرئيسيه اداري</title>
+    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
+    <script>
+
+document.addEventListener('keydown', function(event) {
+    // تعطيل F12
+    if (event.key === 'F12') {
+        event.preventDefault();
+        return false;
+    }
+})
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+
+
+// عشان منع الرجوع للصفحه
+function stopBack() {
+    window.history.go(1);
+}
+document.addEventListener('keydown', function(event) {
+    // تعطيل F12
+    if (event.key === 'F12') {
+        event.preventDefault();
+        return false;
+    }
+})
+
+fetch('quran.txt')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
+    .then(text => {
+        console.log(text); // تحقق من محتوى الملف في وحدة التحكم
+        // تقسيم المحتوى إلى مصفوفة من الأسطر
+        const lines = text.split('\n');
+        // اختيار سطر عشوائي
+        const randomLine = lines[Math.floor(Math.random() * lines.length)];
+        // عرض السطر العشوائي في الصفحة
+        document.getElementById('random-line').textContent = randomLine;
+    })
+    .catch(error => console.error('Error loading file:', error));
+
+
+
+
+
+
+    // إظهار اسم المستخدم في tech_home.html
+function displayUsername() {
+    const username = localStorage.getItem('username');
+    if (username) {
+        const usernameElement = document.createElement('span');
+        usernameElement.textContent = username;
+        usernameElement.classList.add('user-name'); // إضافة Class مخصص
+        document.getElementById('usernameContainer').appendChild(usernameElement);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', displayUsername);
+
+
+
+function stopBack() {
+    window.history.go(1);
+}
+
+
+fetch('quran.txt')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
+    .then(text => {
+        console.log(text); // تحقق من محتوى الملف في وحدة التحكم
+        // تقسيم المحتوى إلى مصفوفة من الأسطر
+        const lines = text.split('\n');
+        // اختيار سطر عشوائي
+        const randomLine = lines[Math.floor(Math.random() * lines.length)];
+        // عرض السطر العشوائي في الصفحة
+        document.getElementById('random-line').textContent = randomLine;
+    })
+    .catch(error => console.error('Error loading file:', error));
+    document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+
+    </script>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden; /* منع التمرير الأفقي */
+        }
+
+        /* المستطيل العلوي */
+        .top-bar {
+            width: auto;
+            background-color: #14b9d0; /* تغيير لون المستطيل العلوي */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: #ffffff; /* لون النص */
+            box-sizing: border-box; /* ضمان أن الحشو لا يتسبب في تجاوز العرض */
+        }
+
+        /* الشعار على يسار الأزرار */
+        .top-bar-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px; /* تكبير الشعار */
+            margin-right: 20px; /* ترك مسافة بين الشعار والأزرار */
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+
+
+        .buttons button {
+            background-color: #79D7E4;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .buttons button img {
+            height: 20px;
+        }
+
+        .top-bar img.profile {
+            height: 60px; /* حجم صورة الملف الشخصي */
+            filter: none; /* إزالة أي فلاتر أو تأثيرات */
+            margin-left: 10px; /* مسافة على يسار الصورة */
+        }
+
+        /* عرض اسم المستخدم بجانب الصورة */
+        .user-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-container h2 {
+            margin: 0;
+            color: #fff; /* لون النص */
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        /* الأزرار الكبيرة */
+        .main-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 100px 0; /* إضافة مسافة لتحريك المربعات الكبيرة لأسفل */
+            flex-wrap: wrap;
+        }
+
+        .main-buttons a {
+            text-decoration: none; /* إزالة التزيين الافتراضي للرابط */
+        }
+
+        .main-buttons button {
+            background-color: #484646;
+            color: #fff;
+            width: 250px; /* تكبير المربعات */
+            height: 250px;
+            border: none;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .main-buttons button img {
+            height: 150px; /* تكبير الصور داخل المربعات */
+        }
+
+        /* القرآن الكريم */
+        .quran {
+            margin: 50px 0; /* إضافة مسافة إضافية للآية القرآنية */
+        }
+
+        /* المستطيل السفلي */
+        .footer {
+            background-color: #484646;
+            color: #fff;
+            padding: 20px;
+            width: 100%; /* المستطيل السفلي يغطي عرض الصفحة بالكامل */
+            text-align: right; /* توجيه النصوص لليسار */
+            border-radius: 0px; /* إزالة الحواف المستديرة */
+            margin-top: auto;
+            box-sizing: border-box; /* ضمان أن الحشو لا يتسبب في تجاوز العرض */
+            overflow-wrap: break-word; /* كسر الكلمات الطويلة لتجنب التجاوز */
+        }
+
+        .footer p {
+            margin: 10px 0; /* زيادة الهوامش لتجنب تداخل النصوص مع الحواف */
+            line-height: 1.5; /* تحسين التباعد بين الأسطر */
+        }
+        .end {
+            text-align: center;
+        }
+
+        .b{
+            transition: ease 0.45s;
+        }
+
+.b:hover{
+    background-color: #6ec1cc;
+    transition: ease 0.45s;
+}
+.bu {
+    transition: ease 0.45s;
+}
+
+.bu:hover {
+    background-color: #009db2 ;
+    transition: ease 0.45s;
+}
+a {
+    text-decoration: none;
+}
+        /* استعلامات الإعلام */
+        /* الشاشات الكبيرة */
+        @media (min-width: 1200px) {
+            .top-bar {
+                padding: 20px 40px;
+            }
+
+            .logo img {
+                height: 80px;
+            }
+
+            .buttons button {
+                font-size: 18px;
+                padding: 15px;
+            }
+
+            .main-buttons button {
+                width: 300px;
+                height: 300px;
+            }
+
+            .main-buttons button img {
+                height: 180px;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .top-bar {
+                padding: 15px 30px;
+            }
+
+            .logo img {
+                height: 70px;
+            }
+
+            .buttons button {
+                font-size: 17px;
+                padding: 12px;
+            }
+
+            .main-buttons button {
+                width: 280px;
+                height: 280px;
+            }
+
+            .main-buttons button img {
+                height: 170px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .top-bar {
+                padding: 10px 20px;
+            }
+
+            .logo img {
+                height: 60px;
+            }
+
+            .buttons button {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .main-buttons button {
+                width: 250px;
+                height: 250px;
+            }
+
+            .main-buttons button img {
+                height: 150px;
+            }
+        }
+
+        @media (min-width: 576px) and (max-width: 767px) {
+            .top-bar {
+                padding: 10px 15px;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .buttons button {
+                font-size: 15px;
+                padding: 8px;
+            }
+
+            .main-buttons button {
+                width: 220px;
+                height: 220px;
+            }
+
+            .main-buttons button img {
+                height: 130px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .top-bar {
+                padding: 10px 10px;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            .buttons button {
+                font-size: 14px;
+                padding: 6px;
+            }
+
+            .main-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .main-buttons button {
+                width: 200px;
+                height: 200px;
+            }
+
+            .main-buttons button img {
+                height: 120px;
+            }
+        
+        }
+
+
+   /* تخصيص شريط التمرير للمتصفحات التي تدعمه */
+   ::-webkit-scrollbar {
+            width: 12px; /* عرض شريط التمرير */
+        }
+
+        /* شريط التمرير نفسه */
+        ::-webkit-scrollbar-track {
+            background: #cccccc; /* لون الخلفية لشريط التمرير */
+            border-radius: 10px; /* جعل الحواف مستديرة */
+        }
+
+        /* مقبض التمرير */
+        ::-webkit-scrollbar-thumb {
+            background-color: #009db2; /* لون المقبض */
+            border-radius: 10px; /* جعل المقبض مستدير */
+            border: 3px solid #f4f4f4; /* إضافة حدود بيضاء للمقبض */
+        }
+
+        /* عند تمرير الفأرة فوق المقبض */
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #007b8e; /* تغيير لون المقبض عند التحويم */
+        }
+
+        /* تخصيص شريط التمرير للمتصفحات الأخرى (مثل Firefox) */
+        .scrollbar {
+            scrollbar-color: #009db2 #cccccc; /* لون المقبض والخلفية */
+            scrollbar-width: thin; /* تحديد حجم الشريط */
+        }
+
+        .user-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-container h2 {
+            margin: 0;
+            color: #fff; /* لون النص */
+            font-size: 18px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- المستطيل العلوي -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="logo">
+                <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo"> <!-- الشعار على يسار الأزرار -->
+            </div>
+
+            <div class="buttons">
+
+                <a href="index.html"><button class="b" >
+                    <img src="https://i.postimg.cc/TY15M5LP/logout.png" alt="Logout">
+                    تسجيل الخروج
+                </button> </a>
+
+                <a href="support1.html"><button class="b">الدعم الفني</button></a>
+                <a href="vis.html"><button class="b" >التحديثات</button></a>
+
+            </div>
+        </div>
+        
+        
+        
+
+        <div class="user-container"><h2><span id="usernameContainer"></span></h2>
+            <img class="profile" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image"> <!-- صورة الملف الشخصي على اليمين -->
+        </div>
+
+    </div>
+
+    <!-- الأزرار الكبيرة -->
+    <div class="main-buttons">
+        <a href="tech_date.html"><button class="bu">
+            <img src="https://i.postimg.cc/MKsyHss0/detep.png" alt="Button 1">
+        </button class="bu"></a>
+        <a href="tech_ads.html"><button class="bu"> 
+            <img src="https://i.postimg.cc/zBZJjrfC/adsp.png" alt="Button 2">
+        </button></a>
+        <a href="tech_cry.html"><button class="bu">
+            <img src="https://i.postimg.cc/bJ73rm3N/cryp.png" alt="Button 3">
+        </button></a>
+        <a href="tech_add.html"><button class="bu">
+            <img src="https://i.imghippo.com/files/nBW5015bdY.png" alt="Button 3">
+        </button></a>
+
+    </div>
+
+    <!-- القرآن الكريم (يجب سحب الآية عشوائيًا من ملف quran.txt) -->
+    <div id="random-line" class="quran"></div>
+
+    <!-- المستطيل السفلي -->
+    <div class="footer">
+        <p>معلومات الاتصال</p>
+        <p>+966 539084645</p>
+        <p>rsanjalawi007@gmail.com</p>
+        <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
+        <p class="end">© جميع الحقوق الفكريه و التطبيقيه محفوظه بأسم ثانوية ابن حزم التعليمية</p>
+    </div>
+
+
+
+</body>
+</html>

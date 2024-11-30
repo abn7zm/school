@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثانوية ابن حزم</title>
+    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png">
+</head>
+<body>
+    <header>
+        <img src="https://i.postimg.cc/nrQwRjHx/logo.png" alt="Logo" class="logo">
+        <a href="tech_home.html" class="back-btn">
+            <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Back"> العودة
+        </a>
+    </header>
+
+    <main>
+        <div class="buttons-container">
+            <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=1932908203#gid=1932908203" class="grade-btn">أول ثانوي</a>
+            <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=403420124#gid=403420124" class="grade-btn">ثاني ثانوي</a>
+            <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=0#gid=0" class="grade-btn">ثالث ثانوي</a>
+            <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=274027731#gid=274027731" class="grade-btn">غير مرتبط بهوية والاقتراحات</a>
+        </div>
+    </main>
+<br><br><br><br><br><br>
+    <footer>
+        <div class="solid-section">
+            <p class="p1">: معلومات الاتصال</p>
+            <p dir="ltr">+966 539084645</p>
+            <p>rsanjalawi007@gmail.com</p>
+            <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
+            <br>
+            <p class="p1">: المساعدة</p>
+            <a href="support1.html"><p>الدعم الفني</p></a>
+        </div>
+
+        <div class="copy" dir="ltr">
+            © جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية
+        </div>
+        <div class="copy" dir="ltr">
+            2024 - 2023
+        </div>
+    </footer>
+
+    <style>
+        /* الأساسيات */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* رأس الصفحة */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logo {
+    width: 100px;
+}
+
+/* زر العودة */
+.back-btn {
+    background-color: #007A8C;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: white;
+    transition: ease 0.35s;
+}
+
+.back-btn img {
+    width: 25px; /* حجم صورة السهم */
+}
+
+.back-btn:hover {
+    background-color: #484646;
+}
+
+/* المربعات */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* المسافة بين الأزرار */
+    flex-wrap: wrap; /* التأكد من أن الأزرار تنسحب بشكل صحيح على الشاشات الصغيرة */
+}
+
+.grade-btn {
+    background-color: #484646;
+    color: white;
+    width: 200px;
+    height: 200px; /* جعل الأزرار مربعة بتساوي العرض والارتفاع */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: ease 0.35s;
+}
+
+.grade-btn:hover {
+    background-color: #009db2;
+}
+
+/* Footer styles */
+footer {
+    background-color: #484646;
+    color: white;
+    padding: 20px;
+    text-align: right;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+  
+}
+
+footer .solid-section {
+    margin-bottom: 10px;
+}
+
+footer .p1 {
+    font-weight: bold;
+}
+
+footer .copy {
+    text-align: center;
+    margin-top: 10px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Media Queries for Large Screens */
+@media (min-width: 1200px) {
+    .grade-btn {
+        width: 250px;
+        height: 250px;
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .grade-btn {
+        width: 275px;
+        height: 275px;
+        font-size: 22px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .grade-btn {
+        width: 300px;
+        height: 300px;
+        font-size: 24px;
+    }
+}
+
+@media (min-width: 1800px) {
+    .grade-btn {
+        width: 325px;
+        height: 325px;
+        font-size: 26px;
+    }
+}
+
+@media (min-width: 2000px) {
+    .grade-btn {
+        width: 350px;
+        height: 350px;
+        font-size: 28px;
+    }
+}
+
+/* Media Queries for Small Screens */
+@media (max-width: 1000px) {
+    .grade-btn {
+        width: 180px;
+        height: 180px;
+        font-size: 16px;
+    }
+
+    .back-btn img {
+        width: 20px;
+    }
+}
+
+@media (max-width: 800px) {
+    .grade-btn {
+        width: 160px;
+        height: 160px;
+        font-size: 14px;
+    }
+
+    .back-btn img {
+        width: 18px;
+    }
+}
+
+@media (max-width: 600px) {
+    .grade-btn {
+        width: 140px;
+        height: 140px;
+        font-size: 12px;
+    }
+
+    .back-btn img {
+        width: 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .grade-btn {
+        width: 120px;
+        height: 120px;
+        font-size: 10px;
+    }
+
+    .back-btn img {
+        width: 14px;
+    }
+}
+
+@media (max-width: 300px) {
+    .grade-btn {
+        width: 100px;
+        height: 100px;
+        font-size: 8px;
+    }
+
+    .back-btn img {
+        width: 12px;
+    }
+}
+
+/* Media Queries for Stacking the buttons vertically at 425px or less */
+@media (max-width: 425px) {
+    .buttons-container {
+        flex-direction: column;
+        gap: 15px; /* المسافة بين الأزرار عندما تكون مكدسة فوق بعضها */
+    }
+
+    .grade-btn {
+        width: 100%;
+        max-width: 300px;
+        height: auto; /* الحفاظ على الشكل المربع في الحجم المناسب */
+        aspect-ratio: 1; /* الحفاظ على نسبة العرض إلى الارتفاع 1:1 */
+    }
+}
+
+
+    </style>
+    <script>
+            document.addEventListener('keydown', function(event) {
+    // تعطيل F12
+    if (event.key === 'F12') {
+        event.preventDefault();
+        return false;
+    }
+})
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+
+    </script>
+</body>
+</html>

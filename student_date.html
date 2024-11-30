@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة التقويم</title>
+    <link rel="icon" href="https://i.imghippo.com/files/iJhm9520ofU.png">
+    <style>
+        /* تخصيص شريط التمرير للمتصفحات التي تدعمه */
+        ::-webkit-scrollbar {
+            width: 12px; /* عرض شريط التمرير */
+        }
+
+        /* شريط التمرير نفسه */
+        ::-webkit-scrollbar-track {
+            background: #cccccc; /* لون الخلفية لشريط التمرير */
+            border-radius: 10px; /* جعل الحواف مستديرة */
+        }
+
+        /* مقبض التمرير */
+        ::-webkit-scrollbar-thumb {
+            background-color: #009db2; /* لون المقبض */
+            border-radius: 10px; /* جعل المقبض مستدير */
+            border: 3px solid #f4f4f4; /* إضافة حدود بيضاء للمقبض */
+        }
+
+        /* عند تمرير الفأرة فوق المقبض */
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #007b8e; /* تغيير لون المقبض عند التحويم */
+        }
+
+        /* تخصيص شريط التمرير للمتصفحات الأخرى (مثل Firefox) */
+        .scrollbar {
+            scrollbar-color: #009db2 #cccccc; /* لون المقبض والخلفية */
+            scrollbar-width: thin; /* تحديد حجم الشريط */
+        }
+
+        /* تنسيقات الصفحة */
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #484646;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden; /* منع التمرير الأفقي */
+            width: 100%; /* جعل الصفحة تأخذ كامل عرض الشاشة */
+        }
+
+        /* الشعار وزر العودة */
+        .header {
+            position: relative;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .header img.logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+        }
+
+        .header a {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            background-color: #009db2;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .header a img {
+            margin-left: 10px;
+            width: 20px;
+        }
+
+        /* تقويم */
+        .calendar-container {
+            width: 100%;
+            max-width: 1200px; /* الحد الأقصى للعرض */
+            margin: 50px auto;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .month {
+            font-size: 32px;
+            color: #007a8c;
+            margin-bottom: 20px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .day {
+            border: 1px solid #009db2;
+            text-align: left;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 1;
+            background-color: #ffffff;
+        }
+
+        .day-number {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 14px;
+            color: #000;
+        }
+
+        .day.current-day {
+            background-color: #009DB2;
+            color: #ffffff;
+        }
+
+        .events {
+            font-size: 18px;
+            color: #000;
+            text-align: center;
+        }
+
+        /* التنقل بين الأشهر */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .navigation button {
+            background-color: #009db2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        .navigation button:hover {
+            background-color: #007a8c;
+        }
+
+        /* تذييل الصفحة */
+        footer {
+            background-color: #484646;
+            color: white;
+            padding: 20px;
+            text-align: right;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+            left: 0;
+            margin-top: auto;
+        }
+
+        footer .solid-section {
+            margin-bottom: 10px;
+            margin-right: 30px;
+        }
+
+        footer .p1 {
+            font-weight: bold;
+        }
+
+        footer .copy {
+            text-align: center;
+            margin-top: 10px;
+            white-space: normal; /* السماح للنص بالظهور بالكامل */
+            margin-right: 30px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* الشاشات الكبيرة */
+        @media screen and (min-width: 1200px) {
+            .calendar-container {
+                max-width: 1200px;
+            }
+        }
+
+        /* الشاشات الصغيرة */
+        @media screen and (max-width: 768px) {
+            .header img.logo {
+                width: 80px;
+            }
+
+            .header a {
+                font-size: 14px;
+            }
+
+            .header a img {
+                width: 16px;
+            }
+
+            .calendar {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .header {
+                flex-direction: column;
+            }
+
+            .calendar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <div class="header">
+        <img src="https://i.postimg.cc/nrQwRjHx/logo.png" alt="Logo" class="logo">
+        <a href="student_home.html">
+            <span>عودة</span>
+            <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Arrow">
+        </a>
+    </div>
+
+    <!-- محتوى التقويم -->
+    <div class="calendar-container">
+        <div class="month" id="month">يناير (الشهر الحالي)</div>
+
+        <div class="navigation">
+            <button onclick="prevMonth()">السابق</button>
+            <button onclick="nextMonth()">التالي</button>
+        </div>
+
+        <div class="calendar" id="calendar"></div>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="solid-section">
+            <p class="p1">: معلومات الاتصال</p>
+            <p dir="ltr">+966 539084645</p>
+            <p>rsanjalawi007@gmail.com</p>
+            <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
+            <br>
+            <p class="p1">: المساعده</p>
+            <a href="support.html"><p>الدعم الفني</p></a>
+        </div>
+
+        <div class="copy" dir="ltr">
+            © جميع الحقوق الفكريه و التطبيقيه محفوظه بأسم ثانوية ابن حزم التعليمية
+        </div>
+        <div class="copy" dir="ltr">
+            2024 - 2023
+        </div>
+    </footer>
+
+    <script>
+        const today = new Date();
+        let currentMonth = today.getMonth();
+        const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+        const currentDay = today.getDate();
+
+        // بيانات الأحداث
+        const events = {
+            "2024-09-10": ["مهمة تسليم المشروع"],
+            "2024-09-15": ["رحلة مدرسية"],
+            "2024-09-20": ["اجازه مطوله"],
+            "2024-09-25": ["نهاية الاجازه المطوله"]
+        };
+
+        // عرض التقويم
+        function renderCalendar() {
+            const calendar = document.getElementById('calendar');
+            const monthElement = document.getElementById('month');
+            const currentYear = today.getFullYear();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            // إذا كان الشهر الحالي
+            if (currentMonth === today.getMonth()) {
+                monthElement.textContent = months[currentMonth] + " (الشهر الحالي)";
+            } else {
+                monthElement.textContent = months[currentMonth];
+            }
+
+            calendar.innerHTML = '';
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'day';
+
+                // إذا كان اليوم الحالي
+                if (currentMonth === today.getMonth() && day === currentDay) {
+                    dayElement.classList.add('current-day');
+                }
+
+                dayElement.innerHTML = `<span class="day-number">${day}</span>`;
+
+                // إضافة الأحداث إلى اليوم
+                const eventKey = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                if (events[eventKey]) {
+                    const eventList = document.createElement('div');
+                    eventList.className = 'events';
+                    events[eventKey].forEach(event => {
+                        const eventItem = document.createElement('div');
+                        eventItem.textContent = event;
+                        eventList.appendChild(eventItem);
+                    });
+                    dayElement.appendChild(eventList);
+                }
+
+                calendar.appendChild(dayElement);
+            }
+        }
+
+        // التنقل بين الأشهر
+        function prevMonth() {
+            currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentMonth = (currentMonth === 11) ? 0 : currentMonth + 1;
+            renderCalendar();
+        }
+
+        // عرض التقويم عند بدء الصفحة
+        window.onload = renderCalendar;
+
+        document.addEventListener('keydown', function(event) {
+    // تعطيل F12
+    if (event.key === 'F12') {
+        event.preventDefault();
+        return false;
+    }
+})
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+    </script>
+
+</body>
+</html>
