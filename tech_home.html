@@ -10,13 +10,7 @@
 function stopBack() {
     window.history.go(1);
 }
-document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }
-})
+
 
 fetch('quran.txt')
     .then(response => {
