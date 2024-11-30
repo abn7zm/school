@@ -75,6 +75,10 @@
     </div>
 </footer>
 <script>
+// هذا الكود سيقوم بإزالة الحدث الذي يعطل زر الفأرة الأيمن
+document.removeEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
 
 </script>
 </body>
