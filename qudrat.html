@@ -104,6 +104,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
             text-decoration: none;
             padding: 2rem 1rem;
+            pointer-events: auto; /* إضافة هذه الخاصية */
         }
         .main-box:hover {
             transform: scale(1.05);
@@ -118,7 +119,6 @@
         .content {
             color: #fff;
             font-size: 1.6rem;
-           
             text-align: center;
         }
 
@@ -164,7 +164,6 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             background: #16a085;
         }
-
 
         .hidden-content {
             font-size: 1rem;
@@ -230,7 +229,7 @@
 
     <!-- الأزرار -->
     <div class="button-container">
-        <div class="main-box" href="#">
+        <div class="main-box" id="start-capacity-test">
             <p class="content">تأسيس القدرات</p>
             <p class="hidden-content">التأسيس هو المرحلة الأساسية لتعليم الطلاب المهارات والمعارف التي يحتاجونها لاجتياز اختبار القدرات.</p>
             <a class="child-box left" href="qudrat_tases1.html">كمي  </a>
@@ -252,7 +251,13 @@
     <footer>
         <p>&copy; 2024 جميع الحقوق محفوظة.</p>
     </footer>
-<script> 
+<script>
+        // إضافة حدث الضغط على العنصر "main-box"
+        document.getElementById('start-capacity-test').addEventListener('click', function() {
+            // هنا يمكن إضافة أي أكواد أخرى عند الضغط، مثل الانتقال إلى صفحة أخرى أو تنفيذ إجراءات أخرى
+            window.location.href = 'qudrat_tases1.html'; // يمكنك تحديد الرابط الذي تريده هنا
+        });
+
         document.addEventListener('keydown', function(event) {
     // تعطيل F12
     if (event.key === 'F12') {
