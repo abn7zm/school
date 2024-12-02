@@ -13,10 +13,9 @@
         <form id="complaintForm" onsubmit="submitForm(event)">
             <div class="input-group">
                 <input type="text" id="name" placeholder="الاسم الثلاثي">
-                <input type="text" id="id" placeholder="رقم الهوية">
+                <input type="text" id="phone" placeholder="رقم الهاتف">
             </div>
             <div class="input-group">
-                <input type="text" id="phone" placeholder="رقم الهاتف">
                 <select id="class" name="class" onchange="updateShobaOptions()">
                     <option value="" disabled selected>الفصل</option>
                     <option value="اول ثانوي">اول ثانوي</option>
@@ -92,7 +91,6 @@
             e.preventDefault();
 
             const name = document.getElementById('name').value;
-            const id = document.getElementById('id').value;
             const phone = document.getElementById('phone').value;
             const classValue = document.getElementById('class').value;
             const shoba = document.getElementById('shoba').value;
@@ -101,7 +99,6 @@
 
             const formData = new FormData();
             formData.append('name', name);
-            formData.append('id', id);
             formData.append('phone', phone);
             formData.append('class', classValue);
             formData.append('shoba', shoba);
@@ -126,8 +123,6 @@
                 responseMessage.style.display = 'block';
             });
         }
-
-
 
     </script>
 
@@ -486,10 +481,6 @@ body::-webkit-scrollbar {
         font-size: 8px;
     }
 }
-
-
-
-
     </style>
 
     <script>        document.addEventListener('keydown', function(event) {
