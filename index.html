@@ -45,55 +45,44 @@
         ::-webkit-scrollbar-thumb:hover { background-color: #007b8e; }
         .scrollbar { scrollbar-color: #009db2 #cccccc; scrollbar-width: thin; }
 
-        /* تخصيص السهم */
+        /* تخصيص السهم الجديد */
         .scroll-down {
             position: fixed; /* تأكيد أنه ثابت */
-            bottom: 20px; /* يضع السهم في أسفل الصفحة */
+            bottom: 20px; /* وضع السهم في أسفل الصفحة */
             left: 50%; /* تمركز السهم أفقيًا */
             transform: translateX(-50%); /* محاذاة السهم في المنتصف تمامًا */
-            width: 60px;
-            height: 60px;
-            background-color: #00a0b0;
-            border-radius: 50%; /* دائرة */
+            width: 70px;
+            height: 70px;
+            background-color: transparent;
+            border: 3px solid #00a0b0;
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            animation: pulse 2s infinite, bounce 1.5s infinite; /* إضافة تأثيرات الحركة */
-            box-shadow: 0 4px 15px rgba(0, 160, 176, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 160, 176, 0.8);
         }
 
-        /* تأثير الأنيميشن لنبض السهم */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* تأثير الأنيميشن للسهم (اهتزاز) */
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0); }
-        }
-
-        /* رمز السهم داخل الدائرة */
-        .scroll-down::after {
-            content: '↓'; /* إضافة رمز السهم */
-            font-size: 30px;
-            color: white;
+        /* تغيير شكل السهم داخل الدائرة */
+        .scroll-down::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border-left: 3px solid #00a0b0;
+            border-bottom: 3px solid #00a0b0;
+            transform: rotate(45deg); /* جعل السهم مائل */
             transition: transform 0.3s ease;
         }
 
-        /* تأثير تفاعل السهم عند المرور عليه */
-        .scroll-down:hover::after {
-            transform: translateY(5px);
+        /* تأثير السهم عند المرور عليه */
+        .scroll-down:hover {
+            transform: scale(1.1); /* زيادة الحجم عند المرور */
+            box-shadow: 0 0 30px rgba(0, 160, 176, 1);
+        }
+
+        .scroll-down:hover::before {
+            transform: rotate(45deg) translateY(5px); /* تحريك السهم قليلاً عند المرور */
         }
 
         /* تأثير الانتقال إلى أسفل */
