@@ -40,10 +40,10 @@
         /* تخصيص السهم */
         .scroll-down {
             position: fixed;
-            top: 20px;
+            top: 50%; /* لضبط السهم في منتصف الشاشة عموديًا */
             left: 50%;
-            transform: translateX(-50%);
-            font-size: 30px;
+            transform: translateX(-50%) translateY(-50%); /* تعديل لإظهار السهم في وسط الصفحة عموديًا وأفقيًا */
+            font-size: 40px; /* زيادة حجم السهم */
             color: #00a0b0;
             cursor: pointer;
             animation: bounce 1.5s infinite; /* تأثير الأنيميشن */
