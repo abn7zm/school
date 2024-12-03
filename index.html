@@ -45,51 +45,29 @@
         ::-webkit-scrollbar-thumb:hover { background-color: #007b8e; }
         .scrollbar { scrollbar-color: #009db2 #cccccc; scrollbar-width: thin; }
 
-        /* تخصيص السهم الجديد */
+        /* تخصيص السهم */
         .scroll-down {
             position: fixed; /* تأكيد أنه ثابت */
-            bottom: 30px; /* وضع السهم في أسفل الصفحة */
+            bottom: 20px; /* يضع السهم في أسفل الصفحة */
             left: 50%; /* تمركز السهم أفقيًا */
             transform: translateX(-50%); /* محاذاة السهم في المنتصف تمامًا */
-            width: 60px;
-            height: 60px;
-            background-color: #00a0b0;
-            border-radius: 50%; /* دائري الشكل */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-size: 40px; /* حجم السهم */
+            color: #00a0b0;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 160, 176, 0.8);
+            animation: bounce 1.5s infinite; /* تأثير الاهتزاز */
         }
 
-        /* السهم داخل الدائرة */
-        .scroll-down::before {
-            content: '';
-            width: 20px;
-            height: 20px;
-            border-left: 3px solid white;
-            border-bottom: 3px solid white;
-            transform: rotate(45deg); /* جعل السهم مائل */
-            transition: transform 0.3s ease;
-        }
-
-        /* تأثير السهم عند المرور عليه */
-        .scroll-down:hover {
-            transform: scale(1.2); /* زيادة الحجم عند المرور */
-            box-shadow: 0 0 30px rgba(0, 160, 176, 1); /* تغيير الظل */
-            background-color: #007a8c; /* تغيير اللون عند المرور */
-        }
-
-        .scroll-down:hover::before {
-            transform: rotate(45deg) translateY(5px); /* تحريك السهم قليلاً عند المرور */
+        /* تأثير الأنيميشن للسهم */
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+            100% { transform: translateY(0); }
         }
 
         /* تأثير الانتقال إلى أسفل */
         html, body {
             scroll-behavior: smooth;
         }
-
     </style>
 </head>
 <body>
@@ -100,7 +78,7 @@
     </div>
 
     <!-- السهم الذي يشير إلى أسفل -->
-    <div class="scroll-down" id="scroll-down" onclick="scrollToBottom()"></div>
+    <div class="scroll-down" id="scroll-down" onclick="scrollToBottom()">↓</div>
 
     <div class="buttons">
         <a href="student_login.html"><button><img src="https://i.imghippo.com/files/s6NDu1725975542.png" alt="الطالب"></button></a>
@@ -137,10 +115,29 @@
     </footer>
 
     <script>
+        // الحصول على السهم وصورة الطائرة
+        const scrollDownButton = document.getElementById('scroll-down');
+        const airplaneImage = document.getElementById('airplane-image');
+
         // الدالة الخاصة بالتمرير إلى أسفل الصفحة
         function scrollToBottom() {
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
+
+        // تتبع التمرير باستخدام حدث window.scroll
+        window.addEventListener('scroll', () => {
+            const airplaneBottom = airplaneImage.getBoundingClientRect().bottom; // المسافة من أسفل الشاشة حتى نهاية الصورة
+            const scrollPosition = window.scrollY + window.innerHeight; // الموقع الحالي للتمرير
+
+            // عندما يصل السهم إلى نهاية صورة الطائرة، يتم إيقافه عن الحركة
+            if (scrollPosition >= airplaneBottom) {
+                scrollDownButton.style.position = 'absolute';
+                scrollDownButton.style.bottom = airplaneImage.offsetHeight + 'px'; // تحديد المسافة أسفل الصورة
+            } else {
+                scrollDownButton.style.position = 'fixed';
+                scrollDownButton.style.bottom = '20px'; // إبقاء السهم في أسفل الصفحة
+            }
+        });
     </script>
 </body>
 </html>
