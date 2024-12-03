@@ -72,13 +72,13 @@
 </head>
 <body>
     <div class="top-image">
-        <img src="https://i.postimg.cc/NjWLFvty/image3.png" alt="صورة أعلى الصفحة" class="top">
+        <img id="airplane-image" src="https://i.postimg.cc/NjWLFvty/image3.png" alt="صورة أعلى الصفحة" class="top">
         <img src="https://i.imghippo.com/files/xMj9m1725975409.png" alt="شعار وزارة التعليم" class="logo-left">
         <img src="https://i.postimg.cc/nrQwRjHx/logo.png" alt="شعار ثانوية ابن حزم" class="logo-right">
     </div>
 
     <!-- السهم الذي يشير إلى أسفل -->
-    <div class="scroll-down" onclick="scrollToBottom()">↓</div>
+    <div class="scroll-down" id="scroll-down" onclick="scrollToBottom()">↓</div>
 
     <div class="buttons">
         <a href="student_login.html"><button><img src="https://i.imghippo.com/files/s6NDu1725975542.png" alt="الطالب"></button></a>
@@ -115,25 +115,29 @@
     </footer>
 
     <script>
+        // الحصول على السهم وصورة الطائرة
+        const scrollDownButton = document.getElementById('scroll-down');
+        const airplaneImage = document.getElementById('airplane-image');
+
+        // الدالة الخاصة بالتمرير إلى أسفل الصفحة
         function scrollToBottom() {
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
-        document.addEventListener('keydown', function(event) {
-            // تعطيل F12
-            if (event.key === 'F12') {
-                event.preventDefault();
-                return false;
+        // تتبع التمرير باستخدام حدث window.scroll
+        window.addEventListener('scroll', () => {
+            const airplaneBottom = airplaneImage.getBoundingClientRect().bottom; // المسافة من أسفل الشاشة حتى نهاية الصورة
+            const scrollPosition = window.scrollY + window.innerHeight; // الموقع الحالي للتمرير
+
+            // عندما يصل السهم إلى نهاية صورة الطائرة، يتم إيقافه عن الحركة
+            if (scrollPosition >= airplaneBottom) {
+                scrollDownButton.style.position = 'absolute';
+                scrollDownButton.style.bottom = airplaneImage.offsetHeight + 'px'; // تحديد المسافة أسفل الصورة
+            } else {
+                scrollDownButton.style.position = 'fixed';
+                scrollDownButton.style.bottom = '20px'; // إبقاء السهم في أسفل الصفحة
             }
-        })
-        document.addEventListener('contextmenu', function(event) {
-            event.preventDefault();
         });
-        console.log = function() {};
-        console.warn = function() {};
-        console.error = function() {};
-        console.info = function() {};
-        console.debug = function() {};
     </script>
 </body>
 </html>
