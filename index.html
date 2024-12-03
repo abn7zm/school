@@ -69,7 +69,14 @@
             scroll-behavior: smooth;
         }
 
-        /* إخفاء السهم على الشاشات الصغيرة */
+        /* إخفاء السهم على الشاشات التي عرضها 1024 بكسل أو أقل */
+        @media (max-width: 1024px) {
+            .scroll-down {
+                display: none;
+            }
+        }
+
+        /* إخفاء السهم على الشاشات التي عرضها 768 بكسل أو أقل */
         @media (max-width: 768px) {
             .scroll-down {
                 display: none;
