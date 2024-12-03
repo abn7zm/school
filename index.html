@@ -36,58 +36,96 @@
         ::-webkit-scrollbar-thumb {background-color: #009db2; border-radius: 10px; border: 3px solid #f4f4f4;}
         ::-webkit-scrollbar-thumb:hover {background-color: #007b8e;}
         .scrollbar {scrollbar-color: #009db2 #cccccc; scrollbar-width: thin;}
+
+        /* تخصيص السهم */
+        .scroll-down {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            color: #00a0b0;
+            cursor: pointer;
+            animation: bounce 1.5s infinite; /* تأثير الأنيميشن */
+        }
+
+        /* تأثير الأنيميشن للسهم */
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* تأثير الانتقال إلى أسفل */
+        html, body {
+            scroll-behavior: smooth;
+        }
     </style>
 </head>
 <body>
-<div class="top-image">
-    <img src="https://i.postimg.cc/NjWLFvty/image3.png" alt="صورة أعلى الصفحة" class="top">
-    <img src="https://i.imghippo.com/files/xMj9m1725975409.png" alt="شعار وزارة التعليم" class="logo-left">
-    <img src="https://i.postimg.cc/nrQwRjHx/logo.png" alt="شعار ثانوية ابن حزم" class="logo-right">
-</div>
-<div class="buttons">
-    <a href="student_login.html"><button><img src="https://i.imghippo.com/files/s6NDu1725975542.png" alt="الطالب"></button></a>
-    <a href="qyas_login.html"><button><img src="https://i.imghippo.com/files/nLE3752Y.png" alt="من نحن"></button></a>
-    <a href="tech_login.html"><button><img src="https://i.imghippo.com/files/HfMVr1725975578.png" alt="التقنية"></button></a>
+    <div class="top-image">
+        <img src="https://i.postimg.cc/NjWLFvty/image3.png" alt="صورة أعلى الصفحة" class="top">
+        <img src="https://i.imghippo.com/files/xMj9m1725975409.png" alt="شعار وزارة التعليم" class="logo-left">
+        <img src="https://i.postimg.cc/nrQwRjHx/logo.png" alt="شعار ثانوية ابن حزم" class="logo-right">
+    </div>
 
-</div>
-<br><br><br>
-<div class="account-message">
-    <p>لا تملك حساب؟</p>
-    <a href="new_acc.html"><button>إنشاء حساب جديد</button></a>
-</div>
-<br><br><br><br><br><br>
-<footer>
-    <div class="solid-section">
-        <p class="p1">: معلومات الاتصال</p>
-        <p dir="ltr">+966 536382599</p>
-        <p>abn7zm@gmail.com</p>
-        <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
-        <br>
-        <p class="p1">: المساعده</p>
-        <a href="support.html"><p>الدعم الفني</p></a>
-        <a href="WHO ARE WE.html"><p>من نحن ؟</p></a>
+    <!-- السهم الذي يشير إلى أسفل -->
+    <div class="scroll-down" onclick="scrollToBottom()">↓</div>
+
+    <div class="buttons">
+        <a href="student_login.html"><button><img src="https://i.imghippo.com/files/s6NDu1725975542.png" alt="الطالب"></button></a>
+        <a href="qyas_login.html"><button><img src="https://i.imghippo.com/files/nLE3752Y.png" alt="من نحن"></button></a>
+        <a href="tech_login.html"><button><img src="https://i.imghippo.com/files/HfMVr1725975578.png" alt="التقنية"></button></a>
     </div>
-    <div class="copy" dir="ltr">
-        © جميع الحقوق الفكريه و التطبيقيه محفوظه بأسم ثانوية ابن حزم التعليمية
+
+    <br><br><br>
+
+    <div class="account-message">
+        <p>لا تملك حساب؟</p>
+        <a href="new_acc.html"><button>إنشاء حساب جديد</button></a>
     </div>
-    <div class="copy" dir="ltr">
-        2024 - 2023
-    </div>
-</footer>
-<script>        document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }
-})
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};</script>
+
+    <br><br><br><br><br><br>
+
+    <footer>
+        <div class="solid-section">
+            <p class="p1">: معلومات الاتصال</p>
+            <p dir="ltr">+966 536382599</p>
+            <p>abn7zm@gmail.com</p>
+            <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
+            <br>
+            <p class="p1">: المساعده</p>
+            <a href="support.html"><p>الدعم الفني</p></a>
+            <a href="WHO ARE WE.html"><p>من نحن ؟</p></a>
+        </div>
+        <div class="copy" dir="ltr">
+            © جميع الحقوق الفكريه و التطبيقيه محفوظه بأسم ثانوية ابن حزم التعليمية
+        </div>
+        <div class="copy" dir="ltr">
+            2024 - 2023
+        </div>
+    </footer>
+
+    <script>
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        document.addEventListener('keydown', function(event) {
+            // تعطيل F12
+            if (event.key === 'F12') {
+                event.preventDefault();
+                return false;
+            }
+        })
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+        console.log = function() {};
+        console.warn = function() {};
+        console.error = function() {};
+        console.info = function() {};
+        console.debug = function() {};
+    </script>
 </body>
 </html>
