@@ -1,119 +1,199 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ثانوية ابن حزم</title>
-    <link rel="icon" href="https://i.imghippo.com/files/iJhm9520ofU.png">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: white;
-            font-family: Arial, sans-serif;
-            overflow-y: scroll;
-            scrollbar-width: none;
-            overflow-x: hidden;
-        }
-        body::-webkit-scrollbar { display: none; }
-        .top-image { position: relative; margin-top: 0; }
-        .top { width: 100%; }
-        .logo-left { position: absolute; top: 20px; left: 20px; width: 10%; }
-        .logo-right { position: absolute; top: 20px; right: 20px; width: 10%; }
-        .buttons { display: flex; margin-top: 0px; justify-content: center; align-items: center; }
-        .buttons button { background-color: #00a0b0; border: none; padding: 30px; margin: 0 10px; cursor: pointer; transition: background-color 0.3s; border-radius: 10px; border: #007a8c 3px solid; }
-        .buttons button:hover { background-color: #007a8c; }
-        .buttons img { width: 150px; height: 150px; }
-        .account-message { text-align: center; margin: 20px; font-size: 18px; }
-        .account-message button { background-color: #484646; color: white; border: none; padding: 10px 25px; font-size: 1.2rem; cursor: pointer; transition: background-color 0.3s; border-radius: 10px; }
-        .account-message button:hover { background-color: #2b2929; }
-        footer { background-color: #484646; color: white; padding: 20px; text-align: right; width: auto; position: relative; }
-        footer .solid-section { margin-bottom: 10px; }
-        footer .p1 { font-weight: bold; }
-        footer .copy { text-align: center; margin-top: 10px; }
-        footer a { color: white; text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-        @media (max-width: 1200px) {.buttons img { width: 120px; height: 120px; }}
-        @media (max-width: 1024px) {.buttons img { width: 100px; height: 100px;} footer { font-size: 0.9rem; }}
-        @media (max-width: 768px) {.buttons img { width: 80px; height: 80px; }}
-        @media (max-width: 576px) {.buttons img { width: 80px; height: 80px; }}
-        @media (max-width: 360px) {.buttons img { width: 80px; height: 80px; }}
-        @media screen and (max-width: 425px) {.buttons { flex-direction: column; align-items: center;} .buttons button { width: 100%; margin-bottom: 10px; }}
-        ::-webkit-scrollbar { width: 12px; }
-        ::-webkit-scrollbar-track { background: #cccccc; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background-color: #009db2; border-radius: 10px; border: 3px solid #f4f4f4; }
-        ::-webkit-scrollbar-thumb:hover { background-color: #007b8e; }
-        .scrollbar { scrollbar-color: #009db2 #cccccc; scrollbar-width: thin; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ثانوية ابن حزم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --main-color: #005d7e;
+      --accent-color: #f6b100;
+      --bg-color: #f0f4f8;
+      --font-color: #222;
+      --button-dark: #484646;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Changa', sans-serif;
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--font-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--main-color), #003b52);
+      color: white;
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      position: relative;
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .logos {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .logos img {
+      width: 120px;
+      filter: brightness(0) invert(1);
+      
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1000px;
+      margin-bottom: 2rem;
+    }
+
+    .tile {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .tile:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .tile img {
+      width: 160px;
+      height: 160px;
+      margin-bottom: 1rem;
+    }
+
+    .tile p {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .account-message {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .account-message button {
+      background: var(--button-dark);
+      border: none;
+      padding: 0.7rem 2rem;
+      font-size: 1rem;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .account-message button:hover {
+      background: #2e2e2e;
+    }
+
+    footer {
+      background: var(--main-color);
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 500px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      .tile img {
+        width: 80px;
+        height: 80px;
+      }
+      .logos img {
+        width: 70px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="top-image">
-        <img id="airplane-image" src="https://i.postimg.cc/NjWLFvty/image3.png" alt="صورة أعلى الصفحة" class="top">
-        <img src="https://i.imghippo.com/files/xMj9m1725975409.png" alt="شعار وزارة التعليم" class="logo-left">
-        <img src="https://i.postimg.cc/nrQwRjHx/logo.png" alt="شعار ثانوية ابن حزم" class="logo-right">
+  <header>
+    <div class="logos">
+      <img src="https://i.postimg.cc/3Nqhzsjx/2-removebg-preview.png
+      " alt="شعار الوزارة">
+      <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="شعار المدرسة">
     </div>
+    <h1>ثانوية ابن حزم</h1>
+  </header>
 
-    <!-- السهم الذي يشير إلى أسفل -->
-    <div class="scroll-down" id="scroll-down" onclick="scrollToBottom()">↓</div>
-
-    <div class="buttons">
-        <a href="student_login.html"><button><img src="https://i.imghippo.com/files/s6NDu1725975542.png" alt="الطالب"></button></a>
-        <a href="qyas_login.html"><button><img src="https://i.imghippo.com/files/nLE3752Y.png" alt="من نحن"></button></a>
-        <a href="tech_login.html"><button><img src="https://i.imghippo.com/files/HfMVr1725975578.png" alt="التقنية"></button></a>
+  <main>
+    <div class="grid">
+      <a href="student_login.html" class="tile">
+        <img src="https://i.postimg.cc/wTNYqZ0m/removebg-preview.png" alt="الطالب">
+        <p></p>
+      </a>
+      <a href="qyas_login.html" class="tile">
+        <img src="https://i.postimg.cc/4xb6g4cF/12-removebg-preview.png" alt="قياس">
+        <p></p>
+      </a>
+      <a href="tech_login.html" class="tile">
+        <img src="https://i.postimg.cc/T1zwybzq/1-removebg-preview.png" alt="الدعم التقني">
+        <p></p>
+      </a>
     </div>
-
-    <br><br><br>
 
     <div class="account-message">
-        <p>لا تملك حساب؟</p>
-        <a href="new_acc.html"><button>إنشاء حساب جديد</button></a>
+      <p>لا تملك حساب؟</p>
+      <a href="new_acc.html"><button>إنشاء حساب جديد</button></a>
     </div>
+  </main>
 
-    <br><br><br><br><br><br>
-
-    <footer>
-        <div class="solid-section">
-            <p class="p1">: معلومات الاتصال</p>
-            <p dir="ltr">+966 536382599</p>
-            <p>abn7zm@gmail.com</p>
-            <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
-            <br>
-            <p class="p1">: المساعده</p>
-            <a href="support.html"><p>الدعم الفني</p></a>
-            <a href="WHO ARE WE.html"><p>من نحن ؟</p></a>
-        </div>
-        <div class="copy" dir="ltr">
-            © جميع الحقوق الفكريه و التطبيقيه محفوظه بأسم ثانوية ابن حزم التعليمية
-        </div>
-        <div class="copy" dir="ltr">
-            2024 - 2023
-        </div>
-    </footer>
-
-    <script>
-        // الحصول على السهم وصورة الطائرة
-        const scrollDownButton = document.getElementById('scroll-down');
-        const airplaneImage = document.getElementById('airplane-image');
-
-        // الدالة الخاصة بالتمرير إلى أسفل الصفحة
-        function scrollToBottom() {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }
-
-        // تتبع التمرير باستخدام حدث window.scroll
-        window.addEventListener('scroll', () => {
-            const airplaneBottom = airplaneImage.getBoundingClientRect().bottom; // المسافة من أسفل الشاشة حتى نهاية الصورة
-            const scrollPosition = window.scrollY + window.innerHeight; // الموقع الحالي للتمرير
-
-            // عندما يصل السهم إلى نهاية صورة الطائرة، يتم إيقافه عن الحركة
-            if (scrollPosition >= airplaneBottom) {
-                scrollDownButton.style.position = 'absolute';
-                scrollDownButton.style.bottom = airplaneImage.offsetHeight + 'px'; // تحديد المسافة أسفل الصورة
-            } else {
-                scrollDownButton.style.position = 'fixed';
-                scrollDownButton.style.bottom = '20px'; // إبقاء السهم في أسفل الصفحة
-            }
-        });
-    </script>
+  <footer>
+    <p><strong>معلومات الاتصال:</strong></p>
+    <p dir="ltr">+966 536382599</p>
+    <p>abn7zm@gmail.com</p>
+    <p>مجمع ثانوية ابن حزم، تبوك</p>
+    <br>
+    <p><strong>روابط:</strong></p>
+    <p><a href="support.html">الدعم الفني</a> | <a href="WHO ARE WE.html">من نحن؟</a></p>
+    <br>
+    <p>© جميع الحقوق محفوظة - ثانوية ابن حزم 2023 - 2025</p>
+  </footer>
 </body>
 </html>
