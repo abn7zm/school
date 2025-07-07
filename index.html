@@ -44,44 +44,6 @@
         ::-webkit-scrollbar-thumb { background-color: #009db2; border-radius: 10px; border: 3px solid #f4f4f4; }
         ::-webkit-scrollbar-thumb:hover { background-color: #007b8e; }
         .scrollbar { scrollbar-color: #009db2 #cccccc; scrollbar-width: thin; }
-
-        /* تخصيص السهم */
-        .scroll-down {
-            position: fixed; /* تأكيد أنه ثابت */
-            bottom: 20px; /* يضع السهم في أسفل الصفحة */
-            left: 50%; /* تمركز السهم أفقيًا */
-            transform: translateX(-50%); /* محاذاة السهم في المنتصف تمامًا */
-            font-size: 40px; /* حجم السهم */
-            color: #00a0b0;
-            cursor: pointer;
-            animation: bounce 1.5s infinite; /* تأثير الاهتزاز */
-        }
-
-        /* تأثير الأنيميشن للسهم */
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(10px); }
-            100% { transform: translateY(0); }
-        }
-
-        /* تأثير الانتقال إلى أسفل */
-        html, body {
-            scroll-behavior: smooth;
-        }
-
-        /* إخفاء السهم على الشاشات التي عرضها 1024 بكسل أو أقل */
-        @media (max-width: 1024px) {
-            .scroll-down {
-                display: none;
-            }
-        }
-
-        /* إخفاء السهم على الشاشات التي عرضها 768 بكسل أو أقل */
-        @media (max-width: 768px) {
-            .scroll-down {
-                display: none;
-            }
-        }
     </style>
 </head>
 <body>
