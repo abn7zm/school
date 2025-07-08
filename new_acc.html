@@ -2,10 +2,14 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إنشاء حساب جديد ثانوية ابن حزم</title>
-  <link rel="icon" href="https://i.imghippo.com/files/iJhm9520ofU.png">
+  <title>إنشاء حساب جديد</title>
   <style>
+    body { font-family: Arial; direction: rtl; background: #eee; padding: 30px; }
+    .form-container { max-width: 400px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #aaa; }
+    input, button { width: 100%; margin: 10px 0; padding: 10px; font-size: 16px; }
+    .error-message { color: red; display: none; }
+    .success-message { color: green; display: none; }
+
         body, html {
     height: 100%;
     margin: 0;
@@ -228,244 +232,113 @@ body::-webkit-scrollbar {
   </style>
 </head>
 <body>
-
-  <header class="header">
-    <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="شعار" class="logo">
-  </header>
-
-  <div class="background"></div>
-
   <div class="form-container">
-    <h2 class="new">إنشاء حساب جديد</h2>
-
+    <h2>إنشاء حساب جديد</h2>
     <form id="createAccountForm">
-      <input type="text" id="fullName" name="name" placeholder="اسم صاحب الهوية الثلاثي" pattern="[أ-ي ]+" title="يرجى إدخال الحروف العربية فقط" required>
+      <input type="text" id="fullName" placeholder="الاسم الثلاثي" required>
       <div class="error-message" id="fullNameError">يرجى كتابة الاسم الثلاثي بشكل صحيح</div>
 
-      <input type="text" id="idNumber" name="id" placeholder="رقم الهوية" maxlength="15" required>
-      <div class="error-message" id="idError">يتكون رقم الهوية من 10 أرقام فقط</div>
+      <input type="text" id="idNumber" placeholder="رقم الهوية" required>
+      <div class="error-message" id="idError">رقم الهوية غير موجود</div>
 
-      <div class="password-container">
-        <input type="password" id="password" name="pass" placeholder="كلمة المرور" required>
-        <button type="button" id="togglePasswordButton">
-          <img src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png" alt="إظهار" id="showIcon" class="toggle-icon">
-          <img src="https://cdn4.iconfinder.com/data/icons/liny/24/eye-off-line-512.png" alt="إخفاء" id="hideIcon" class="toggle-icon" style="display: none;">
-        </button>
-      </div>
-      <div class="error-message" id="passwordError">يجب كتابة كلمة مرور</div>
-
+      <input type="password" id="password" placeholder="كلمة المرور" required>
       <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور" required>
-      <div class="error-message" id="confirmPasswordError">كلمتا المرور غير متطابقتين</div>
+      <div class="error-message" id="passwordError">كلمات المرور غير متطابقة</div>
 
-      <div class="checkbox-container">
-        <input type="checkbox" id="privacyPolicy" required>
-        <label for="privacyPolicy">
-          <a href="PRIVACY POLICY.HTML" target="_blank" class="privacy-policy-link">الموافقة على سياسة الخصوصيه</a>
-        </label>
-      </div>
-      <div class="error-message" id="policyError">يجب الموافقه على سياسة الخصوصيه</div>
+      <input type="checkbox" id="privacyPolicy"> أوافق على سياسة الخصوصية
+      <div class="error-message" id="policyError">يجب الموافقة على سياسة الخصوصية</div>
 
-      <button type="submit" id="createAccountButton" disabled>إنشاء حساب</button>
+      <button type="submit" id="createAccountButton" disabled>إنشاء الحساب</button>
     </form>
 
-    <div class="success-message" id="successMessage">تم انشاء حسابك بنجاح</div>
-    <div class="error-message" id="idCheckMessage">أنت لست مسجلاً في النظام الرجاء مراجعة إدارة المدرسة</div>
+    <div class="error-message" id="idCheckMessage">أنت لست مسجلاً في النظام</div>
+    <div class="success-message" id="successMessage">تم إنشاء الحساب بنجاح</div>
   </div>
 
-  <a href="index.html" class="return-home-button">العودة
-    <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Arrow" class="button-icon">
-  </a>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const idInput = document.getElementById("idNumber");
+  const idError = document.getElementById("idError");
+  const idCheckMessage = document.getElementById("idCheckMessage");
+  const createButton = document.getElementById("createAccountButton");
+  const successMessage = document.getElementById("successMessage");
 
-  <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const idNumber = document.getElementById('idNumber');
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
-    const privacyPolicy = document.getElementById('privacyPolicy');
-    const createAccountButton = document.getElementById('createAccountButton');
-    const successMessage = document.getElementById('successMessage');
-    const togglePasswordButton = document.getElementById('togglePasswordButton');
-    const showIcon = document.getElementById('showIcon');
-    const hideIcon = document.getElementById('hideIcon');
-    const fullName = document.getElementById('fullName');
-    const idCheckMessage = document.getElementById('idCheckMessage');
+  const password = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirmPassword");
+  const passwordError = document.getElementById("passwordError");
 
-    let idIsValid = false; // للتحقق من وجود الرقم
+  const fullName = document.getElementById("fullName");
+  const fullNameError = document.getElementById("fullNameError");
 
-    function validateIDNumber(showError = true) {
-      const idError = document.getElementById('idError');
-      const idValue = idNumber.value.trim();
-      if (idValue === '') {
-        if (showError) {
-          idError.style.display = 'block';
-          idError.textContent = 'يجب كتابة رقم الهوية';
+  const policy = document.getElementById("privacyPolicy");
+  const policyError = document.getElementById("policyError");
+
+  let idIsValid = false;
+
+  function checkIDNumberInSystem() {
+    const idValue = idInput.value.trim();
+    if (idValue === "") {
+      idIsValid = false;
+      idCheckMessage.style.display = "none";
+      createButton.disabled = true;
+      return;
+    }
+
+    fetch("https://script.google.com/macros/s/PASTE_YOUR_SCRIPT_URL_HERE/exec?id=" + idValue)
+      .then(res => res.json())
+      .then(data => {
+        if (data.exists) {
+          idIsValid = true;
+          idCheckMessage.style.display = "none";
+        } else {
+          idIsValid = false;
+          idCheckMessage.style.display = "block";
         }
-        return false;
-      }
-      if (idValue.length < 2 || idValue.length > 15) {
-        if (showError) {
-          idError.style.display = 'block';
-          idError.textContent = 'يجب أن يكون الإدخال بين 2 و 15 رقمًا';
-        }
-        return false;
-      } else {
-        idError.style.display = 'none';
-        return true;
-      }
+        validateForm();
+      });
+  }
+
+  function validateForm() {
+    const nameValid = fullName.value.trim().split(" ").length === 3;
+    const passValid = password.value === confirmPassword.value && password.value !== "";
+    const policyChecked = policy.checked;
+
+    fullNameError.style.display = nameValid ? "none" : "block";
+    passwordError.style.display = passValid ? "none" : "block";
+    policyError.style.display = policyChecked ? "none" : "block";
+
+    const formValid = nameValid && passValid && policyChecked && idIsValid;
+    createButton.disabled = !formValid;
+  }
+
+  idInput.addEventListener("input", checkIDNumberInSystem);
+  fullName.addEventListener("input", validateForm);
+  password.addEventListener("input", validateForm);
+  confirmPassword.addEventListener("input", validateForm);
+  policy.addEventListener("change", validateForm);
+
+  document.getElementById("createAccountForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (!idIsValid) {
+      idCheckMessage.style.display = "block";
+      return;
     }
 
-    function checkIDNumberInSystem() {
-      const idNumberValue = idNumber.value.trim();
-      if (idNumberValue === '') {
-        idCheckMessage.style.display = 'none';
-        createAccountButton.disabled = true;
-        idIsValid = false;
-        return;
-      }
-
-      fetch('https://script.google.com/macros/s/AKfycbxe6UPZ_6tslTVVfS_3WvEFjtw0QaDdr_hJNBJaCH8b1_t4xErlEZZWMxX4Zx8RtCCE1w/exec?id=' + idNumberValue)
-        .then(response => response.json())
-        .then(data => {
-          if (!data.exists) {
-            idCheckMessage.style.display = 'block';
-            createAccountButton.disabled = true;
-            idIsValid = false;
-          } else {
-            idCheckMessage.style.display = 'none';
-            idIsValid = true;
-            validateForm();
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    }
-
-    function validatePassword() {
-      const passwordError = document.getElementById('passwordError');
-      if (password.value.trim() === '') {
-        passwordError.style.display = 'block';
-        passwordError.textContent = 'يجب كتابة كلمة مرور';
-        return false;
-      }
-      passwordError.style.display = 'none';
-      return true;
-    }
-
-    function validateConfirmPassword() {
-      const confirmPasswordError = document.getElementById('confirmPasswordError');
-      if (confirmPassword.value.trim() === '') {
-        confirmPasswordError.style.display = 'block';
-        confirmPasswordError.textContent = 'يجب تأكيد كلمة المرور';
-        return false;
-      }
-      if (password.value !== confirmPassword.value) {
-        confirmPasswordError.style.display = 'block';
-        confirmPasswordError.textContent = 'كلمتا المرور غير متطابقتين';
-        return false;
-      }
-      confirmPasswordError.style.display = 'none';
-      return true;
-    }
-
-    function validatePrivacyPolicy() {
-      const policyError = document.getElementById('policyError');
-      if (!privacyPolicy.checked) {
-        policyError.style.display = 'block';
-        policyError.textContent = 'يجب الموافقة على سياسة الخصوصية';
-        return false;
-      }
-      policyError.style.display = 'none';
-      return true;
-    }
-
-    function validateFullName() {
-      const fullNameError = document.getElementById('fullNameError');
-      const nameParts = fullName.value.trim().split(/\s+/);
-      if (nameParts.length !== 3 || !/^[أ-ي\s]+$/.test(fullName.value)) {
-        fullNameError.style.display = 'block';
-        fullNameError.textContent = 'يرجى كتابة الاسم الثلاثي بشكل صحيح';
-        return false;
-      }
-      fullNameError.style.display = 'none';
-      return true;
-    }
-
-    function validateForm() {
-      const idValid = validateIDNumber(false);
-      const passwordValid = validatePassword(false);
-      const confirmPasswordValid = validateConfirmPassword(false);
-      const privacyPolicyValid = validatePrivacyPolicy(false);
-      const fullNameValid = validateFullName(false);
-
-      const isValid = idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid && idIsValid;
-      createAccountButton.disabled = !isValid;
-    }
-
-    function handleInput() {
-      validateIDNumber(false);
-      checkIDNumberInSystem();
-      validatePassword();
-      validateConfirmPassword();
-      validateFullName();
-      validatePrivacyPolicy();
-      validateForm();
-    }
-
-    idNumber.addEventListener('input', handleInput);
-    password.addEventListener('input', handleInput);
-    confirmPassword.addEventListener('input', handleInput);
-    fullName.addEventListener('input', handleInput);
-    privacyPolicy.addEventListener('change', handleInput);
-
-    togglePasswordButton.addEventListener('click', function () {
-      const show = password.type === 'password';
-      password.type = confirmPassword.type = show ? 'text' : 'password';
-      showIcon.style.display = show ? 'none' : 'inline';
-      hideIcon.style.display = show ? 'inline' : 'none';
-    });
-
-    createAccountButton.addEventListener('click', function (event) {
-      event.preventDefault();
-
-      if (!idIsValid) {
-        idCheckMessage.style.display = 'block';
-        return;
-      }
-
-      if (
-        validateIDNumber(true) &&
-        validatePassword(true) &&
-        validateConfirmPassword(true) &&
-        validatePrivacyPolicy(true) &&
-        validateFullName(true)
-      ) {
-        fetch('https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec', {
-          method: 'POST',
-          body: new URLSearchParams({
-            'name': fullName.value,
-            'id': idNumber.value,
-            'pass': password.value
-          })
-        })
-          .then(response => {
-            if (response.ok) {
-              successMessage.style.display = 'block';
-              setTimeout(() => {
-                window.location.href = 'index.html';
-              }, 500);
-            } else {
-              throw new Error('Network response was not ok.');
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            successMessage.style.display = 'none';
-          });
+    fetch("https://script.google.com/macros/s/PASTE_YOUR_FORM_SUBMIT_URL_HERE/exec", {
+      method: "POST",
+      body: new URLSearchParams({
+        name: fullName.value,
+        id: idInput.value,
+        pass: password.value
+      })
+    }).then(res => {
+      if (res.ok) {
+        successMessage.style.display = "block";
       }
     });
   });
-  </script>
-
+});
+</script>
 </body>
 </html>
