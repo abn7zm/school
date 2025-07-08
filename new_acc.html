@@ -284,7 +284,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    fetch("https://script.google.com/macros/s/PASTE_YOUR_SCRIPT_URL_HERE/exec?id=" + idValue)
+    fetch("https://script.google.com/macros/s/AKfycbyWqgi_izcOOpiFCtv1qYX91dSkae3cZ4GRD7HbFhO2cvd5a6viL5TT1PzgHMlqMkNPaA/exec" + idValue)
       .then(res => res.json())
       .then(data => {
         if (data.exists) {
@@ -325,7 +325,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    fetch("https://script.google.com/macros/s/PASTE_YOUR_FORM_SUBMIT_URL_HERE/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec", {
       method: "POST",
       body: new URLSearchParams({
         name: fullName.value,
