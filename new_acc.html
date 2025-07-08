@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    fetch('https://script.google.com/macros/s/AKfycbxe6UPZ_6tslTVVfS_3WvEFjtw0QaDdr_hJNBJaCH8b1_t4xErlEZZWMxX4Zx8RtCCE1w/exec?id=' + idNumberValue)
+    fetch('https://script.google.com/macros/s/AKfycbzd2sBEMW9bSFUBQ-mu4aHY88BrOvi26pXJA7zFHYBrn-1SpTMQXNvWMIbPItysSrteyQ/exec' + idNumberValue)
       .then(response => response.json())
       .then(data => {
         if (!data.exists) {
