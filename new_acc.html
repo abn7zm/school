@@ -335,7 +335,7 @@ console.info = function() {};
 console.debug = function() {};
 
 
-  function checkIDNumberInSystem() {
+ function checkIDNumberInSystem() {
     const idNumberValue = idNumber.value.trim();
 
     if (idNumberValue === '') {
@@ -344,25 +344,33 @@ console.debug = function() {};
         return;
     }
 
-    fetch('encrypted_ids.txt') // تأكد أن اسم الملف مطابق
+    const encryptedFilePromise = fetch('encrypted_ids.txt')
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('file error');
             return response.text();
         })
         .then(data => {
-            const ids = data.split('\n').map(line => line.trim()).filter(line => line !== '');
-            let matchFound = false;
-            for (const encrypted of ids) {
-                const decrypted = customDecrypt(encrypted);
-                if (decrypted === idNumberValue) {
-                    matchFound = true;
-                    break;
-                }
-            }
+            const lines = data.split('\n').map(e => e.trim()).filter(Boolean);
+            return lines.some(encrypted => customDecrypt(encrypted) === idNumberValue);
+        });
 
-            if (matchFound) {
+    const googleSheetPromise = fetch('https://docs.google.com/spreadsheets/d/1LbrF5BwPtA0m4VhrpKF5FvuVJxv_oThftmyEV4eBGtE/export?format=csv')
+        .then(response => {
+            if (!response.ok) throw new Error('sheet error');
+            return response.text();
+        })
+        .then(csv => {
+            const lines = csv.split('\n').map(line => line.trim());
+            return lines.some(line => {
+                const cols = line.split(',');
+                return cols[1] && cols[1].trim() === idNumberValue;
+            });
+        });
+
+    Promise.all([encryptedFilePromise, googleSheetPromise])
+        .then(results => {
+            const [foundInFile, foundInSheet] = results;
+            if (foundInFile || foundInSheet) {
                 idCheckMessage.style.display = 'none';
                 validateForm();
             } else {
@@ -370,10 +378,12 @@ console.debug = function() {};
                 createAccountButton.disabled = true;
             }
         })
-        .catch(error => {
-            console.error('Error:', error);
+        .catch(err => {
+            console.error('خطأ في التحقق من الهوية:', err);
         });
 }
+
+
 
 
     function validatePassword(showError = true) {
