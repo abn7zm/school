@@ -45,27 +45,30 @@
       padding: 0;
       background: white;
       color: #000;
-      min-height: 100vh;
+      text-align: center;
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .top-bar {
       background-color: #005d7e;
       display: flex;
-      justify-content: space-between;
       align-items: center;
       padding: 10px 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       color: #fff;
+      justify-content: space-between;
+      position: relative;
       flex-wrap: nowrap;
     }
 
+    /* الشعار وزر تسجيل الخروج على اليسار */
     .left-section {
       display: flex;
       align-items: center;
       gap: 15px;
-      flex-shrink: 0;
     }
 
     .logo img {
@@ -86,28 +89,40 @@
       gap: 5px;
       transition: background-color 0.3s;
     }
-
     .logout-button:hover {
       background-color: #c58d00;
     }
-
     .logout-button img {
       height: 20px;
     }
 
+    /* العنوان في الوسط */
     .page-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 36px;
       font-weight: bold;
+      color: #ffffff;
       user-select: none;
       white-space: nowrap;
-      flex-grow: 1;
-      text-align: center;
     }
 
+    /* حاوية المستخدم: صورة + اسم + أزرار */
     .right-section {
       display: flex;
       align-items: center;
       gap: 15px;
+      direction: rtl; /* عشان ترتيب عربي: الصورة يمين */
+      flex-wrap: nowrap;
+      min-width: 0;
+    }
+
+    .profile-img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      object-fit: cover;
       flex-shrink: 0;
     }
 
@@ -117,18 +132,16 @@
       color: #fff;
       margin: 0;
       white-space: nowrap;
-    }
-
-    .profile-img {
-      height: 60px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
+      flex-shrink: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
     }
 
     .right-buttons {
       display: flex;
       gap: 10px;
+      flex-shrink: 0;
     }
 
     .right-buttons a > button {
@@ -141,12 +154,14 @@
       border-radius: 5px;
       transition: background-color 0.3s;
       white-space: nowrap;
+    
     }
 
     .right-buttons a > button:hover {
       background-color: #c58d00;
     }
 
+    /* أزرار رئيسية */
     .main-buttons {
       display: flex;
       justify-content: center;
@@ -158,8 +173,8 @@
     .main-buttons button {
       background-color: #ffffff;
       color: #000;
-      width: 400px;
-      height: 400px;
+      width: 300px;
+      height: 300px;
       border: none;
       border-radius: 12px;
       display: flex;
@@ -176,13 +191,14 @@
     }
 
     .main-buttons button img {
-      height: 250px;
+      height: 200px;
+      max-width: 90%;
+      object-fit: contain;
     }
 
     .quran {
       height: 80px;
       color: #000;
-      text-align: center;
     }
 
     .footer {
@@ -236,6 +252,68 @@
     a {
       text-decoration: none;
     }
+
+    /* استايلات الجوال */
+    @media (max-width: 768px) {
+      .top-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+        position: relative;
+      }
+
+      .left-section, .right-section {
+        flex: 1 1 100%;
+        justify-content: center;
+        margin: 5px 0;
+      }
+
+      .page-title {
+        position: static;
+        transform: none;
+        font-size: 28px;
+        margin: 5px 0;
+        width: 100%;
+        text-align: center;
+        order: 1;
+      }
+
+      .right-section {
+        order: 3;
+        flex-wrap: nowrap;
+        justify-content: center;
+        direction: rtl;
+      }
+
+      .profile-img {
+        height: 50px;
+        width: 50px;
+      }
+
+      .user-name {
+        font-size: 16px;
+        max-width: 80px;
+      }
+
+      .right-buttons a > button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      .logout-button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      .main-buttons button {
+        width: 150px;
+        height: 150px;
+      }
+
+      .main-buttons button img {
+        height: 100px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -255,8 +333,8 @@
     <h1 class="page-title">بوابة الطالب</h1>
 
     <div class="right-section">
-      <h2 class="user-name"><span id="userName"></span></h2>
       <img class="profile-img" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image" />
+      <h2 class="user-name"><span id="userName"></span></h2>
       <div class="right-buttons">
         <a href="support2.html"><button>الدعم الفني</button></a>
         <a href="vis_student.html"><button>التحديثات</button></a>
