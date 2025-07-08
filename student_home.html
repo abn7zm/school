@@ -1,413 +1,369 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الرئيسيه طالب</title>
-    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var userName = localStorage.getItem('userName');
-            if (userName) {
-                document.getElementById('userName').textContent = userName;
-            } else {
-                alert('لم يتم العثور على اسم المستخدم.');
-                window.location.href = 'student_login.html'; 
-            }
-        });
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الرئيسيه طالب</title>
+  <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var userName = localStorage.getItem('userName');
+      if (userName) {
+        document.getElementById('userName').textContent = userName;
+      } else {
+        alert('لم يتم العثور على اسم المستخدم.');
+        window.location.href = 'student_login.html';
+      }
 
-        function stopBack() {
-            window.history.go(1);
-        }
+      fetch('quran.txt')
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.text();
+        })
+        .then(text => {
+          const lines = text.split('\n');
+          const randomLine = lines[Math.floor(Math.random() * lines.length)];
+          document.getElementById('random-line').textContent = randomLine;
+        })
+        .catch(error => console.error('Error loading file:', error));
+    });
 
-        fetch('quran.txt')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then(text => {
-                console.log(text);
-                const lines = text.split('\n');
-                const randomLine = lines[Math.floor(Math.random() * lines.length)];
-                document.getElementById('random-line').textContent = randomLine;
-            })
-            .catch(error => console.error('Error loading file:', error));
+    document.addEventListener('contextmenu', function (event) {
+      event.preventDefault();
+    });
 
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'F12') {
-                event.preventDefault();
-                return false;
-            }
-        });
-        document.addEventListener('contextmenu', function(event) {
-            event.preventDefault();
-        });
+    console.log = function () {};
+    console.warn = function () {};
+    console.error = function () {};
+    console.info = function () {};
+    console.debug = function () {};
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: white;
+      color: #000;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        console.log = function() {};
-        console.warn = function() {};
-        console.error = function() {};
-        console.info = function() {};
-        console.debug = function() {};
-    </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden; 
-        }
+    .top-bar {
+      background-color: #005d7e;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      color: #fff;
+      justify-content: space-between;
+      position: relative;
+      flex-wrap: nowrap;
+    }
 
-        .top-bar {
-            width: auto;
-            background-color: #14b9d0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            color: #ffffff; 
-            box-sizing: border-box; 
-        }
+    /* الشعار وزر تسجيل الخروج على اليسار */
+    .left-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-        .top-bar-content {
-            display: flex;
-            align-items: center;
-        }
+    .logo img {
+      height: 90px;
+      filter: drop-shadow(0 0 10px #00e6f6);
+    }
 
-        .logo img {
-            height: 60px; 
-            margin-right: 20px;
-        }
+    .logout-button {
+      background-color: #f6b100;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background-color 0.3s;
+    }
+    .logout-button:hover {
+      background-color: #c58d00;
+    }
+    .logout-button img {
+      height: 20px;
+    }
 
-        .buttons {
-            display: flex;
-            gap: 10px;
-        }
+    /* العنوان في الوسط */
+    .page-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      color: #ffffff;
+      user-select: none;
+      white-space: nowrap;
+    }
 
-        .buttons button {
-            background-color: #79D7E4;
-            border: none;
-            padding: 10px;
-            font-size: 16px;
-            color: #fff;
-            cursor: pointer;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+    /* حاوية المستخدم: صورة + اسم + أزرار */
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      direction: rtl; /* عشان ترتيب عربي: الصورة يمين */
+      flex-wrap: nowrap;
+      min-width: 0;
+    }
 
-        .buttons button img {
-            height: 20px;
-        }
+    .profile-img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
 
-        .top-bar img.profile {
-            height: 60px;
-            filter: none;
-            margin-left: 10px;
-        }
+    .user-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      margin: 0;
+      white-space: nowrap;
+      flex-shrink: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
+    }
 
-        .user-container {
-            display: flex;
-            align-items: center;
-        }
+    .right-buttons {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
 
-        .user-container h2 {
-            margin: 0;
-            color: #fff;
-            font-size: 18px;
-            margin-right: 10px;
-        }
+    .right-buttons a > button {
+      background-color: #f6b100;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      white-space: nowrap;
+    
+    }
 
-        .main-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 100px 0;
-            flex-wrap: wrap;
-        }
+    .right-buttons a > button:hover {
+      background-color: #c58d00;
+    }
 
-        .main-buttons a {
-            text-decoration: none;
-        }
+    /* أزرار رئيسية */
+    .main-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 100px 0;
+      flex-wrap: wrap;
+    }
 
-        .main-buttons button {
-            background-color: #484646;
-            color: #fff;
-            width: 250px;
-            height: 250px;
-            border: none;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
+    .main-buttons button {
+      background-color: #ffffff;
+      color: #000;
+      width: 300px;
+      height: 300px;
+      border: none;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 15px rgba(70, 70, 70, 0.3);
+    }
 
-        .main-buttons button img {
-            height: 150px;
-        }
+    .main-buttons button:hover {
+      background-color: #999999;
+      box-shadow: 0 0 25px rgba(41, 41, 41, 0.7);
+    }
 
-        .quran {
-            margin: 50px 0;
-        }
+    .main-buttons button img {
+      height: 200px;
+      max-width: 90%;
+      object-fit: contain;
+    }
 
-        .footer {
-            background-color: #484646;
-            color: #fff;
-            padding: 20px;
-            width: 100%;
-            text-align: right;
-            border-radius: 0px;
-            margin-top: auto;
-            box-sizing: border-box;
-            overflow-wrap: break-word;
-        }
+    .quran {
+      height: 80px;
+      color: #000;
+    }
 
-        .footer p {
-            margin: 10px 0;
-            line-height: 1.5;
-        }
-        .end {
-            text-align: center;
-        }
+    .footer {
+      background-color: #005d7e;
+      color: #ffffff;
+      padding: 25px 40px;
+      width: 100%;
+      text-align: right;
+      margin-top: auto;
+      box-sizing: border-box;
+    }
 
-        .b{
-            transition: ease 0.45s;
-        }
+    .footer h3 {
+      margin-bottom: 15px;
+      font-size: 22px;
+      color: #ffffff;
+      font-weight: bold;
+      border-bottom: 2px solid #f6b100;
+      padding-bottom: 5px;
+    }
 
-        .b:hover{
-            background-color: #6ec1cc;
-            transition: ease 0.45s;
-        }
-        .bu {
-            transition: ease 0.45s;
-        }
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      font-size: 18px;
+    }
 
-        .bu:hover {
-            background-color: #009db2 ;
-            transition: ease 0.45s;
-        }
-        a {
-            text-decoration: none;
-        }
-        @media (min-width: 1200px) {
-            .top-bar {
-                padding: 20px 40px;
-            }
+    .contact-list li {
+      margin-bottom: 10px;
+    }
 
-            .logo img {
-                height: 80px;
-            }
+    .contact-list li a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
 
-            .buttons button {
-                font-size: 18px;
-                padding: 15px;
-            }
+    .contact-list li a:hover {
+      color: #007a8c;
+      text-decoration: underline;
+    }
 
-            .main-buttons button {
-                width: 300px;
-                height: 300px;
-            }
+    .end {
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+      margin-top: 15px;
+    }
 
-            .main-buttons button img {
-                height: 180px;
-            }
-        }
+    a {
+      text-decoration: none;
+    }
 
-        @media (min-width: 992px) and (max-width: 1199px) {
-            .top-bar {
-                padding: 15px 30px;
-            }
+    /* استايلات الجوال */
+    @media (max-width: 768px) {
+      .top-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+        position: relative;
+      }
 
-            .logo img {
-                height: 70px;
-            }
+      .left-section, .right-section {
+        flex: 1 1 100%;
+        justify-content: center;
+        margin: 5px 0;
+      }
 
-            .buttons button {
-                font-size: 17px;
-                padding: 12px;
-            }
+      .page-title {
+        position: static;
+        transform: none;
+        font-size: 28px;
+        margin: 5px 0;
+        width: 100%;
+        text-align: center;
+        order: 1;
+      }
 
-            .main-buttons button {
-                width: 280px;
-                height: 280px;
-            }
+      .right-section {
+        order: 3;
+        flex-wrap: nowrap;
+        justify-content: center;
+        direction: rtl;
+      }
 
-            .main-buttons button img {
-                height: 170px;
-            }
-        }
+      .profile-img {
+        height: 50px;
+        width: 50px;
+      }
 
-        @media (min-width: 768px) and (max-width: 991px) {
-            .top-bar {
-                padding: 10px 20px;
-            }
+      .user-name {
+        font-size: 16px;
+        max-width: 80px;
+      }
 
-            .logo img {
-                height: 60px;
-            }
+      .right-buttons a > button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
 
-            .buttons button {
-                font-size: 16px;
-                padding: 10px;
-            }
+      .logout-button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
 
-            .main-buttons button {
-                width: 250px;
-                height: 250px;
-            }
+      .main-buttons button {
+        width: 150px;
+        height: 150px;
+      }
 
-            .main-buttons button img {
-                height: 150px;
-            }
-        }
-
-        @media (min-width: 576px) and (max-width: 767px) {
-            .top-bar {
-                padding: 10px 15px;
-            }
-
-            .logo img {
-                height: 50px;
-            }
-
-            .buttons button {
-                font-size: 15px;
-                padding: 8px;
-            }
-
-            .main-buttons button {
-                width: 220px;
-                height: 220px;
-            }
-
-            .main-buttons button img {
-                height: 130px;
-            }
-        }
-
-        @media (max-width: 575px) {
-            .top-bar {
-                padding: 10px 10px;
-            }
-
-            .logo img {
-                height: 40px;
-            }
-
-            .buttons button {
-                font-size: 14px;
-                padding: 6px;
-            }
-
-            .main-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .main-buttons button {
-                width: 200px;
-                height: 200px;
-            }
-
-            .main-buttons button img {
-                height: 120px;
-            }
-        }
-
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #cccccc;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: #009db2;
-            border-radius: 10px;
-            border: 3px solid #f4f4f4;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: #007b8e;
-        }
-
-        .scrollbar {
-            scrollbar-color: #009db2 #cccccc;
-            scrollbar-width: thin;
-        }
-    </style>
+      .main-buttons button img {
+        height: 100px;
+      }
+    }
+  </style>
 </head>
 <body>
-
-    <div class="top-bar">
-        <div class="top-bar-content">
-            <div class="logo">
-                <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo">
-            </div>
-
-            <div class="buttons">
-                <a href="index.html"><button class="b">
-                    <img src="https://i.postimg.cc/TY15M5LP/logout.png" alt="Logout">
-                    تسجيل الخروج
-                </button></a>
-
-                <a href="support2.html"><button class="b">الدعم الفني</button></a>
-                <a href="vis_student.html"><button class="b">التحديثات</button></a>
-            </div>
-        </div>
-
-        <div class="user-container">
-            <h2><span class="userName" id="userName"></span></h2>
-            <img class="profile" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image">
-        </div>
+  <div class="top-bar">
+    <div class="left-section">
+      <div class="logo">
+        <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" />
+      </div>
+      <a href="index.html">
+        <button class="logout-button">
+          <img src="https://i.postimg.cc/TY15M5LP/logout.png" alt="Logout" />
+          تسجيل الخروج
+        </button>
+      </a>
     </div>
 
-    <div class="main-buttons">
-        <a href="student_date.html"><button class="bu">
-            <img src="https://i.postimg.cc/MKsyHss0/detep.png" alt="Button 1">
-        </button></a>
-        <a href="student_ads.html"><button class="bu"> 
-            <img src="https://i.postimg.cc/zBZJjrfC/adsp.png" alt="Button 2">
-        </button></a>
-        <a href="before.html"><button class="bu">
-            <img src="https://i.postimg.cc/bJ73rm3N/cryp.png" alt="Button 3">
-        </button></a>
-    </div>
+    <h1 class="page-title">بوابة الطالب</h1>
 
-    <div id="random-line" class="quran"></div>
-
-    <div class="footer">
-        <p>معلومات الاتصال</p>
-        <p>+966 536382599</p>
-        <p>abn7zm@gmail.com</p>
-        <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
-        <p class="end">© جميع الحقوق الفكريه و التطبيقيه محفوظه بأسم ثانوية ابن حزم التعليمية</p>
+    <div class="right-section">
+      <img class="profile-img" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image" />
+      <h2 class="user-name"><span id="userName"></span></h2>
+      <div class="right-buttons">
+        <a href="support2.html"><button>الدعم الفني</button></a>
+        <a href="vis_student.html"><button>التحديثات</button></a>
+      </div>
     </div>
-<script>        document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }
-})
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};</script>
+  </div>
+
+  <div class="main-buttons">
+    <a href="student_date.html"><button class="bu">
+      <img src="https://i.postimg.cc/MKsyHss0/detep.png" alt="Button 1" />
+    </button></a>
+    <a href="student_ads.html"><button class="bu">
+      <img src="https://i.postimg.cc/zBZJjrfC/adsp.png" alt="Button 2" />
+    </button></a>
+    <a href="before.html"><button class="bu">
+      <img src="https://i.postimg.cc/bJ73rm3N/cryp.png" alt="Button 3" />
+    </button></a>
+  </div>
+
+  <div id="random-line" class="quran"></div>
+
+  <div class="footer">
+    <h3>معلومات الاتصال</h3>
+    <ul class="contact-list">
+      <li>📞 <a href="tel:+966539084645">+966 539084645</a></li>
+      <li>📧 <a href="mailto:rsanjalawi007@gmail.com">rsanjalawi007@gmail.com</a></li>
+      <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
+    </ul>
+    <p class="end">© جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
+  </div>
 </body>
 </html>
