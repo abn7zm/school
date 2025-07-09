@@ -303,7 +303,8 @@
         </button>
       </div>
       <button type="submit">تسجيل دخول</button>
-     
+      <p class="login">ليس لديك حساب؟</p>
+      <a href="new_acc.html" class="create-account-link">إنشاء حساب جديد</a>
     </form>
   </div>
   <a href="index.html" class="return-home-button" aria-label="العودة إلى الصفحة الرئيسية">
@@ -355,7 +356,7 @@
           .then((result) => {
             if (result !== 'incorrect_password' && result !== 'incorrect_id') {
               localStorage.setItem('userName', result);
-              window.location.href = 'student_home.html';
+              window.location.href = 'tech_home.html';
             } else {
               alert('يرجى التحقق من رقم الهوية/كلمة المرور');
             }
