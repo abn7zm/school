@@ -3,367 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الدعم الفني ثانوية ابن حزم</title>
+    <title>الدعم الفني - ثانوية ابن حزم</title>
     <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e3f2fd, #ffffff);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: #007a8c;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header img {
+            width: 120px;
+            filter: drop-shadow(0 0 5px #fff);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 48px;
+            color: #007a8c;
+            margin: 40px 0 20px;
+        }
+
+        details {
+            background-color: #f0f0f0;
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #009db2;
+            transition: 0.3s;
+        }
+
+        summary {
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        details[open] {
+            background-color: #e0f7fa;
+        }
+
+        .form-container {
+            background-color: #f9f9f9;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            color: #007a8c;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container input,
+        .form-container textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-container button {
+            background-color: #007a8c;
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            display: block;
+            margin: auto;
+            transition: background-color 0.3s;
+        }
+
+        .form-container button:hover {
+            background-color: #005f6b;
+        }
+
+        .note {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .footer {
+      background-color: #005d7e;
+      color: #ffffff;
+      padding: 25px 40px;
+      width: 100%;
+      text-align: right;
+      margin-top: auto;
+      box-sizing: border-box;
+    }
+
+    .footer h3 {
+      margin-bottom: 15px;
+      font-size: 22px;
+      color: #ffffff;
+      font-weight: bold;
+      border-bottom: 2px solid #f6b100;
+      padding-bottom: 5px;
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      font-size: 18px;
+    }
+
+    .contact-list li {
+      margin-bottom: 10px;
+    }
+
+    .contact-list li a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-list li a:hover {
+      color: #007a8c;
+      text-decoration: underline;
+    }
+
+    .end {
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+
+        .return-home-button {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background-color: #ffffff;
+            color: #007a8c;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .return-home-button:hover {
+            background-color: #e0f7fa;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+
+            .return-home-button {
+                top: 10px;
+                right: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
-
-<header>
-    <img class="img" src="https://i.postimg.cc/nrQwRjHx/logo.png" dir="ltr">
-</header>
-
 <body>
-    
-    
+    <header>
+        <a href="index.html" class="return-home-button">العودة</a>
+        <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo">
+    </header>
+
     <h1>الدعم الفني</h1>
-    
-    
 
+    <details>
+        <summary>هل تواجه مشكله في انشاء حساب؟</summary>
+        يرجى التحقق من إدخال رقم الهوية والاسم الثلاثي بالشكل الصحيح، مثلاً: (عبدالرحمن بدون مسافات)، والتأكد من كلمة المرور والموافقة على الشروط.
+    </details>
 
-    <a href="tech_home.html" class="return-home-button" dir="ltr">العودة
-        <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Arrow" class="button-icon">
-    </a>
+    <details>
+        <summary>هل تواجه مشكله في تسجيل الدخول؟</summary>
+        تأكد من أن رقم الهوية وكلمة المرور صحيحة، في حال النسيان يرجى تعبئة النموذج بالأسفل.
+    </details>
 
-    <div dir="rtl">
-        <details>
-            <summary>هل تواجه مشكله في انشاء حساب ؟</summary>
-            يرجى التحقق من ادخال رقم الهويه بشكل صحيح  يرجى التأكد من كتابة الاسم الثلاثي بشكل صحيح وتكون كتابة اي اسم يبدا بـ عبد بهذا الشكل (عبدالرحيم) دون مسافات ويرجى كتابة كلمة المرور مرتين بشكل صحيح والموافقه على سياسة الخصوصيه , لم تحل المشكله ؟ انزل لآخر الصفحه
-        </details>
+    <details>
+        <summary>هل انت إداري ولا تستطيع تسجيل الدخول؟</summary>
+        الرجاء مراسلة رقم الدعم الفني على واتساب: +966536382599.
+    </details>
 
-        <details>
-            <summary>هل تواجه مشكله في تسجيل الدخول ؟</summary>
-            الرجاء التحقق ما ان كان رقم الهويه صحيح و  والرجاء التحقق من كلمة المرور , اذا نسيت كلمت المرور رجاءً املأ النموذج الذي في اسفل الصفحه
-        </details>
+    <details>
+        <summary>هل تواجه مشكله في الموقع الالكتروني؟</summary>
+        تأكد من اتصال الإنترنت، وإذا استمرت المشكلة، أبلغ عنها عبر النموذج أدناه.
+    </details>
 
-        <details>
-            <summary>هل انت إداري و لا تستطيع تسجيل الدخول ؟</summary>
-            الرجاء مراسلة هذا الرقم في تطبيق واتساب , 966536382599+ او مقابلة الطالب ريان شادي
-        </details>
-
-        <details>
-            <summary>هل تواجه مشكله في الموقع الالكتروني ؟</summary>
-            تحقق من اتصالك بالانرنت واذا واجهت مشاكل اخرى الرجاء تسجيلها في "لم تجد مشكلتك ؟"
-        </details>
-
-        <!-- المزيد من التفاصيل إذا لزم الأمر -->
-    </div>
-
-    <div class="form-container" dir="rtl">
-        <form id="problemForm" onsubmit="submitForm(event)">
-            <h2>لم تجد مشكلتك؟</h2>
-            <div class="input-group">
-                <input type="email" id="email" name="email" placeholder="البريد الإلكتروني" required>
-                <input type="text" id="id" name="id" placeholder="رقم الهوية" maxlength="10" required>
-                <input type="text" id="phone" name="phone" placeholder="رقم الهاتف" maxlength="10" required>
-            </div>
-            <textarea id="problem" name="problem" placeholder="المشكلة التي تواجهها"></textarea>
-            <p class="note">بحالة ادخال معلومات خاطئة يتحمل الطالب مسؤولية عدم الرد*</p>
+    <div class="form-container">
+        <h2>لم تجد مشكلتك؟</h2>
+        <form>
+            <input type="email" placeholder="البريد الإلكتروني" required>
+            <input type="text" placeholder="رقم الهوية" required maxlength="10">
+            <input type="text" placeholder="رقم الهاتف" required maxlength="10">
+            <textarea placeholder="اكتب المشكلة التي تواجهها هنا..." required></textarea>
+            <p class="note">* في حال إدخال معلومات خاطئة يتحمل الطالب مسؤولية عدم الرد</p>
             <button type="submit">إرسال</button>
-            <p id="successMessage" style="color: green; display: none;">تم ارسال مشكلتك بنجاح الرجاء انتظار الرد</p>
         </form>
     </div>
-    
 
-    <div class="gradient-section">
-        <!-- يمكن إضافة محتوى هنا إذا لزم الأمر -->
-    </div>
-
-    <!-- المستطيل باللون الثابت -->
-    <div class="solid-section">
-        <p class="p1">: معلومات الاتصال</p>
-        <p>+966 536382599</p>
-        <p>abn7zm@gmail.com</p>
-        <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
-        <br>
-      
-       
-
-        <div class="copy">
-            © جميع الحقوق الفكريه و التطبيقيه محفوظه بأسم ثانوية ابن حزم التعليمية 
-        </div>
-        <div class="copy">
-            2024 - 2023
-        </div>
-    </div>
-
-    <script>
-        document.getElementById('id').addEventListener('input', function (e) {
-    // منع إدخال أي شيء غير الأرقام
-    this.value = this.value.replace(/\D/g, '');
-
-    // تقييد الطول الأقصى بـ 10 أرقام
-    if (this.value.length > 10) {
-        this.value = this.value.slice(0, 10);
-    }
-});
-
-document.getElementById('phone').addEventListener('input', function (e) {
-    // منع إدخال أي شيء غير الأرقام
-    this.value = this.value.replace(/\D/g, '');
-
-    // تقييد الطول الأقصى بـ 10 أرقام
-    if (this.value.length > 10) {
-        this.value = this.value.slice(0, 10);
-    }
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
-
-document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }
-})
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
-function submitForm(event) {
-    event.preventDefault();
-    var form = document.getElementById('problemForm');
-    var formData = new FormData(form);
-    var data = {};
-    formData.forEach((value, key) => data[key] = value);
-    
-    fetch('https://script.google.com/macros/s/AKfycbyYjuuC7H8-iZkprA-X7bjQGZOz4x4Q-G6DWL3O-y_0NI4dwJp7_0Ndkm1wWVtdSfI1/exec ', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams(data)
-    })
-    .then(response => {
-        document.getElementById('successMessage').style.display = 'block'; // إظهار رسالة النجاح
-        form.reset(); // إعادة تعيين النموذج بعد الإرسال
-    })
-    .catch(error => alert('حدث خطأ أثناء الإرسال'));
-}
-
-    </script>
-    <style>
-        details {
-    border: 2px solid  #575656;
-    border-radius: 4px;
-    padding: 0.5em 0.5em 0;
-    margin-top: 15px;
-    font-size: larger;
-    user-select: none;
-  }
-  
-  summary {
-    font-weight: bold;
-    margin: -0.5em -0.5em 0;
-    padding: 0.5em;
-    background-color: gray;
-    list-style: none;
-    transition: 0.45s;
-  }
-  
-  details[open] {
-    padding: 0.6em;
-    transition: 0.45s;
-  }
-  
-  details[open] summary {
-    border-bottom: 1px solid #aaa;
-    margin-bottom: 0.5em;
-  }
-
-  summary:hover {
-    background-color: #575656;
-  }
-
-.img {
-    width: 100%; /* يجعل العرض بنسبة 100% من العنصر الحاوي */
-    height: auto; /* يحافظ على نسبة العرض إلى الارتفاع */
-    max-width: 130px; /* الحد الأقصى لعرض الصورة */
-    margin-right: 0;
-    position: relative;
-    
-}
-
- 
-
-
-.form-container {
-    background-color: #f1f1f1;
-    width: 80%; /* يجعل العرض بنسبة 100% من العنصر الحاوي */
-    height: auto; /* يحافظ على نسبة العرض إلى الارتفاع */
-    max-width: 500px; /* الحد الأقصى لعرض الصورة */
-    margin: 50px auto;
-    padding: 30px; /* زيادة حجم الحواف الداخلية */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    font-size: 24px; /* زيادة حجم الخط */
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.input-group {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-input[type="text"], input[type="email"] {
-    width: 30%;
-    padding: 15px; /* تكبير حجم الحواف الداخلية */
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-textarea {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    text-align: right;
-    resize: none;
-}
-
-.note {
-    color: red;
-    font-size: 18px;
-    margin-bottom: 10px;
-    text-align: right;
-}
-
-button {
-    background-color: #00bcd4;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px; /* زيادة حجم الخط */
-    margin-right: 40% ;
-}
-
-button:hover {
-    background-color: #0097a7;
-}
-
-/*? the end of page */
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background-color: #ffffff;
-}
-
-.gradient-section {
-    background: linear-gradient(to bottom, #ffffff 0%, #484646 100%);
-    min-height: 500px; /* يمكنك تعديل هذا حسب الحاجة */
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.solid-section {
-    background-color: #484646;
-    height: auto; /* اجعل الارتفاع تلقائياً ليناسب المحتوى */
-    width: 100%;
-    margin: 0;
-    padding: 20px; /* إضافة حواف داخلية للمستطيل */
-    box-sizing: border-box;
-    color: #ffffff; /* لون النص */
-    text-align: center; /* محاذاة النص إلى المنتصف */
-    font-size: 16px; /* حجم الخط */
-    text-align: right;
-}
-.copy {
-    text-align: center;
-    font-size: 16px;
-}
-
-a {
-    text-decoration: none;
-    color: #ffffff;
-    
-}
-.p1 {
-    font-size: 18px;
-}
-/*END*/
-
-h1 {
-    text-align: right;
-    font-size: 60px;
-    margin-right: 20px;
-}
-
-
-
-
-
-
-
-
-
-
-
-/* ? سكرول الصفحه */
-body::-webkit-scrollbar {
-    display: none;
-  }
-/*END*/
-
-/*?home btn*/
-.return-home-button {
-    position: absolute;
-    top: 40px; /* التحكم في موقع الزر بالنسبة للحاوية */
-    right: 78px;  /* التحكم في موقع الزر بالنسبة للحاوية */
-    padding: 10px 18px;
-    background-color: #007a8c ;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.45s ease;
-    font-size: 20px;
-    z-index: 1000; /* اجعل الزر فوق باقي العناصر */
-}
-
-.return-home-button:hover {
-    background-color: #484646 ;
-}
-
-.button-icon {
-    margin-left: 10px;
-    width: 20px; /* عرض الصورة */
-    height: 20px; /* ارتفاع الصورة */
-}
-    </style>
-
-
-<script>
-            document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }
-})
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
-</script>
+    <div class="footer">
+    <h3>معلومات الاتصال</h3>
+    <ul class="contact-list">
+      <li>📞 <a href="tel:+966539084645">+966 539084645</a></li>
+      <li>📧 <a href="mailto:rsanjalawi007@gmail.com">rsanjalawi007@gmail.com</a></li>
+      <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
+    </ul>
+    <p class="end">© جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
+  </div>
 </body>
 </html>
