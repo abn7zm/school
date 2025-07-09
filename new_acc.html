@@ -335,37 +335,46 @@ console.info = function() {};
 console.debug = function() {};
 
 
-    function checkIDNumberInSystem() {
-        const idNumberValue = idNumber.value.trim();
-        
+  function checkIDNumberInSystem() {
+    const idNumberValue = idNumber.value.trim();
 
-        if (idNumberValue === '') {
-            idCheckMessage.style.display = 'none';
-            createAccountButton.disabled = true;
-            return;
-        }
-        
-        fetch('tl$&12psps935aofm!^uffge$FS3$klp1@.txt')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then(data => {
-                const ids = data.split('\n').map(id => id.trim()).filter(id => id !== '');
-                if (!ids.includes(idNumberValue)) {
-                    idCheckMessage.style.display = 'block';
-                    createAccountButton.disabled = true; 
-                } else {
-                    idCheckMessage.style.display = 'none';
-                    validateForm(); 
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+    if (idNumberValue === '') {
+        idCheckMessage.style.display = 'none';
+        createAccountButton.disabled = true;
+        return;
     }
+
+    fetch('encrypted_ids.txt') // تأكد أن اسم الملف مطابق
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            const ids = data.split('\n').map(line => line.trim()).filter(line => line !== '');
+            let matchFound = false;
+            for (const encrypted of ids) {
+                const decrypted = customDecrypt(encrypted);
+                if (decrypted === idNumberValue) {
+                    matchFound = true;
+                    break;
+                }
+            }
+
+            if (matchFound) {
+                idCheckMessage.style.display = 'none';
+                validateForm();
+            } else {
+                idCheckMessage.style.display = 'block';
+                createAccountButton.disabled = true;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
 
     function validatePassword(showError = true) {
         const passwordError = document.getElementById('passwordError');
@@ -549,5 +558,22 @@ console.warn = function() {};
 console.error = function() {};
 console.info = function() {};
 console.debug = function() {};
+
+
+const SECRET_KEY = "2shawermaExtrathoRahemdallahy5lleh";
+
+function customDecrypt(encryptedID) {
+    try {
+        const decoded = atob(encryptedID); // فك base64
+        const parts = decoded.split(":");
+        if (parts[0] === SECRET_KEY) {
+            return parts[1]; // يرجع رقم الهوية الأصلي
+        }
+        return null;
+    } catch (e) {
+        return null;
+    }
+}
+
 </script>
 </html>
