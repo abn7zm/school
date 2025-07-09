@@ -1,222 +1,213 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title >من نحن   </title>
-    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
-    
-    <body>
-        
-        <header>
-            <img src="https://i.postimg.cc/gJV7wWxh/logo1.png" alt="logo" class="logo">
-        </header>
-        <h1 class="who"> من نحن</h1>
-        <h1 class="box">
-            <p class="content2">من نحن</p>
-            <p class="content">مرحبًا بكم في ابن حزم، المكان الذي يجمع بين العلم والقيم، حيث نسعى لتقديم تعليم متميز وشامل لكل طالب.</p>
-        </h1>
-        <h1 class="box2">
-            <p class="content3">قيمنا</p>
-            <p class="content4">نؤمن بالتميز الأكاديمي، الابتكار، المسؤولية الاجتماعية، والتنمية الشخصية لتطوير الطلاب.</p>
-        </h1>
-        <h1 class="box3">
-            <p class="content5">هيئة التدريس</p>
-            <p class="content6">فريقنا من المعلمين هم نخبة من أفضل الخبرات في مجال التعليم، يتمتعون بشغف كبير تجاه مهنتهم، ويسعون دائمًا لتحفيز الطلاب على تحقيق أفضل النتائج.</p>
-        </h1>
-        <h1 class="box4">
-            <p class="content7">هدفنا</p>
-            <p class="content8">هدفنا هو إعداد طلابنا ليصبحوا أفرادًا مستقلين وناجحين في حياتهم المستقبلية.</p>
-        </h1>
-        <a href="index.html" class="return-home-button">العودة
-        </a>
-    </body>
-    <style>
-        .who {
-    position: relative; /* تحريك نسبي */
-    top: 2%; /* تحريك بناءً على نسبة من ارتفاع العنصر */
-    z-index: 100; /* تحديد ترتيب العنصر */
-    font-size: clamp(20px, 5vw, 60px); /* حجم خط مرن يتراوح بين 20px و60px */
-    color: #ffffff; /* اللون الأبيض */
-    text-align: center; /* توسيط النص أفقيًا */
-    margin: 0 auto; /* توسيط العنصر في المنتصف إذا كان بعرض محدد */
-}
-
-        /* استعادة تنسيق عام مرن */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            margin: 0;
-            padding: 0;
-            overflow-x:hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        header {
-            width: 100%;
-            height: 10vh;
-            background-color: #14b9d0;
-            position: fixed;
-            top: 0;
-            z-index: 10;
-        }
-
-        .logo {
-    position: absolute;
-    top: 2%; /* موقع مرن نسبة إلى ارتفاع الشاشة */
-    left: 2%; /* موقع مرن نسبة إلى عرض الشاشة */
-    width: 7vw; /* العرض مرن ويتغير بناءً على عرض النافذة */
-    height: auto; /* الحفاظ على نسبة الأبعاد الأصلية */
-    max-width: 120px; /* تحديد الحد الأقصى للحجم */
-    min-width: 50px; /* تحديد الحد الأدنى للحجم */
-}
-
-        h1 {
-            margin: 0;
-            position: relative;
-            text-align: center;
-            width: 100%; /* عرض مرن */
-            padding: 2vh 0;
-        }
-
-        .box, .box2, .box3, .box4 {
-            position: relative;
-            width: 20vw; /* مرونة العرض */
-            height: 15vh; /* مرونة الارتفاع */
-            background-color: #484646;
-            margin: 2vh;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
-        }
-        .box{
-            top: 18%;
-            position: absolute;
-        }
-        .box2{
-            top: 38%;
-            position: absolute;
-        }
-        .box3{
-            top: 58%;
-            position:absolute;
-        }
-        .box4{
-            top: 78%;
-            position:absolute;
-
-        }
-
-        .box:hover, .box2:hover, .box3:hover, .box4:hover {
-            transform: scale(1.1); /* تكبير المربع بنسبة 10% */
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .content2, .content3, .content5, .content7 {
-            font-size: 1.5vw; /* خط مرن */
-            color: #ffffff;
-            margin-bottom: 1vh;
-        }
-
-        .content, .content4, .content6, .content8 {
-            font-size: 1vw; /* خط مرن */
-            background-color: #ffffff;
-            color: #333;
-            padding: 1vh 2vw;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-
-        .box:hover .content, .box2:hover .content4, .box3:hover .content6, .box4:hover .content8 {
-            display: block; /* إظهار النص عند التمرير */
-        }
-
-        /* زر العودة إلى الصفحة الرئيسية */
-        .return-home-button {
-            position: fixed;
-            top: 2vh;
-            right: 2vw;
-            padding: 1vh 2vw;
-            background-color: #007a8c;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            font-size: 1vw;
-            display: flex;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .return-home-button:hover {
-            background-color: #484646;
-        }
-
-        .button-icon {
-            margin-left: 0.5vw;
-            width: 1.5vw;
-            height: auto;
-        }
-
-        /* استجابة للأجهزة الصغيرة */
-        @media screen and (max-width: 768px) {
-            .box, .box2, .box3, .box4 {
-                width: 40vw;
-                height: 20vh;
-            }
-
-            .content2, .content3, .content5, .content7 {
-                font-size: 3vw;
-            }
-
-            .content, .content4, .content6, .content8 {
-                font-size: 2.5vw;
-            }
-
-            .return-home-button {
-                font-size: 3vw;
-            }
-
-            .button-icon {
-                width: 3vw;
-            }
-        }
-        
-    </style>
-    <script>
-        document.addEventListener('keydown', function(event) {
-// تعطيل F12
-if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>من نحن - ثانوية ابن حزم</title>
+  <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(to right, #dfe9f3, #ffffff);
+      margin: 0;
+      padding: 0;
     }
 
-})
-document.addEventListener('contextmenu', function(event) {
-event.preventDefault();
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
+    header {
+      background-color: #14b9d0;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-</script>
+    .logo {
+      height: 100px;
+      filter: drop-shadow(0 0 10px #00e6f6);
+    }
+
+    .return-home-button {
+      background-color: #f6b100;
+      color: white;
+      padding: 10px 18px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .return-home-button:hover {
+      background-color: #bd8700;
+    }
+
+    .title {
+      text-align: center;
+      margin: 40px 0 20px;
+      font-size: 40px;
+      color: #004d60;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      background-color: #007a8c;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -3px;
+    }
+
+    .timeline-box {
+      padding: 20px;
+      position: relative;
+      background-color: inherit;
+      width: 50%;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease;
+    }
+
+    .timeline-box.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-box.left {
+      left: 0;
+    }
+
+    .timeline-box.right {
+      left: 50%;
+    }
+
+    .timeline-box::after {
+      content: '';
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      right: -13px;
+      background-color: white;
+      border: 4px solid #14b9d0;
+      top: 15px;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .timeline-box.right::after {
+      left: -13px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .card h3 {
+      color: #007a8c;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #444;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    @media screen and (max-width: 768px) {
+      .timeline::after {
+        left: 20px;
+      }
+
+      .timeline-box {
+        width: 100%;
+        padding-left: 40px;
+        padding-right: 25px;
+      }
+
+      .timeline-box.right {
+        left: 0%;
+      }
+
+      .timeline-box::after {
+        left: 5px;
+      }
+    }
+  </style>
 </head>
+<body>
 
+<header>
+  <img src="https://i.postimg.cc/gJV7wWxh/logo1.png" alt="logo" class="logo">
+  <a href="index.html" class="return-home-button">العودة</a>
+</header>
+
+<h1 class="title">من نحن</h1>
+
+<div class="timeline">
+  <div class="timeline-box left">
+    <div class="card">
+      <h3>من نحن</h3>
+      <p>مرحبًا بكم في ثانوية ابن حزم، حيث نجمع بين العلم والقيم لبناء جيل من الطلاب المتميزين.</p>
+    </div>
+  </div>
+
+  <div class="timeline-box right">
+    <div class="card">
+      <h3>قيمنا</h3>
+      <p>نؤمن بالتميز، والاحترام، والمسؤولية، والابتكار، ونسعى لتعزيز هذه القيم في كل طالب.</p>
+    </div>
+  </div>
+
+  <div class="timeline-box left">
+    <div class="card">
+      <h3>هيئة التدريس</h3>
+      <p>فريقنا يتكون من نخبة من المعلمين المتفانين في إيصال المعلومة وتحفيز الطلاب على الإبداع والتميز.</p>
+    </div>
+  </div>
+
+  <div class="timeline-box right">
+    <div class="card">
+      <h3>هدفنا</h3>
+      <p>نسعى لإعداد طلاب متمكنين علميًا وأخلاقيًا، قادرين على قيادة المستقبل بثقة.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // تأثير الظهور عند التمرير
+  window.addEventListener('scroll', () => {
+    document.querySelectorAll('.timeline-box').forEach(box => {
+      const rect = box.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) {
+        box.classList.add('show');
+      }
+    });
+  });
+
+  // تعطيل F12 و Right Click
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'F12') event.preventDefault();
+  });
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
+  console.log = console.warn = console.error = console.info = console.debug = function () {};
+</script>
+
+</body>
 </html>
