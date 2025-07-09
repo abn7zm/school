@@ -20,6 +20,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
     }
 
     header img {
@@ -180,6 +181,8 @@
       color: #ffffff;
       user-select: none;
       white-space: nowrap;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
 
     @media (max-width: 600px) {
@@ -191,10 +194,19 @@
         flex-direction: column;
         gap: 15px;
         text-align: center;
+        position: relative;
       }
 
       header img {
         height: 40px;
+      }
+
+      .cry {
+        position: static;
+        transform: none;
+        margin-top: 10px;
+        font-size: 28px;
+        color: #ffffff !important; /* تأكيد اللون الأبيض */
       }
     }
   </style>
