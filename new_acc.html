@@ -441,36 +441,42 @@ console.debug = function() {};
         return;
     }
 
-    fetch('encrypted_ids.txt') // تأكد أن اسم الملف مطابق
+    fetch('https://docs.google.com/spreadsheets/d/1-IAOaZT6c75rKXqoPGgBTlTjt_SpcgfOXMWowSnx20o/export?format=csv')
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('sheet error');
             return response.text();
         })
-        .then(data => {
-            const ids = data.split('\n').map(line => line.trim()).filter(line => line !== '');
-            let matchFound = false;
-            for (const encrypted of ids) {
-                const decrypted = customDecrypt(encrypted);
-                if (decrypted === idNumberValue) {
-                    matchFound = true;
-                    break;
-                }
-            }
+        .then(csv => {
+            const lines = csv.split('\n').map(line => line.trim());
+            const foundInSheet = lines.some(line => {
+                const cols = line.split(',');
+                return cols[1] && cols[1].trim() === idNumberValue;
+            });
 
-            if (matchFound) {
-                idCheckMessage.style.display = 'none';
-                validateForm();
-            } else {
+            if (foundInSheet) {
                 idCheckMessage.style.display = 'block';
+                idCheckMessage.textContent = 'رقم الهوية مستخدم من قبل';
                 createAccountButton.disabled = true;
+            } else {
+                idCheckMessage.style.display = 'none';
+
+                // نعيد التحقق من جميع الحقول مرة أخرى
+                const idValid = validateIDNumber(false);
+                const passwordValid = validatePassword(false);
+                const confirmPasswordValid = validateConfirmPassword(false);
+                const privacyPolicyValid = validatePrivacyPolicy(false);
+                const fullNameValid = validateFullName(false);
+
+                const isValid = idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid;
+
+                createAccountButton.disabled = !isValid;
             }
         })
-        .catch(error => {
-            console.error('Error:', error);
+        .catch(err => {
+            console.error('خطأ في قراءة Google Sheet:', err);
         });
 }
+
 
 
     function validatePassword(showError = true) {
