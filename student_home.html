@@ -126,17 +126,7 @@
       flex-shrink: 0;
     }
 
-    .user-name {
-      font-size: 18px;
-      font-weight: bold;
-      color: #fff;
-      margin: 0;
-      white-space: nowrap;
-      flex-shrink: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 120px;
-    }
+    
 
     .right-buttons {
       display: flex;
@@ -252,6 +242,25 @@
     a {
       text-decoration: none;
     }
+    .user-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* لجعل الصورة على اليمين */
+    gap: 10px; /* مسافة بين النص والصورة */
+}
+
+.user-container h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 18px;
+}
+
+.profile {
+    width: 50px; /* تصغير حجم الصورة */
+    height: 50px;
+    border-radius: 50%; /* شكل دائري إن أردت */
+    object-fit: cover;
+}
 
     /* استايلات الجوال */
     @media (max-width: 768px) {
@@ -333,8 +342,11 @@
     <h1 class="page-title">بوابة الطالب</h1>
 
     <div class="right-section">
-      <img class="profile-img" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image" />
-      <h2 class="user-name"><span id="userName"></span></h2>
+      
+        <div class="user-container">
+    <h2><span class="userName" id="userName"></span></h2>
+    <img class="profile" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image">
+</div>
       <div class="right-buttons">
         <a href="support2.html"><button>الدعم الفني</button></a>
         <a href="vis_student.html"><button>التحديثات</button></a>
