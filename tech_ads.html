@@ -1,261 +1,244 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>الاعلانات اداري</title>
-    <link rel="stylesheet" href="tech_ads.css">
-    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: rgba(182, 182, 182, 0);
-            user-select: none;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إرسال إعلان إداري</title>
+  <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
 
-        header {
-            position: relative;
-            width: 100%;
-            height: 60px;
-        }
+    body {
+      background: linear-gradient(135deg, #dfe9f3 0%, #ffffff 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        h1 {
-            text-align: center;
-            margin-top: 100px;
-        }
+    header {
+      background-color: #005d7e;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        form {
-            max-width: 600px;
-            margin: auto;
-            background: #484646;
-            padding: 50px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            color: #ffffff;
-            font-size: 21px;
-            position: relative; /* أضف هذه الخاصية */
-        }
+    header img {
+      height: 90px;
+      filter: drop-shadow(0 0 10px #00e6f6);
+    }
 
-        form button.b {
-            display: block; /* أضف هذه الخاصية */
-            margin: 20px auto 0; /* أضف هذه الخاصية */
-            width: auto; /* تأكد من ضبط العرض التلقائي */
-        }
+    .return-home-button {
+      background-color: #f6b100;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-        }
+    .return-home-button:hover {
+      background-color: #c48d01;
+      color: white;
+    }
 
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid black;
-            border-radius: 4px;
-            font-size: 18px;
-            background-color: #afafaf;
-        }
+    h1 {
+      text-align: center;
+      margin: 40px 0 20px;
+      color: #333;
+      font-size: 36px;
+    }
 
-        .d {
-            height: 200px;
-        }
+    form {
+      background-color: #ffffff;
+      padding: 40px;
+      max-width: 600px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
 
-        .b {
-            background-color: #009db2;
-            color: white;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.45s ease;
-        }
+    label {
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: block;
+      color: #009db2;
+    }
 
-        .b:hover {
-            background-color: #007a8c;
-        }
+    input, textarea {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      transition: border 0.3s ease;
+      font-size: 18px;
+    }
 
-        .logo1 {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 150px;
-            height: auto;
-        }
+    input:focus, textarea:focus {
+      border-color: #009db2;
+      outline: none;
+    }
 
-        .return-home-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 10px 18px;
-            background-color: #007a8c;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 20px;
-        }
+    button {
+      background-color: #009db2;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-        .return-home-button:hover {
-            background-color: #484646;
-        }
+    button:hover {
+      background-color: #007a8c;
+    }
 
-        .button-icon {
-            margin-right: 10px;
-            width: 20px;
-            height: 20px;
-        }
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 20px;
+      color: green;
+    }
 
-        .solid-section {
-            background-color: #484646;
-            width: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            color: #ffffff;
-            font-size: 16px;
-            text-align: right;
-            position: relative;
-            top: 500px;
-        }
+        .footer {
+      background-color: #005d7e;
+      color: #ffffff;
+      padding: 25px 40px;
+      width: 100%;
+      text-align: right;
+      margin-top: auto;
+      box-sizing: border-box;
+    }
 
-        .copy {
-            font-size: 16px;
-            text-align: center;
-        }
+    .footer h3 {
+      margin-bottom: 15px;
+      font-size: 22px;
+      color: #ffffff;
+      font-weight: bold;
+      border-bottom: 2px solid #f6b100;
+      padding-bottom: 5px;
+    }
 
-        a {
-            text-decoration: none;
-            color: #ffffff;
-        }
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      font-size: 18px;
+    }
 
-        .p1 {
-            font-size: 18px;
-        }
+    .contact-list li {
+      margin-bottom: 10px;
+    }
 
-        .message {
-            color: green;
-            font-size: 20px;
-            text-align: center;
-        }
-        
-        @media (max-width: 425px) {
-            .b {
-                font-size: 16px;
-            }
+    .contact-list li a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
 
-            .solid-section {
-                font-size: 14px;
-                padding: 10px;
-            }
-        }
+    .contact-list li a:hover {
+      color: #007a8c;
+      text-decoration: underline;
+    }
 
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
+    .end {
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+      margin-top: 15px;
+    }
 
-        ::-webkit-scrollbar-track {
-            background: #cccccc;
-            border-radius: 10px;
-        }
+    a {
+      text-decoration: none;
+    }
 
-        ::-webkit-scrollbar-thumb {
-            background-color: #009db2;
-            border-radius: 10px;
-            border: 3px solid #f4f4f4;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: #007b8e;
-        }
-
-        .scrollbar {
-            scrollbar-color: #009db2 #cccccc;
-            scrollbar-width: thin;
-        }
-    </style>
+    @media (max-width: 600px) {
+      form {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+      button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <img class="logo1" src="https://i.postimg.cc/nrQwRjHx/logo.png" alt="">
-        <a href="tech_home.html" class="return-home-button">العودة
-            <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Arrow" class="button-icon">
-        </a>
-    </header>
+  <header>
+    <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="logo">
+    <a href="tech_home.html" class="return-home-button">العودة</a>
+  </header>
 
-    <h1>إرسال إعلان</h1>
-    <form id="ad-form">
-        <label for="title">عنوان الإعلان:</label>
-        <input type="text" id="title" name="title" required>
-    
-        <label for="link">إضافة رابط (اختياري):</label>
-        <input type="url" id="link" name="link" placeholder="أدخل الرابط هنا">
-    
-        <label for="description">وصف الإعلان:</label>
-        <textarea class="d" id="description" name="description" rows="4" required></textarea>
-        <br><br><br>
-        <button class="b" type="submit">إرسال الإعلان</button>
-    </form>
+  <h1>إرسال إعلان</h1>
+  <form id="ad-form">
+    <label for="title">عنوان الإعلان:</label>
+    <input type="text" id="title" name="title" required>
 
-    <p id="message" class="message"></p>
+    <label for="link">رابط (اختياري):</label>
+    <input type="url" id="link" name="link">
 
-    <footer class="solid-section">
-        <p class="p1">: معلومات الاتصال</p>
-        <p dir="ltr">+966 536382599</p>
-        <p>abn7zm@gmail.com</p>
-        <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
-        <br>
-        <p class="p1">: المساعده</p>
-        <a href="support1.html"><p>الدعم الفني</p></a>
+    <label for="description">وصف الإعلان:</label>
+    <textarea id="description" name="description" rows="5" required></textarea>
 
-        <div class="copy" dir="ltr">
-            © جميع الحقوق الفكريه و التطبيقيه محفوظه بأسم ثانوية ابن حزم التعليمية 
-        </div>
-        <div class="copy" dir="ltr">
-            2024 - 2023
-        </div>
-    </footer>
+    <button type="submit">إرسال الإعلان</button>
+    <p class="message" id="message"></p>
+  </form>
+<div class="footer">
+    <h3>معلومات الاتصال</h3>
+    <ul class="contact-list">
+      <li>📞 <a href="tel:+966539084645">+966 539084645</a></li>
+      <li>📧 <a href="mailto:rsanjalawi007@gmail.com">rsanjalawi007@gmail.com</a></li>
+      <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
+    </ul>
+    <p class="end">© جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
+  </div>
 
-    <script>
-        document.getElementById('ad-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
+  <script>
+    document.getElementById('ad-form').addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const formData = new FormData(this);
 
-            const formData = new FormData(this);
-            
-            try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbwLpWkduyqs8eWiL-X9S6uDfHm-7nDAZoOk0nwez60PJLlvT4st2xURvp6D6vOVXcnLiw/exec', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                if (response.ok) {
-                    const result = await response.text();
-                    document.getElementById('message').textContent = 'تم ارسال الاعلان بنجاح';
-                } else {
-                    document.getElementById('message').textContent = 'حدث خطأ أثناء إرسال الإعلان.';
-                }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                document.getElementById('message').textContent = 'حدث خطأ أثناء إرسال الإعلان.';
-            }
+      try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbwLpWkduyqs8eWiL-X9S6uDfHm-7nDAZoOk0nwez60PJLlvT4st2xURvp6D6vOVXcnLiw/exec', {
+          method: 'POST',
+          body: formData
         });
 
-        document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }
-})
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
+        const message = document.getElementById('message');
+        if (response.ok) {
+          message.textContent = 'تم إرسال الإعلان بنجاح';
+          message.style.color = 'green';
+        } else {
+          message.textContent = 'حدث خطأ أثناء الإرسال';
+          message.style.color = 'red';
+        }
+      } catch (err) {
+        document.getElementById('message').textContent = 'حدث خطأ أثناء الإرسال';
+      }
+    });
 
-    </script>
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'F12') event.preventDefault();
+    });
+
+    document.addEventListener('contextmenu', function (event) {
+      event.preventDefault();
+    });
+
+    console.log = console.warn = console.error = console.info = console.debug = function () {};
+  </script>
 </body>
 </html>

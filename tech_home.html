@@ -1,472 +1,348 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الرئيسيه اداري</title>
-    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
-    <script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الرئيسيه طالب</title>
+  <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var userName = localStorage.getItem('userName');
+      if (userName) {
+        document.getElementById('userName').textContent = userName;
+      } else {
+        alert('لم يتم العثور على اسم المستخدم.');
+        window.location.href = 'student_login.html';
+      }
 
-document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
+      fetch('quran.txt')
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.text();
+        })
+        .then(text => {
+          const lines = text.split('\n');
+          const randomLine = lines[Math.floor(Math.random() * lines.length)];
+          document.getElementById('random-line').textContent = randomLine;
+        })
+        .catch(error => console.error('Error loading file:', error));
+    });
+
+    document.addEventListener('contextmenu', function (event) {
+      event.preventDefault();
+    });
+
+    console.log = function () {};
+    console.warn = function () {};
+    console.error = function () {};
+    console.info = function () {};
+    console.debug = function () {};
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: white;
+      color: #000;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-})
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
 
-
-// عشان منع الرجوع للصفحه
-function stopBack() {
-    window.history.go(1);
-}
-document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
+    .top-bar {
+      background-color: #005d7e;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      color: #fff;
+      justify-content: space-between;
+      position: relative;
+      flex-wrap: nowrap;
     }
-})
 
-fetch('quran.txt')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.text();
-    })
-    .then(text => {
-        console.log(text); // تحقق من محتوى الملف في وحدة التحكم
-        // تقسيم المحتوى إلى مصفوفة من الأسطر
-        const lines = text.split('\n');
-        // اختيار سطر عشوائي
-        const randomLine = lines[Math.floor(Math.random() * lines.length)];
-        // عرض السطر العشوائي في الصفحة
-        document.getElementById('random-line').textContent = randomLine;
-    })
-    .catch(error => console.error('Error loading file:', error));
-
-
-
-
-
-
-    // إظهار اسم المستخدم في tech_home.html
-function displayUsername() {
-    const username = localStorage.getItem('username');
-    if (username) {
-        const usernameElement = document.createElement('span');
-        usernameElement.textContent = username;
-        usernameElement.classList.add('user-name'); // إضافة Class مخصص
-        document.getElementById('usernameContainer').appendChild(usernameElement);
+    /* الشعار وزر تسجيل الخروج على اليسار */
+    .left-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
-}
 
-document.addEventListener('DOMContentLoaded', displayUsername);
+    .logo img {
+      height: 90px;
+      filter: drop-shadow(0 0 10px #00e6f6);
+    }
 
+    .logout-button {
+      background-color: #f6b100;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background-color 0.3s;
+    }
+    .logout-button:hover {
+      background-color: #c58d00;
+    }
+    .logout-button img {
+      height: 20px;
+    }
 
+    /* العنوان في الوسط */
+    .page-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      color: #ffffff;
+      user-select: none;
+      white-space: nowrap;
+    }
 
-function stopBack() {
-    window.history.go(1);
-}
+    /* حاوية المستخدم: صورة + اسم + أزرار */
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      direction: rtl; /* عشان ترتيب عربي: الصورة يمين */
+      flex-wrap: nowrap;
+      min-width: 0;
+    }
 
+    .profile-img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
 
-fetch('quran.txt')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.text();
-    })
-    .then(text => {
-        console.log(text); // تحقق من محتوى الملف في وحدة التحكم
-        // تقسيم المحتوى إلى مصفوفة من الأسطر
-        const lines = text.split('\n');
-        // اختيار سطر عشوائي
-        const randomLine = lines[Math.floor(Math.random() * lines.length)];
-        // عرض السطر العشوائي في الصفحة
-        document.getElementById('random-line').textContent = randomLine;
-    })
-    .catch(error => console.error('Error loading file:', error));
-    document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
+    .user-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      margin: 0;
+      white-space: nowrap;
+      flex-shrink: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
+    }
 
-    </script>
+    .right-buttons {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
 
+    .right-buttons a > button {
+      background-color: #f6b100;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      white-space: nowrap;
+    
+    }
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden; /* منع التمرير الأفقي */
-        }
+    .right-buttons a > button:hover {
+      background-color: #c58d00;
+    }
 
-        /* المستطيل العلوي */
-        .top-bar {
-            width: auto;
-            background-color: #14b9d0; /* تغيير لون المستطيل العلوي */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            color: #ffffff; /* لون النص */
-            box-sizing: border-box; /* ضمان أن الحشو لا يتسبب في تجاوز العرض */
-        }
+    /* أزرار رئيسية */
+    .main-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 100px 0;
+      flex-wrap: wrap;
+    }
 
-        /* الشعار على يسار الأزرار */
-        .top-bar-content {
-            display: flex;
-            align-items: center;
-        }
+    .main-buttons button {
+      background-color: #ffffff;
+      color: #000;
+      width: 300px;
+      height: 300px;
+      border: none;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 15px rgba(70, 70, 70, 0.3);
+    }
 
-        .logo img {
-            height: 60px; /* تكبير الشعار */
-            margin-right: 20px; /* ترك مسافة بين الشعار والأزرار */
-        }
+    .main-buttons button:hover {
+      background-color: #999999;
+      box-shadow: 0 0 25px rgba(41, 41, 41, 0.7);
+    }
 
-        .buttons {
-            display: flex;
-            gap: 10px;
-        }
+    .main-buttons button img {
+      height: 200px;
+      max-width: 90%;
+      object-fit: contain;
+    }
 
+    .quran {
+      height: 80px;
+      color: #000;
+    }
 
+    .footer {
+      background-color: #005d7e;
+      color: #ffffff;
+      padding: 25px 40px;
+      width: 100%;
+      text-align: right;
+      margin-top: auto;
+      box-sizing: border-box;
+    }
 
-        .buttons button {
-            background-color: #79D7E4;
-            border: none;
-            padding: 10px;
-            font-size: 16px;
-            color: #fff;
-            cursor: pointer;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+    .footer h3 {
+      margin-bottom: 15px;
+      font-size: 22px;
+      color: #ffffff;
+      font-weight: bold;
+      border-bottom: 2px solid #f6b100;
+      padding-bottom: 5px;
+    }
 
-        .buttons button img {
-            height: 20px;
-        }
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      font-size: 18px;
+    }
 
-        .top-bar img.profile {
-            height: 60px; /* حجم صورة الملف الشخصي */
-            filter: none; /* إزالة أي فلاتر أو تأثيرات */
-            margin-left: 10px; /* مسافة على يسار الصورة */
-        }
+    .contact-list li {
+      margin-bottom: 10px;
+    }
 
-        /* عرض اسم المستخدم بجانب الصورة */
-        .user-container {
-            display: flex;
-            align-items: center;
-        }
+    .contact-list li a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
 
-        .user-container h2 {
-            margin: 0;
-            color: #fff; /* لون النص */
-            font-size: 18px;
-            margin-right: 10px;
-        }
+    .contact-list li a:hover {
+      color: #007a8c;
+      text-decoration: underline;
+    }
 
-        /* الأزرار الكبيرة */
-        .main-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 100px 0; /* إضافة مسافة لتحريك المربعات الكبيرة لأسفل */
-            flex-wrap: wrap;
-        }
+    .end {
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+      margin-top: 15px;
+    }
 
-        .main-buttons a {
-            text-decoration: none; /* إزالة التزيين الافتراضي للرابط */
-        }
+    a {
+      text-decoration: none;
+    }
 
-        .main-buttons button {
-            background-color: #484646;
-            color: #fff;
-            width: 250px; /* تكبير المربعات */
-            height: 250px;
-            border: none;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
+    /* استايلات الجوال */
+    @media (max-width: 768px) {
+      .top-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+        position: relative;
+      }
 
-        .main-buttons button img {
-            height: 150px; /* تكبير الصور داخل المربعات */
-        }
+      .left-section, .right-section {
+        flex: 1 1 100%;
+        justify-content: center;
+        margin: 5px 0;
+      }
 
-        /* القرآن الكريم */
-        .quran {
-            margin: 50px 0; /* إضافة مسافة إضافية للآية القرآنية */
-        }
+      .page-title {
+        position: static;
+        transform: none;
+        font-size: 28px;
+        margin: 5px 0;
+        width: 100%;
+        text-align: center;
+        order: 1;
+      }
 
-        /* المستطيل السفلي */
-        .footer {
-            background-color: #484646;
-            color: #fff;
-            padding: 20px;
-            width: 100%; /* المستطيل السفلي يغطي عرض الصفحة بالكامل */
-            text-align: right; /* توجيه النصوص لليسار */
-            border-radius: 0px; /* إزالة الحواف المستديرة */
-            margin-top: auto;
-            box-sizing: border-box; /* ضمان أن الحشو لا يتسبب في تجاوز العرض */
-            overflow-wrap: break-word; /* كسر الكلمات الطويلة لتجنب التجاوز */
-        }
+      .right-section {
+        order: 3;
+        flex-wrap: nowrap;
+        justify-content: center;
+        direction: rtl;
+      }
 
-        .footer p {
-            margin: 10px 0; /* زيادة الهوامش لتجنب تداخل النصوص مع الحواف */
-            line-height: 1.5; /* تحسين التباعد بين الأسطر */
-        }
-        .end {
-            text-align: center;
-        }
+      .profile-img {
+        height: 50px;
+        width: 50px;
+      }
 
-        .b{
-            transition: ease 0.45s;
-        }
+      .user-name {
+        font-size: 16px;
+        max-width: 80px;
+      }
 
-.b:hover{
-    background-color: #6ec1cc;
-    transition: ease 0.45s;
-}
-.bu {
-    transition: ease 0.45s;
-}
+      .right-buttons a > button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
 
-.bu:hover {
-    background-color: #009db2 ;
-    transition: ease 0.45s;
-}
-a {
-    text-decoration: none;
-}
-        /* استعلامات الإعلام */
-        /* الشاشات الكبيرة */
-        @media (min-width: 1200px) {
-            .top-bar {
-                padding: 20px 40px;
-            }
+      .logout-button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
 
-            .logo img {
-                height: 80px;
-            }
+      .main-buttons button {
+        width: 150px;
+        height: 150px;
+      }
 
-            .buttons button {
-                font-size: 18px;
-                padding: 15px;
-            }
-
-            .main-buttons button {
-                width: 300px;
-                height: 300px;
-            }
-
-            .main-buttons button img {
-                height: 180px;
-            }
-        }
-
-        @media (min-width: 992px) and (max-width: 1199px) {
-            .top-bar {
-                padding: 15px 30px;
-            }
-
-            .logo img {
-                height: 70px;
-            }
-
-            .buttons button {
-                font-size: 17px;
-                padding: 12px;
-            }
-
-            .main-buttons button {
-                width: 280px;
-                height: 280px;
-            }
-
-            .main-buttons button img {
-                height: 170px;
-            }
-        }
-
-        @media (min-width: 768px) and (max-width: 991px) {
-            .top-bar {
-                padding: 10px 20px;
-            }
-
-            .logo img {
-                height: 60px;
-            }
-
-            .buttons button {
-                font-size: 16px;
-                padding: 10px;
-            }
-
-            .main-buttons button {
-                width: 250px;
-                height: 250px;
-            }
-
-            .main-buttons button img {
-                height: 150px;
-            }
-        }
-
-        @media (min-width: 576px) and (max-width: 767px) {
-            .top-bar {
-                padding: 10px 15px;
-            }
-
-            .logo img {
-                height: 50px;
-            }
-
-            .buttons button {
-                font-size: 15px;
-                padding: 8px;
-            }
-
-            .main-buttons button {
-                width: 220px;
-                height: 220px;
-            }
-
-            .main-buttons button img {
-                height: 130px;
-            }
-        }
-
-        @media (max-width: 575px) {
-            .top-bar {
-                padding: 10px 10px;
-            }
-
-            .logo img {
-                height: 40px;
-            }
-
-            .buttons button {
-                font-size: 14px;
-                padding: 6px;
-            }
-
-            .main-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .main-buttons button {
-                width: 200px;
-                height: 200px;
-            }
-
-            .main-buttons button img {
-                height: 120px;
-            }
-        
-        }
-
-
-   /* تخصيص شريط التمرير للمتصفحات التي تدعمه */
-   ::-webkit-scrollbar {
-            width: 12px; /* عرض شريط التمرير */
-        }
-
-        /* شريط التمرير نفسه */
-        ::-webkit-scrollbar-track {
-            background: #cccccc; /* لون الخلفية لشريط التمرير */
-            border-radius: 10px; /* جعل الحواف مستديرة */
-        }
-
-        /* مقبض التمرير */
-        ::-webkit-scrollbar-thumb {
-            background-color: #009db2; /* لون المقبض */
-            border-radius: 10px; /* جعل المقبض مستدير */
-            border: 3px solid #f4f4f4; /* إضافة حدود بيضاء للمقبض */
-        }
-
-        /* عند تمرير الفأرة فوق المقبض */
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: #007b8e; /* تغيير لون المقبض عند التحويم */
-        }
-
-        /* تخصيص شريط التمرير للمتصفحات الأخرى (مثل Firefox) */
-        .scrollbar {
-            scrollbar-color: #009db2 #cccccc; /* لون المقبض والخلفية */
-            scrollbar-width: thin; /* تحديد حجم الشريط */
-        }
-
-        .user-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .user-container h2 {
-            margin: 0;
-            color: #fff; /* لون النص */
-            font-size: 18px;
-            margin-right: 10px;
-        }
-    </style>
+      .main-buttons button img {
+        height: 100px;
+      }
+    }
+  </style>
 </head>
 <body>
-
-    <!-- المستطيل العلوي -->
-    <div class="top-bar">
-        <div class="top-bar-content">
-            <div class="logo">
-                <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo"> <!-- الشعار على يسار الأزرار -->
-            </div>
-
-            <div class="buttons">
-
-                <a href="index.html"><button class="b" >
-                    <img src="https://i.postimg.cc/TY15M5LP/logout.png" alt="Logout">
-                    تسجيل الخروج
-                </button> </a>
-
-                <a href="support1.html"><button class="b">الدعم الفني</button></a>
-                <a href="vis.html"><button class="b" >التحديثات</button></a>
-
-            </div>
-        </div>
-        
-        
-        
-
-        <div class="user-container"><h2><span id="usernameContainer"></span></h2>
-            <img class="profile" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image"> <!-- صورة الملف الشخصي على اليمين -->
-        </div>
-
+  <div class="top-bar">
+    <div class="left-section">
+      <div class="logo">
+        <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" />
+      </div>
+      <a href="index.html">
+        <button class="logout-button">
+          <img src="https://i.postimg.cc/TY15M5LP/logout.png" alt="Logout" />
+          تسجيل الخروج
+        </button>
+      </a>
     </div>
 
-    <!-- الأزرار الكبيرة -->
-    <div class="main-buttons">
+    <h1 class="page-title">صفحة المعلم</h1>
+
+    <div class="right-section">
+      <img class="profile-img" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image" />
+      <h2 class="user-name"><span id="userName"></span></h2>
+      <div class="right-buttons">
+        <a href="support2.html"><button>الدعم الفني</button></a>
+        <a href="vis_student.html"><button>التحديثات</button></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-buttons">
         <a href="tech_date.html"><button class="bu">
             <img src="https://i.postimg.cc/MKsyHss0/detep.png" alt="Button 1">
         </button class="bu"></a>
@@ -481,20 +357,16 @@ a {
         </button></a>
 
     </div>
+  <div id="random-line" class="quran"></div>
 
-    <!-- القرآن الكريم (يجب سحب الآية عشوائيًا من ملف quran.txt) -->
-    <div id="random-line" class="quran"></div>
-
-    <!-- المستطيل السفلي -->
-    <div class="footer">
-        <p>معلومات الاتصال</p>
-        <p>+966 536382599</p>
-        <p>abn7zm@gmail.com</p>
-        <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
-        <p class="end">© جميع الحقوق الفكريه و التطبيقيه محفوظه بأسم ثانوية ابن حزم التعليمية</p>
-    </div>
-
-
-
+  <div class="footer">
+    <h3>معلومات الاتصال</h3>
+    <ul class="contact-list">
+      <li>📞 <a href="tel:+966539084645">+966 539084645</a></li>
+      <li>📧 <a href="mailto:rsanjalawi007@gmail.com">rsanjalawi007@gmail.com</a></li>
+      <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
+    </ul>
+    <p class="end">© جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
+  </div>
 </body>
 </html>

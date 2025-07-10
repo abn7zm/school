@@ -1,502 +1,314 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قسم الشكاوى طالب</title>
-    <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>قسم الشكاوى - طالب</title>
+  <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #005d7e;
+      padding: 20px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    header img {
+      height: 50px;
+    }
+
+    .return-home-button {
+      background-color: #f6b100;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      font-size: 15px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .return-home-button:hover {
+      background-color: #1dcde7;
+      transform: scale(1.05);
+    }
+
+    .main-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: white;
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #484646;
+      margin-bottom: 30px;
+      font-size: 26px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .form-row input,
+    .form-row select,
+    textarea {
+      flex: 1;
+      font-size: 16px;
+      padding: 12px 15px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      transition: border 0.3s;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus,
+    textarea:focus {
+      border-color: #14b9d0;
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 130px;
+    }
+
+    button {
+      background-color: #14b9d0;
+      color: white;
+      padding: 14px;
+      font-size: 17px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #1dcde7;
+      transform: scale(1.03);
+    }
+
+    #responseMessage {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    
+    .footer {
+      background-color: #005d7e;
+      color: #ffffff;
+      padding: 25px 40px;
+      width: 100%;
+      text-align: right;
+      margin-top: auto;
+      box-sizing: border-box;
+    }
+
+    .footer h3 {
+      margin-bottom: 15px;
+      font-size: 22px;
+      color: #ffffff;
+      font-weight: bold;
+      border-bottom: 2px solid #f6b100;
+      padding-bottom: 5px;
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      font-size: 18px;
+    }
+
+    .contact-list li {
+      margin-bottom: 10px;
+    }
+
+    .contact-list li a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-list li a:hover {
+      color: #007a8c;
+      text-decoration: underline;
+    }
+
+    .end {
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+.logo img {
+      height: 90px;
+      filter: drop-shadow(0 0 10px #00e6f6);
+    }
+    .cry {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      color: #ffffff;
+      user-select: none;
+      white-space: nowrap;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        flex-direction: column;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        position: relative;
+      }
+
+      header img {
+        height: 40px;
+      }
+
+      .cry {
+        position: static;
+        transform: none;
+        margin-top: 10px;
+        font-size: 28px;
+        color: #ffffff !important; /* تأكيد اللون الأبيض */
+      }
+    }
+  </style>
 </head>
 <body>
-    <img class="logo" src="https://i.postimg.cc/nrQwRjHx/logo.png" alt="Logo">
 
-    <div class="container">
-        <form id="complaintForm" onsubmit="submitForm(event)">
-            <div class="input-group">
-                <input type="text" id="name" placeholder="الاسم الثلاثي">
-                <input type="text" id="phone" placeholder="رقم الهاتف">
-            </div>
-            <div class="input-group">
-                <select id="class" name="class" onchange="updateShobaOptions()">
-                    <option value="" disabled selected>الفصل</option>
-                    <option value="اول ثانوي">اول ثانوي</option>
-                    <option value="ثاني ثانوي">ثاني ثانوي</option>
-                    <option value="ثالث ثانوي">ثالث ثانوي</option>
-                </select>
-                <select id="shoba" name="shoba">
-                    <option value="" disabled selected>الشعبة</option>
-                </select>
-            </div>
-            <input class="cs" type="text" id="subject" placeholder="عنوان الشكوى / الاقتراح *" required>
-            <br><br>
-            <textarea id="complaint" placeholder="  الشكوى / الاقتراح.... *" required></textarea>
-            <button type="submit">إرسال</button>
-            <p id="responseMessage"></p>
-        </form>
+  <header>
+    <div class="logo">
+        <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" />
+      </div>
+      <div class="cry">
+      قسم الشكاوي /الاقتراحات
     </div>
+    <a href="student_home.html" class="return-home-button">العودة إلى الرئيسية</a>
+  </header>
 
-    <a href="student_home.html" class="return-home-button">العودة
-        <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Arrow" class="button-icon">
-    </a>
+  <div class="main-container">
+    <h2>نموذج الشكاوى / الاقتراحات</h2>
+    <form id="complaintForm" onsubmit="submitForm(event)">
+      <div class="form-row">
+        <input type="text" id="name" placeholder="الاسم الثلاثي" required>
+        <input type="text" id="phone" placeholder="رقم الهاتف" required>
+      </div>
+      <div class="form-row">
+        <select id="class" onchange="updateShobaOptions()" required>
+          <option value="" disabled selected>اختر الفصل</option>
+          <option value="اول ثانوي">اول ثانوي</option>
+          <option value="ثاني ثانوي">ثاني ثانوي</option>
+          <option value="ثالث ثانوي">ثالث ثانوي</option>
+        </select>
+        <select id="shoba" required>
+          <option value="" disabled selected>اختر الشعبة</option>
+        </select>
+      </div>
+      <input type="text" id="subject" placeholder="عنوان الشكوى / الاقتراح" required>
+      <textarea id="complaint" placeholder="اكتب هنا تفاصيل الشكوى أو الاقتراح" required></textarea>
+      <button type="submit">إرسال</button>
+      <p id="responseMessage"></p>
+    </form>
+  </div>
 
-    <div class="solid-section" dir="rtl">
-        <p class="p1">: معلومات الاتصال</p>
-        <p dir="ltr">+966 536382599</p>
-        <p>abn7zm@gmail.com</p>
-        <p>مجمع ثانوية ابن حزم التعليمي, تبوك</p>
-        <br>
-        <p class="p1">: المساعدة</p>
-        <a href="support2.html"><p>الدعم الفني</p></a>
-        <div class="copy" dir="ltr">
-            © جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية
-        </div>
-        <div class="copy" dir="ltr">
-            2024 - 2023
-        </div>
-    </div>
+  
+  <div class="footer">
+    <h3>معلومات الاتصال</h3>
+    <ul class="contact-list">
+      <li>📞 <a href="tel:+966539084645">+966 539084645</a></li>
+      <li>📧 <a href="mailto:rsanjalawi007@gmail.com">rsanjalawi007@gmail.com</a></li>
+      <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
+    </ul>
+    <p class="end">© جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
+  </div>
 
-    <script>
-        function updateShobaOptions() {
-            const classSelect = document.getElementById('class');
-            const shobaSelect = document.getElementById('shoba');
-            const selectedClass = classSelect.value;
+  <script>
+    function updateShobaOptions() {
+      const classValue = document.getElementById('class').value;
+      const shoba = document.getElementById('shoba');
+      let options = [];
 
-            let shobaOptions = [];
+      if (classValue === 'اول ثانوي') options = ['101', '102', '103', '104'];
+      else if (classValue === 'ثاني ثانوي') options = ['201', '202', '203'];
+      else if (classValue === 'ثالث ثانوي') options = ['301', '302', '303'];
 
-            if (selectedClass === 'اول ثانوي') {
-                shobaOptions = ['101', '102', '103', '104'];
-            } else if (selectedClass === 'ثاني ثانوي') {
-                shobaOptions = ['201', '202', '203'];
-            } else if (selectedClass === 'ثالث ثانوي') {
-                shobaOptions = ['301', '302', '303'];
-            }
-
-            shobaSelect.innerHTML = '<option value="" disabled selected>الشعبة</option>';
-            shobaOptions.forEach(function(shoba) {
-                const option = document.createElement('option');
-                option.value = shoba;
-                option.text = shoba;
-                shobaSelect.appendChild(option);
-            });
-        }
-
-        document.getElementById('phone').addEventListener('input', function (e) {
-            this.value = this.value.replace(/\D/g, '');
-
-            if (this.value.length > 10) {
-                this.value = this.value.slice(0, 10);
-            }
-        });
-
-        function submitForm(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const classValue = document.getElementById('class').value;
-            const shoba = document.getElementById('shoba').value;
-            const subject = document.getElementById('subject').value;
-            const complaint = document.getElementById('complaint').value;
-
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('phone', phone);
-            formData.append('class', classValue);
-            formData.append('shoba', shoba);
-            formData.append('subject', subject);
-            formData.append('complaint', complaint);
-
-            fetch('https://script.google.com/macros/s/AKfycbwlWpn9cBcrIvdfkvB4mqgoPnJgh37muGtlRqQkmQb1SOJmFhsUawCzQOla8yHEc1qktA/exec', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                const responseMessage = document.getElementById('responseMessage');
-                responseMessage.textContent = data;
-                responseMessage.style.color = 'green';
-                responseMessage.style.display = 'block';
-            })
-            .catch(error => {
-                const responseMessage = document.getElementById('responseMessage');
-                responseMessage.textContent = 'حدث خطأ، حاول مرة أخرى';
-                responseMessage.style.color = 'red';
-                responseMessage.style.display = 'block';
-            });
-        }
-
-    </script>
-
-    <style>
-        /* أساليب أساسية */
-body {
-    font-family: 'Cairo', sans-serif;
-    background-color: #f5f5f5;
-    direction: rtl;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    overflow-x: hidden; /* منع التمرير الأفقي */
-}
-
-/* تصميم النموذج */
-.container {
-    background-color: #484646;
-    border-radius: 15px;
-    padding: 30px;
-    width: 90%;
-    max-width: 800px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    margin: 200px auto;
-}
-
-/* تصميم الصورة */
-.logo {
-    left: 10px;
-    width: 13%;
-    z-index: 1;
-    position: absolute;
-    top: 10px;
-}
-
-/* تصميم الزر */
-button {
-    width: 100%;
-    padding: 10px;
-    border-radius: 15px;
-    border: none;
-    background-color: #14b9d0;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-/* تصميم النص */
-.solid-section {
-    background-color: #484646;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    color: #ffffff;
-    text-align: right;
-    font-size: 16px;
-    position: relative;
-    top: 120px;
-}
-
-a {
-    text-decoration: none;
-    color: #ffffff;
-    
-  }
-
-
-.copy {
-    text-align: center;
-    font-size: 16px;
-}
-
-/* زر العودة إلى الصفحة الرئيسية */
-.return-home-button {
-    position: absolute;
-    top: 40px;
-    right: 66px;
-    padding: 10px 18px;
-    background-color: #007a8c;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.45s ease;
-    font-size: 20px;
-    z-index: 1000;
-}
-
-.return-home-button:hover {
-    background-color: #484646;
-}
-
-.button-icon {
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
-}
-
-/* تصميم الإدخالات */
-.input-group {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-.input-group input, .input-group select {
-    width: 100%;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 15px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-
-textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 15px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    resize: none;
-    box-sizing: border-box;
-    font-size: 14px;
-    height: 100px;
-    margin-bottom: 15px;
-}
-
-.cs {
-    width: 100%;
-    padding: 20px;
-    border-radius: 15px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    resize: none;
-    box-sizing: border-box;
-    font-size: 14px;
-    height: 10px;
-    margin-bottom: 15px;
-}
-
-/* تحسينات عامة */
-body::-webkit-scrollbar {
-    display: none;
-}
-
-/* نقاط توقف للتكبير */
-@media (min-width: 1920px) {
-    .logo {
-        width: 6%;
+      shoba.innerHTML = '<option value="" disabled selected>اختر الشعبة</option>';
+      options.forEach(val => {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.textContent = val;
+        shoba.appendChild(opt);
+      });
     }
 
-    .container {
-        padding: 40px;
-    }
-
-    button {
-        font-size: 18px;
-    }
-
-    .solid-section {
-        padding: 30px;
-        font-size: 18px;
-    }
-
-    .copy {
-        font-size: 18px;
-    }
-}
-
-@media (min-width: 1600px) {
-    .logo {
-        width: 8%;
-    }
-
-    .container {
-        padding: 35px;
-    }
-
-    button {
-        font-size: 17px;
-    }
-
-    .solid-section {
-        padding: 28px;
-        font-size: 17px;
-    }
-
-    .copy {
-        font-size: 17px;
-    }
-}
-
-@media (min-width: 1280px) {
-    .logo {
-        width: 10%;
-    }
-
-    .container {
-        padding: 30px;
-    }
-
-    button {
-        font-size: 16px;
-    }
-
-    .solid-section {
-        padding: 25px;
-        font-size: 16px;
-    }
-
-    .copy {
-        font-size: 16px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .logo {
-        width: 12%;
-    }
-
-    .container {
-        padding: 25px;
-    }
-
-    button {
-        font-size: 15px;
-    }
-
-    .solid-section {
-        padding: 22px;
-        font-size: 15px;
-    }
-
-    .copy {
-        font-size: 15px;
-    }
-}
-
-@media (min-width: 768px) {
-    .logo {
-        width: 14%;
-    }
-
-    .container {
-        padding: 20px;
-    }
-
-    button {
-        font-size: 14px;
-    }
-
-    .solid-section {
-        padding: 20px;
-        font-size: 14px;
-    }
-
-    .copy {
-        font-size: 14px;
-    }
-}
-
-/* نقاط توقف للتصغير */
-@media (max-width: 768px) {
-    .logo {
-        width: 20%;
-    }
-
-    .container {
-        padding: 15px;
-    }
-
-    button {
-        font-size: 12px;
-    }
-
-    .solid-section {
-        padding: 15px;
-        font-size: 12px;
-    }
-
-    .copy {
-        font-size: 12px;
-    }
-    .return-home-button {
-       right: 0;
-       margin-right: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .logo {
-        width: 25%;
-    }
-
-    .container {
-        padding: 10px;
-    }
-
-    button {
-        font-size: 10px;
-    }
-
-    .solid-section {
-        padding: 10px;
-        font-size: 10px;
-    }
-
-    .copy {
-        font-size: 10px;
-    }
-}
-
-@media (max-width: 360px) {
-    .logo {
-        width: 30%;
-    }
-
-    .container {
-        padding: 8px;
-    }
-
-    button {
-        font-size: 9px;
-    }
-
-    .solid-section {
-        padding: 8px;
-        font-size: 9px;
-    }
-
-    .copy {
-        font-size: 9px;
-    }
-}
-
-@media (max-width: 320px) {
-    .logo {
-        width: 35%;
-    }
-
-    .container {
-        padding: 6px;
-    }
-
-    button {
-        font-size: 8px;
-    }
-
-    .solid-section {
-        padding: 6px;
-        font-size: 8px;
-    }
-
-    .copy {
-        font-size: 8px;
-    }
-}
-    </style>
-
-    <script>        document.addEventListener('keydown', function(event) {
-        // تعطيل F12
-        if (event.key === 'F12') {
-            event.preventDefault();
-            return false;
-        }
-    })
-    document.addEventListener('contextmenu', function(event) {
-        event.preventDefault();
+    document.getElementById('phone').addEventListener('input', function () {
+      this.value = this.value.replace(/\D/g, '').slice(0, 10);
     });
-    console.log = function() {};
-    console.warn = function() {};
-    console.error = function() {};
-    console.info = function() {};
-    console.debug = function() {};</script>
+
+    function submitForm(e) {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append('name', document.getElementById('name').value);
+      formData.append('phone', document.getElementById('phone').value);
+      formData.append('class', document.getElementById('class').value);
+      formData.append('shoba', document.getElementById('shoba').value);
+      formData.append('subject', document.getElementById('subject').value);
+      formData.append('complaint', document.getElementById('complaint').value);
+
+      fetch('https://script.google.com/macros/s/AKfycbwlWpn9cBcrIvdfkvB4mqgoPnJgh37muGtlRqQkmQb1SOJmFhsUawCzQOla8yHEc1qktA/exec', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.text())
+      .then(data => {
+        const msg = document.getElementById('responseMessage');
+        msg.textContent = data;
+        msg.style.color = 'green';
+      })
+      .catch(() => {
+        const msg = document.getElementById('responseMessage');
+        msg.textContent = 'حدث خطأ، حاول مرة أخرى';
+        msg.style.color = 'red';
+      });
+    }
+  </script>
 </body>
 </html>
