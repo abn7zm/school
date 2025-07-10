@@ -312,64 +312,99 @@
     <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="سهم العودة" class="button-icon" />
   </a>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const togglePasswordButton = document.getElementById('togglePasswordButton');
-      const password = document.getElementById('password');
-      const showIcon = document.getElementById('showIcon');
-      const hideIcon = document.getElementById('hideIcon');
-      const idNumber = document.getElementById('idNumber');
-      const loginForm = document.getElementById('loginForm');
-
-      togglePasswordButton.addEventListener('click', function () {
-        if (password.type === 'password') {
-          password.type = 'text';
-          showIcon.style.display = 'none';
-          hideIcon.style.display = 'inline';
-        } else {
-          password.type = 'password';
-          showIcon.style.display = 'inline';
-          hideIcon.style.display = 'none';
-        }
-      });
-
-      idNumber.addEventListener('input', function () {
-        if (this.value.length > 15) {
-          this.value = this.value.slice(0, 15);
-        }
-      });
-
-      loginForm.addEventListener('submit', function (event) {
+    document.addEventListener('keydown', function(event) {
+    // تعطيل F12
+    if (event.key === 'F12') {
         event.preventDefault();
+        return false;
+    }
+})
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
 
-        fetch(
-          'https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec',
-          {
+document.addEventListener('DOMContentLoaded', function() {
+    const togglePasswordButton = document.getElementById('togglePasswordButton');
+    const password = document.getElementById('password');
+    const showIcon = document.getElementById('showIcon');
+    const hideIcon = document.getElementById('hideIcon');
+    const idNumber = document.getElementById('idNumber');
+    const loginForm = document.getElementById('loginForm');
+
+    // التبديل بين إظهار وإخفاء كلمة المرور
+    togglePasswordButton.addEventListener('click', function() {
+        if (password.type === 'password') {
+            password.type = 'text';
+            showIcon.style.display = 'none';
+            hideIcon.style.display = 'inline';
+        } else {
+            password.type = 'password';
+            showIcon.style.display = 'inline';
+            hideIcon.style.display = 'none';
+        }
+    });
+
+    idNumber.addEventListener('input', function() {
+
+    if (this.value.length > 15) {
+        this.value = this.value.slice(0, 15);
+    }
+});
+
+
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+
+
+
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        var idNumber = document.getElementById('idNumber').value;
+        var password = document.getElementById('password').value;
+
+        fetch('https://script.google.com/macros/s/AKfycbwMKjyVVnvgCbPO9gkW1l0U2Rs_6dIF_1X0xm6s_mQsZqUh4efokZtRx4hL8PdtY1KTRw/exec', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
             body: new URLSearchParams({
-              idNumber: idNumber.value,
-              password: password.value,
-            }),
-          }
-        )
-          .then((res) => res.text())
-          .then((result) => {
+                'idNumber': idNumber,
+                'password': password
+            })
+        })
+        .then(response => response.text())
+        .then(result => {
             if (result !== 'incorrect_password' && result !== 'incorrect_id') {
-              localStorage.setItem('userName', result);
-              window.location.href = 'student_home.html';
+                localStorage.setItem('userName', result);
+                window.location.href = 'student_home.html';
             } else {
-              alert('يرجى التحقق من رقم الهوية/كلمة المرور');
+                alert('يرجى التحقق من رقم الهوية/كلمة المرور');
             }
-          })
-          .catch((err) => console.error('Error:', err));
-      });
+        })
+        .catch(error => console.error('Error:', error));
     });
+});
 
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'F12') e.preventDefault();
-    });
-    console.log = console.warn = console.error = console.info = console.debug = function () {};
-  </script>
+
+document.addEventListener('keydown', function(event) {
+    // تعطيل F12
+    if (event.key === 'F12') {
+        event.preventDefault();
+        return false;
+    }
+})
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+</script>
 </body>
 </html>
