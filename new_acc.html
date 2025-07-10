@@ -285,6 +285,34 @@
       direction: rtl;
       user-select: none;
     }
+
+
+    /*secss ms */
+    #successMessage {
+  display: none;
+  background-color: #e6f9f7;
+  border: 2px solid #00bfa6;
+  color: #00695c;
+  padding: 15px;
+  margin-top: 20px;
+  font-size: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3);
+  text-align: center;
+  font-weight: bold;
+  animation: fadeInScale 0.5s ease-in-out forwards;
+}
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
   </style>
 </head>
 <body>
@@ -329,9 +357,11 @@
           aria-label="كلمة المرور"
         />
         <button type="button" id="togglePasswordButton" aria-label="تبديل إظهار كلمة المرور" tabindex="0">
-            <div id="successMessage" style="display: none; color: green; margin-top: 15px;">
+            <button type="submit" id="createAccountButton">إنشاء حساب</button>
+<div id="successMessage">
   ✅ تم إنشاء الحساب بنجاح! سيتم توجيهك الآن...
 </div>
+
           <img
             src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png"
             id="showIcon"
