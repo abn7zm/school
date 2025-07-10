@@ -525,7 +525,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // نخفي رسائل الخطأ أثناء الكتابة حتى لا تظهر مبكرًا
     hideAllErrors();
     const isValid = validateForm(false);
-    createAccountButton.disabled = !isValid;
+    
   }
 
   fullName.addEventListener('input', handleInput);
@@ -535,7 +535,7 @@ document.addEventListener('DOMContentLoaded', function() {
   privacyPolicy.addEventListener('change', handleInput);
 
   // عند محاولة الإرسال
-  createAccountButton.addEventListener('click', function(event) {
+createAccountButton.addEventListener('click', function(event) {
   event.preventDefault();
 
   const idValue = idNumber.value.trim();
@@ -553,14 +553,10 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
 
-      // تحقق من الحقول الأخرى
-      const idValid = validateIDNumber(true);
-      const passwordValid = validatePassword(true);
-      const confirmPasswordValid = validateConfirmPassword(true);
-      const privacyPolicyValid = validatePrivacyPolicy(true);
-      const fullNameValid = validateFullName(true);
+      // تحقق شامل مع عرض رسائل الخطأ
+      const formValid = validateForm(true);
 
-      if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid) {
+      if (formValid) {
         fetch('https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec', {
           method: 'POST',
           body: new URLSearchParams({
