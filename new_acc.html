@@ -400,84 +400,71 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-function validateIDNumber(showError = true) {
-    const idError = document.getElementById('idError');
-    const idValue = idNumber.value.trim();
+    function validateIDNumber(showError = true) {
+        const idError = document.getElementById('idError');
+        const idValue = idNumber.value.trim();
 
-    if (idValue === '') {
-        if (showError) {
-            idError.style.display = 'block';
-            idError.textContent = 'يجب كتابة رقم الهوية أو الإدخال المطلوب';
-        }
-        return false;
-    }
-
-  
-    if (idValue.length < 2 || idValue.length > 15) {
-        if (showError) {
-            idError.style.display = 'block';
-            idError.textContent = 'يجب أن يكون الإدخال بين 2 و 15 حرفًا أو رمزًا';
-        }
-        return false;
-    } else {
-        idError.style.display = 'none';
-        return true;
-    }
-}
-
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
-
-
-  function checkIDNumberInSystem() {
-    const idNumberValue = idNumber.value.trim();
-
-    if (idNumberValue === '') {
-        idCheckMessage.style.display = 'none';
-        createAccountButton.disabled = true;
-        return;
-    }
-
-    fetch('https://docs.google.com/spreadsheets/d/1-IAOaZT6c75rKXqoPGgBTlTjt_SpcgfOXMWowSnx20o/export?format=csv')
-        .then(response => {
-            if (!response.ok) throw new Error('sheet error');
-            return response.text();
-        })
-        .then(csv => {
-            const lines = csv.split('\n').map(line => line.trim());
-            const foundInSheet = lines.some(line => {
-                const cols = line.split(',');
-                return cols[1] && cols[1].trim() === idNumberValue;
-            });
-
-            if (foundInSheet) {
-                idCheckMessage.style.display = 'block';
-                idCheckMessage.textContent = 'رقم الهوية مستخدم من قبل';
-                createAccountButton.disabled = true;
-            } else {
-                idCheckMessage.style.display = 'none';
-
-                // نعيد التحقق من جميع الحقول مرة أخرى
-                const idValid = validateIDNumber(false);
-                const passwordValid = validatePassword(false);
-                const confirmPasswordValid = validateConfirmPassword(false);
-                const privacyPolicyValid = validatePrivacyPolicy(false);
-                const fullNameValid = validateFullName(false);
-
-                const isValid = idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid;
-
-                createAccountButton.disabled = !isValid;
+        if (idValue === '') {
+            if (showError) {
+                idError.style.display = 'block';
+                idError.textContent = 'يجب كتابة رقم الهوية أو الإدخال المطلوب';
             }
-        })
-        .catch(err => {
-            console.error('خطأ في قراءة Google Sheet:', err);
-        });
-}
+            return false;
+        }
 
+        if (idValue.length < 2 || idValue.length > 15) {
+            if (showError) {
+                idError.style.display = 'block';
+                idError.textContent = 'يجب أن يكون الإدخال بين 2 و 15 حرفًا أو رمزًا';
+            }
+            return false;
+        } else {
+            idError.style.display = 'none';
+            return true;
+        }
+    }
 
+    function checkIDNumberInSystem() {
+        const idNumberValue = idNumber.value.trim();
+
+        if (idNumberValue === '') {
+            idCheckMessage.style.display = 'none';
+            createAccountButton.disabled = true;
+            return;
+        }
+
+        fetch('https://docs.google.com/spreadsheets/d/1-IAOaZT6c75rKXqoPGgBTlTjt_SpcgfOXMWowSnx20o/export?format=csv')
+            .then(response => {
+                if (!response.ok) throw new Error('sheet error');
+                return response.text();
+            })
+            .then(csv => {
+                const lines = csv.split('\n').map(line => line.trim());
+                const foundInSheet = lines.some(line => {
+                    const cols = line.split(',');
+                    return cols[1] && cols[1].trim() === idNumberValue;
+                });
+
+                if (foundInSheet) {
+                    idCheckMessage.style.display = 'block';
+                    idCheckMessage.textContent = 'رقم الهوية مستخدم من قبل';
+                    createAccountButton.disabled = true;
+                } else {
+                    idCheckMessage.style.display = 'none';
+                    const idValid = validateIDNumber(false);
+                    const passwordValid = validatePassword(false);
+                    const confirmPasswordValid = validateConfirmPassword(false);
+                    const privacyPolicyValid = validatePrivacyPolicy(false);
+                    const fullNameValid = validateFullName(false);
+
+                    const isValid = idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid;
+                    createAccountButton.disabled = !isValid;
+                }
+            })
+            .catch(err => {
+                console.error('خطأ في قراءة Google Sheet:', err);
+            });
+    }
 
     function validatePassword(showError = true) {
         const passwordError = document.getElementById('passwordError');
@@ -488,7 +475,7 @@ console.debug = function() {};
             }
             return false;
         }
-        if (password.value.length < 0) {
+        if (password.value.length < 6) {
             if (showError) {
                 passwordError.style.display = 'block';
                 passwordError.textContent = 'يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل';
@@ -500,24 +487,25 @@ console.debug = function() {};
         }
     }
 
-  function validateConfirmPassword(showError = false) {
-    if (confirmPassword.value.trim() === '') {
-      if (showError) {
-        confirmPasswordError.textContent = 'يجب تأكيد كلمة المرور';
-        confirmPasswordError.style.display = 'block';
-      }
-      return false;
+    function validateConfirmPassword(showError = false) {
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        if (confirmPassword.value.trim() === '') {
+            if (showError) {
+                confirmPasswordError.textContent = 'يجب تأكيد كلمة المرور';
+                confirmPasswordError.style.display = 'block';
+            }
+            return false;
+        }
+        if (password.value !== confirmPassword.value) {
+            if (showError) {
+                confirmPasswordError.textContent = 'كلمتا المرور غير متطابقتين';
+                confirmPasswordError.style.display = 'block';
+            }
+            return false;
+        }
+        confirmPasswordError.style.display = 'none';
+        return true;
     }
-    if (password.value !== confirmPassword.value) {
-      if (showError) {
-        confirmPasswordError.textContent = 'كلمتا المرور غير متطابقتين';
-        confirmPasswordError.style.display = 'block';
-      }
-      return false;
-    }
-    confirmPasswordError.style.display = 'none';
-    return true;
-  }
 
     function validatePrivacyPolicy(showError = true) {
         const policyError = document.getElementById('policyError');
@@ -573,21 +561,14 @@ console.debug = function() {};
     password.addEventListener('input', handleInput);
     confirmPassword.addEventListener('input', handleInput);
     fullName.addEventListener('input', handleInput);
-
     privacyPolicy.addEventListener('change', handleInput);
 
     togglePasswordButton.addEventListener('click', function() {
-        if (password.type === 'password') {
-            password.type = 'text';
-            confirmPassword.type = 'text';
-            showIcon.style.display = 'none';
-            hideIcon.style.display = 'inline';
-        } else {
-            password.type = 'password';
-            confirmPassword.type = 'password';
-            showIcon.style.display = 'inline';
-            hideIcon.style.display = 'none';
-        }
+        const type = password.type === 'password' ? 'text' : 'password';
+        password.type = type;
+        confirmPassword.type = type;
+        showIcon.style.display = type === 'password' ? 'inline' : 'none';
+        hideIcon.style.display = type === 'password' ? 'none' : 'inline';
     });
 
     createAccountButton.addEventListener('click', function(event) {
@@ -599,7 +580,14 @@ console.debug = function() {};
         const privacyPolicyValid = validatePrivacyPolicy(true);
         const fullNameValid = validateFullName(true);
 
-        if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid) {
+        if (
+            idValid &&
+            passwordValid &&
+            confirmPasswordValid &&
+            privacyPolicyValid &&
+            fullNameValid &&
+            idCheckMessage.style.display === 'none'
+        ) {
             fetch('https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec', {
                 method: 'POST',
                 body: new URLSearchParams({
@@ -610,7 +598,6 @@ console.debug = function() {};
             })
             .then(response => {
                 if (response.ok) {
-                    console.log('Data submitted successfully');
                     successMessage.style.display = 'block';
                     setTimeout(() => {
                         window.location.href = 'index.html';
@@ -626,55 +613,20 @@ console.debug = function() {};
         }
     });
 
-    idNumber.addEventListener('input', function (e) {
-     
+    idNumber.addEventListener('input', function () {
         if (this.value.length > 15) {
             this.value = this.value.slice(0, 10);
         }
     });
 });
-document.addEventListener('keydown', function(event) {
 
+document.addEventListener('keydown', function(event) {
     if (event.key === 'F12') {
         event.preventDefault();
-        return false;
     }
-})
+});
 document.addEventListener('contextmenu', function(event) {
     event.preventDefault();
 });
-
-document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }
-})
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
-
-
-const SECRET_KEY = "2shawermaExtrathoRahemdallahy5lleh";
-
-function customDecrypt(encryptedID) {
-    try {
-        const decoded = atob(encryptedID); // فك base64
-        const parts = decoded.split(":");
-        if (parts[0] === SECRET_KEY) {
-            return parts[1]; // يرجع رقم الهوية الأصلي
-        }
-        return null;
-    } catch (e) {
-        return null;
-    }
-}
-
 </script>
 </html>
