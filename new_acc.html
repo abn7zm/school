@@ -96,10 +96,6 @@
       outline: none;
       background: #e0f5fa;
     }
-    input {
-  background-color: #f0fbff;
-  border-color: #009db2;
-}
     .password-container {
       display: flex;
       align-items: center;
@@ -107,6 +103,7 @@
       margin-bottom: 30px;
       flex-wrap: nowrap;
       justify-content: flex-start;
+      position: relative;
     }
     .password-container input {
       flex: 1 1 auto;
@@ -139,6 +136,7 @@
       width: 24px;
       height: 24px;
       filter: drop-shadow(0 0 2px rgba(0,0,0,0.25));
+      user-select: none;
     }
     button[type="submit"] {
       width: 100%;
@@ -156,12 +154,12 @@
       text-transform: uppercase;
     }
     button[type="submit"]:disabled {
-  background: #cccccc;
-  color: #888888;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-    button[type="submit"]:hover {
+      background: #cccccc;
+      color: #888888;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    button[type="submit"]:hover:not(:disabled) {
       background: linear-gradient(90deg, #007a8c, #005f6b);
       box-shadow: 0 8px 25px rgba(0, 122, 140, 0.8);
     }
@@ -180,10 +178,6 @@
       height: 18px;
       cursor: pointer;
       transition: outline 0.3s ease;
-    }
-    .checkbox-container input[type="checkbox"].error-checkbox {
-     
-      outline-offset: 2px;
     }
     .checkbox-container label a {
       color: #007a8c;
@@ -271,6 +265,26 @@
         height: 18px;
       }
     }
+    /* أخطاء بسيطة تظهر تحت الحقول */
+    .error-message {
+      color: #d93025;
+      font-size: 13px;
+      margin-top: -15px;
+      margin-bottom: 10px;
+      display: none;
+      text-align: right;
+      direction: rtl;
+      user-select: none;
+    }
+    #idCheckMessage {
+      color: #d93025;
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: none;
+      text-align: right;
+      direction: rtl;
+      user-select: none;
+    }
   </style>
 </head>
 <body>
@@ -289,6 +303,8 @@
         aria-required="true"
         aria-label="الاسم الثلاثي"
       />
+      <div id="fullNameError" class="error-message"></div>
+
       <input
         type="text"
         id="idNumber"
@@ -299,6 +315,9 @@
         aria-required="true"
         aria-label="رقم الهوية"
       />
+      <div id="idError" class="error-message"></div>
+      <div id="idCheckMessage">رقم الهوية غير موجود في النظام</div>
+
       <div class="password-container">
         <input
           type="password"
@@ -309,7 +328,7 @@
           aria-required="true"
           aria-label="كلمة المرور"
         />
-        <button type="button" id="togglePasswordButton" aria-label="تبديل إظهار كلمة المرور">
+        <button type="button" id="togglePasswordButton" aria-label="تبديل إظهار كلمة المرور" tabindex="0">
           <img
             src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png"
             id="showIcon"
@@ -325,6 +344,8 @@
           />
         </button>
       </div>
+      <div id="passwordError" class="error-message"></div>
+
       <input
         type="password"
         id="confirmPassword"
@@ -334,6 +355,8 @@
         aria-required="true"
         aria-label="تأكيد كلمة المرور"
       />
+      <div id="confirmPasswordError" class="error-message"></div>
+
       <div class="checkbox-container">
         <input
           type="checkbox"
@@ -348,75 +371,231 @@
           <a href="PRIVACY POLICY.HTML" target="_blank" rel="noopener noreferrer">سياسة الخصوصية</a>
         </label>
       </div>
-      <button type="submit" id="createAccountButton" disabled>إنشاء حساب</button>
+      <div id="policyError" class="error-message"></div>
+
+      <button type="submit" id="createAccountButton">إنشاء حساب</button>
     </form>
   </div>
   <a href="index.html" class="return-home-button" aria-label="العودة إلى الصفحة الرئيسية">
     العودة
     <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="سهم العودة" class="button-icon" />
   </a>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const togglePasswordButton = document.getElementById('togglePasswordButton');
-      const password = document.getElementById('password');
-      const showIcon = document.getElementById('showIcon');
-      const hideIcon = document.getElementById('hideIcon');
-      const form = document.getElementById('createAccountForm');
-      const createAccountButton = document.getElementById('createAccountButton');
-privacyPolicy.addEventListener('change', () => {
-  createAccountButton.disabled = !privacyPolicy.checked;
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const fullName = document.getElementById('fullName');
+  const idNumber = document.getElementById('idNumber');
+  const password = document.getElementById('password');
+  const confirmPassword = document.getElementById('confirmPassword');
+  const privacyPolicy = document.getElementById('privacyPolicy');
+  const createAccountButton = document.getElementById('createAccountButton');
+  const togglePasswordButton = document.getElementById('togglePasswordButton');
+  const showIcon = document.getElementById('showIcon');
+  const hideIcon = document.getElementById('hideIcon');
+  const fullNameError = document.getElementById('fullNameError');
+  const idError = document.getElementById('idError');
+  const idCheckMessage = document.getElementById('idCheckMessage');
+  const passwordError = document.getElementById('passwordError');
+  const confirmPasswordError = document.getElementById('confirmPasswordError');
+  const policyError = document.getElementById('policyError');
+
+  // إخفاء رسائل الخطأ مبدئياً
+  function hideAllErrors() {
+    fullNameError.style.display = 'none';
+    idError.style.display = 'none';
+    idCheckMessage.style.display = 'none';
+    passwordError.style.display = 'none';
+    confirmPasswordError.style.display = 'none';
+    policyError.style.display = 'none';
+  }
+
+  function validateFullName(showError = false) {
+    const value = fullName.value.trim();
+    const nameParts = value.split(/\s+/);
+    const arabicRegex = /^[\u0621-\u064A\s]+$/;
+    if (nameParts.length !== 3 || !arabicRegex.test(value)) {
+      if (showError) {
+        fullNameError.textContent = 'يرجى كتابة الاسم الثلاثي بشكل صحيح';
+        fullNameError.style.display = 'block';
+      }
+      return false;
+    }
+    fullNameError.style.display = 'none';
+    return true;
+  }
+
+  function validateIDNumber(showError = false) {
+    const value = idNumber.value.trim();
+    if (value === '') {
+      if (showError) {
+        idError.textContent = 'يجب كتابة رقم الهوية أو الإدخال المطلوب';
+        idError.style.display = 'block';
+      }
+      return false;
+    }
+    if (value.length < 2 || value.length > 15) {
+      if (showError) {
+        idError.textContent = 'يجب أن يكون الإدخال بين 2 و 15 حرفًا أو رمزًا';
+        idError.style.display = 'block';
+      }
+      return false;
+    }
+    idError.style.display = 'none';
+    return true;
+  }
+
+  function validatePassword(showError = false) {
+    if (password.value.trim() === '') {
+      if (showError) {
+        passwordError.textContent = 'يجب كتابة كلمة مرور';
+        passwordError.style.display = 'block';
+      }
+      return false;
+    }
+    if (password.value.length < 6) {
+      if (showError) {
+        passwordError.textContent = 'يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل';
+        passwordError.style.display = 'block';
+      }
+      return false;
+    }
+    passwordError.style.display = 'none';
+    return true;
+  }
+
+  function validateConfirmPassword(showError = false) {
+    if (confirmPassword.value.trim() === '') {
+      if (showError) {
+        confirmPasswordError.textContent = 'يجب تأكيد كلمة المرور';
+        confirmPasswordError.style.display = 'block';
+      }
+      return false;
+    }
+    if (password.value !== confirmPassword.value) {
+      if (showError) {
+        confirmPasswordError.textContent = 'كلمتا المرور غير متطابقتين';
+        confirmPasswordError.style.display = 'block';
+      }
+      return false;
+    }
+    confirmPasswordError.style.display = 'none';
+    return true;
+  }
+
+  function validatePrivacyPolicy(showError = false) {
+    if (!privacyPolicy.checked) {
+      if (showError) {
+        policyError.textContent = 'يجب الموافقة على سياسة الخصوصية';
+        policyError.style.display = 'block';
+      }
+      return false;
+    }
+    policyError.style.display = 'none';
+    return true;
+  }
+
+  // تحقق شامل بدون اظهار رسالة خطأ (لأجل تمكين الزر فقط)
+  function validateForm(showErrors = false) {
+    const validFullName = validateFullName(showErrors);
+    const validID = validateIDNumber(showErrors);
+    const validPassword = validatePassword(showErrors);
+    const validConfirmPassword = validateConfirmPassword(showErrors);
+    const validPolicy = validatePrivacyPolicy(showErrors);
+
+    return validFullName && validID && validPassword && validConfirmPassword && validPolicy;
+  }
+
+  // التبديل بين إظهار وإخفاء كلمة المرور
+ togglePasswordButton.addEventListener('click', function() {
+  if (password.type === 'password') {
+    password.type = 'text';
+    confirmPassword.type = 'text';
+    showIcon.style.display = 'none';
+    hideIcon.style.display = 'inline';
+  } else {
+    password.type = 'password';
+    confirmPassword.type = 'password';
+    showIcon.style.display = 'inline';
+    hideIcon.style.display = 'none';
+  }
 });
 
-      togglePasswordButton.addEventListener('click', () => {
-        if (password.type === 'password') {
-          password.type = 'text';
-          showIcon.style.display = 'none';
-          hideIcon.style.display = 'inline';
-        } else {
-          password.type = 'password';
-          showIcon.style.display = 'inline';
-          hideIcon.style.display = 'none';
-        }
-      });
+  // تمكين وتعطيل زر إنشاء الحساب حسب صحة البيانات أثناء الكتابة
+  function handleInput() {
+    // نخفي رسائل الخطأ أثناء الكتابة حتى لا تظهر مبكرًا
+    hideAllErrors();
+    const isValid = validateForm(false);
+    createAccountButton.disabled = !isValid;
+  }
 
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
+  fullName.addEventListener('input', handleInput);
+  idNumber.addEventListener('input', handleInput);
+  password.addEventListener('input', handleInput);
+  confirmPassword.addEventListener('input', handleInput);
+  privacyPolicy.addEventListener('change', handleInput);
 
-        // إزالة الخطأ السابق من checkbox
-        privacyPolicy.classList.remove('error-checkbox');
+  // عند محاولة الإرسال
+  createAccountButton.addEventListener('click', function(event) {
+  event.preventDefault();
 
-        // تحقق من checkbox
-        if (!privacyPolicy.checked) {
-          alert('يجب الموافقة على سياسة الخصوصية أولاً');
-          privacyPolicy.focus();
-          privacyPolicy.classList.add('error-checkbox');
-          return;
-        }
+  const idValue = idNumber.value.trim();
 
-        // تحقق تطابق كلمة المرور
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        if (password.value !== confirmPassword) {
-          alert('كلمتا المرور غير متطابقتين');
-          return;
-        }
+  fetch('tl$&12psps935aofm!^uffge$FS3$klp1@.txt')
+    .then(response => {
+      if (!response.ok) throw new Error('ملف الهوية غير متاح');
+      return response.text();
+    })
+    .then(data => {
+      const ids = data.split('\n').map(id => id.trim());
 
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
+      if (!ids.includes(idValue)) {
+        alert('رقم الهوية غير موجود في النظام');
+        return;
+      }
 
-        // كل شيء تمام، أرسل البيانات (مثلاً)
-        alert('تم إنشاء الحساب بنجاح!');
-        form.reset();
-      });
+      // تحقق من الحقول الأخرى
+      const idValid = validateIDNumber(true);
+      const passwordValid = validatePassword(true);
+      const confirmPasswordValid = validateConfirmPassword(true);
+      const privacyPolicyValid = validatePrivacyPolicy(true);
+      const fullNameValid = validateFullName(true);
+
+      if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid) {
+        fetch('https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec', {
+          method: 'POST',
+          body: new URLSearchParams({
+            'name': fullName.value.trim(),
+            'id': idNumber.value.trim(),
+            'pass': password.value.trim()
+          })
+        })
+        .then(response => {
+          if (response.ok) {
+            alert('تم إنشاء الحساب بنجاح!');
+            window.location.href = 'index.html';
+          } else {
+            alert('حدث خطأ أثناء إرسال البيانات.');
+          }
+        })
+        .catch(() => {
+          alert('تعذر الاتصال بالخادم.');
+        });
+      }
+    })
+    .catch(error => {
+      alert('فشل في التحقق من رقم الهوية.');
+      console.error(error);
     });
+});
 
-    // منع قائمة السياق وزر F12 مثل صفحة تسجيل الدخول
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'F12') e.preventDefault();
-    });
-    console.log = console.warn = console.error = console.info = console.debug = function () {};
-  </script>
-</body>
-</html>
+  // تحديد أقصى طول رقم الهوية أثناء الإدخال (مثلاً 15)
+  idNumber.addEventListener('input', function() {
+    if (this.value.length > 15) {
+      this.value = this.value.slice(0, 15);
+    }
+  });
+
+  // بدء حالة الزر مع تحميل الصفحة
+  handleInput();
+});
+</script>
