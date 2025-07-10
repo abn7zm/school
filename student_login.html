@@ -342,28 +342,27 @@
         event.preventDefault();
 
         fetch(
-          'https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec',
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-              idNumber: idNumber.value,
-              password: password.value,
-            }),
-          }
-        )
-          .then((res) => res.text())
-          .then((result) => {
-            if (result !== 'incorrect_password' && result !== 'incorrect_id') {
-              localStorage.setItem('userName', data.name);
-              window.location.href = 'student_home.html';
-            } else {
-              alert('يرجى التحقق من رقم الهوية/كلمة المرور');
-            }
-          })
-          .catch((err) => console.error('Error:', err));
-      });
-    });
+  'https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec',
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      idNumber: idNumber.value,
+      password: password.value,
+    }),
+  }
+)
+  .then((res) => res.text()) // ← هذا السطر كان ناقص
+  .then((result) => {
+    if (result.startsWith('success:')) {
+      const name = result.split(':')[1]; // يأخذ الاسم بعد :
+      localStorage.setItem("userName", name);
+      window.location.href = 'student_home.html';
+    } else {
+      alert('يرجى التحقق من رقم الهوية/كلمة المرور');
+    }
+  })
+  .catch((err) => console.error('Error:', err));
 
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     document.addEventListener('keydown', (e) => {
