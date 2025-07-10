@@ -1,697 +1,585 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>إنشاء حساب جديد</title>
-  <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: 'Cairo', sans-serif;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      direction: rtl;
-      background: #0d1f2d;
-      overflow-x: hidden;
-      position: relative;
-      padding: 10px;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background:
-        repeating-linear-gradient(
-          45deg,
-          rgba(24, 24, 24, 0.15) 0,
-          rgba(255, 223, 0, 0.15) 1px,
-          transparent 1px,
-          transparent 20px
-        ),
-        repeating-linear-gradient(
-          -45deg,
-          rgba(24, 24, 24, 0.15) 0,
-          rgba(27, 27, 27, 0.15) 1px,
-          transparent 1px,
-          transparent 20px
-        );
-      z-index: 0;
-      pointer-events: none;
-    }
-    #logo {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      height: 150px;
-      filter: drop-shadow(0 0 10px #00e6f6);
-      z-index: 10;
-      max-width: 150px;
-      width: 15vw;
-      min-width: 100px;
-    }
-    .form-container {
-      position: relative;
-      background: #ffffffee;
-      border-radius: 20px;
-      padding: 35px 25px;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-      z-index: 1;
-      text-align: center;
-      filter: drop-shadow(0 0 5px #00e6f6);
-      box-sizing: border-box;
-    }
-    h2 {
-      margin-bottom: 30px;
-      font-size: 28px;
-      font-weight: 700;
-      color: #007a8c;
-      user-select: none;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 14px 18px;
-      margin-bottom: 20px;
-      border: 2px solid #009db2;
-      border-radius: 15px;
-      font-size: 16px;
-      text-align: right;
-      background: #f0fbff;
-      color: #00454d;
-      transition: border-color 0.3s ease, background-color 0.3s ease;
-    }
-    input[type="text"]:focus,
-    input[type="password"]:focus {
-      border-color: #007a8c;
-      outline: none;
-      background: #e0f5fa;
-    }
-    .password-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 30px;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-      position: relative;
-    }
-    .password-container input {
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-    .password-container button {
-      background: #009db2;
-      border: none;
-      border-radius: 15px;
-      padding: 12px;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: background 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 157, 178, 0.4);
-      color: white;
-      user-select: none;
-      flex-shrink: 0;
-      position: relative;
-      top: -10px;
-    }
-    .password-container button:hover {
-      background: #007a8c;
-      box-shadow: 0 6px 15px rgba(0, 122, 140, 0.6);
-    }
-    .toggle-icon {
-      width: 24px;
-      height: 24px;
-      filter: drop-shadow(0 0 2px rgba(0,0,0,0.25));
-      user-select: none;
-    }
-    button[type="submit"] {
-      width: 100%;
-      background: linear-gradient(90deg, #009db2, #007a8c);
-      padding: 16px;
-      border: none;
-      border-radius: 20px;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 6px 18px rgba(0, 157, 178, 0.7);
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
-      text-transform: uppercase;
-    }
-    button[type="submit"]:disabled {
-      background: #cccccc;
-      color: #888888;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-    button[type="submit"]:hover:not(:disabled) {
-      background: linear-gradient(90deg, #007a8c, #005f6b);
-      box-shadow: 0 8px 25px rgba(0, 122, 140, 0.8);
-    }
-    .checkbox-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: flex-start;
-      margin-bottom: 25px;
-      direction: rtl;
-      font-size: 14px;
-      color: #00454d;
-    }
-    .checkbox-container input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-      transition: outline 0.3s ease;
-    }
-    .checkbox-container label a {
-      color: #007a8c;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .checkbox-container label a:hover {
-      color: #005f6b;
-      text-decoration: underline;
-    }
-    .return-home-button {
-      position: fixed;
-      top: 40px;
-      right: 20px;
-      padding: 14px 26px;
-      background: #009db2;
-      color: white;
-      font-weight: 700;
-      border-radius: 40px;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 7px 22px rgba(0, 157, 178, 0.8);
-      transition: background 0.3s ease, transform 0.3s ease;
-      border: 1px solid white;
-      user-select: none;
-      z-index: 20;
-    }
-    .return-home-button:hover {
-      background: #007a8c;
-      transform: scale(1.1);
-      box-shadow: 0 9px 30px rgba(0, 122, 140, 1);
-    }
-    .button-icon {
-      width: 22px;
-      height: 22px;
-      filter: drop-shadow(0 0 4px rgba(0,0,0,0.25));
-    }
-    /* Responsive Styles */
-    @media (max-width: 480px) {
-      #logo {
-        top: 15px;
-        left: 15px;
-        height: 100px;
-        width: 25vw;
-        min-width: 80px;
-      }
-      .form-container {
-        padding: 25px 15px;
-        max-width: 100%;
-      }
-      h2 {
-        font-size: 22px;
-      }
-      input[type="text"], input[type="password"] {
-        padding: 12px 14px;
-        font-size: 14px;
-      }
-      .password-container {
-        flex-wrap: nowrap;
-      }
-      .password-container input {
-        font-size: 14px;
-      }
-      .password-container button {
-        width: 44px;
-        height: 44px;
-        padding: 10px;
-        top: -6px;
-      }
-      button[type="submit"] {
-        font-size: 16px;
-        padding: 14px;
-      }
-      .return-home-button {
-        top: 15px;
-        right: 15px;
-        padding: 12px 20px;
-        font-size: 14px;
-        gap: 8px;
-      }
-      .button-icon {
-        width: 18px;
-        height: 18px;
-      }
-    }
-    /* أخطاء بسيطة تظهر تحت الحقول */
-    .error-message {
-      color: #d93025;
-      font-size: 13px;
-      margin-top: -15px;
-      margin-bottom: 10px;
-      display: none;
-      text-align: right;
-      direction: rtl;
-      user-select: none;
-    }
-    #idCheckMessage {
-      color: #d93025;
-      font-size: 14px;
-      margin-bottom: 20px;
-      display: none;
-      text-align: right;
-      direction: rtl;
-      user-select: none;
-    }
-
-
-    /*secss ms */
-    #successMessage {
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>إنشاء حساب جديد</title>
+<link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Cairo', sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0d1f2d;
+  overflow-x: hidden;
+  padding: 10px;
+  position: relative;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(24, 24, 24, 0.15) 0,
+      rgba(255, 223, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(24, 24, 24, 0.15) 0,
+      rgba(27, 27, 27, 0.15) 1px,
+      transparent 1px,
+      transparent 20px
+    );
+  z-index: 0;
+  pointer-events: none;
+}
+#logo {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  height: 150px;
+  filter: drop-shadow(0 0 10px #00e6f6);
+  z-index: 10;
+  max-width: 150px;
+  width: 15vw;
+  min-width: 100px;
+}
+.form-container {
+  position: relative;
+  background: #ffffffee;
+  border-radius: 20px;
+  padding: 35px 25px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  text-align: center;
+  filter: drop-shadow(0 0 5px #00e6f6);
+}
+h2 {
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #007a8c;
+  user-select: none;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border: 2px solid #009db2;
+  border-radius: 15px;
+  font-size: 16px;
+  text-align: right;
+  background: #f0fbff;
+  color: #00454d;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: #007a8c;
+  outline: none;
+  background: #e0f5fa;
+}
+.password-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  position: relative;
+}
+.password-container input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.password-container button {
+  background: #009db2;
+  border: none;
+  border-radius: 15px;
+  padding: 12px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 157, 178, 0.4);
+  color: white;
+  user-select: none;
+  flex-shrink: 0;
+  position: relative;
+  top: -10px;
+}
+.password-container button:hover {
+  background: #007a8c;
+  box-shadow: 0 6px 15px rgba(0, 122, 140, 0.6);
+}
+.toggle-icon {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.25));
+  user-select: none;
+}
+button[type="submit"] {
+  width: 100%;
+  background: linear-gradient(90deg, #009db2, #007a8c);
+  padding: 16px;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 157, 178, 0.7);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  text-transform: uppercase;
+}
+button[type="submit"]:disabled {
+  background: #cccccc;
+  color: #888888;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+button[type="submit"]:hover:not(:disabled) {
+  background: linear-gradient(90deg, #007a8c, #005f6b);
+  box-shadow: 0 8px 25px rgba(0, 122, 140, 0.8);
+}
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-start;
+  margin-bottom: 25px;
+  font-size: 14px;
+  color: #00454d;
+}
+.checkbox-container input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  transition: outline 0.3s ease;
+}
+.checkbox-container label a {
+  color: #007a8c;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.checkbox-container label a:hover {
+  color: #005f6b;
+  text-decoration: underline;
+}
+.return-home-button {
+  position: fixed;
+  top: 40px;
+  right: 20px;
+  padding: 14px 26px;
+  background: #009db2;
+  color: white;
+  font-weight: 700;
+  border-radius: 40px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 7px 22px rgba(0, 157, 178, 0.8);
+  transition: background 0.3s ease, transform 0.3s ease;
+  border: 1px solid white;
+  user-select: none;
+  z-index: 20;
+}
+.return-home-button:hover {
+  background: #007a8c;
+  transform: scale(1.1);
+  box-shadow: 0 9px 30px rgba(0, 122, 140, 1);
+}
+.button-icon {
+  width: 22px;
+  height: 22px;
+  filter: drop-shadow(0 0 4px rgba(0,0,0,0.25));
+}
+/* Responsive */
+@media (max-width: 480px) {
+  #logo {
+    top: 15px;
+    left: 15px;
+    height: 100px;
+    width: 25vw;
+    min-width: 80px;
+  }
+  .form-container {
+    padding: 25px 15px;
+    max-width: 100%;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  input[type="text"], input[type="password"] {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+  .password-container button {
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    top: -6px;
+  }
+  button[type="submit"] {
+    font-size: 16px;
+    padding: 14px;
+  }
+  .return-home-button {
+    top: 15px;
+    right: 15px;
+    padding: 12px 20px;
+    font-size: 14px;
+    gap: 8px;
+  }
+  .button-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+/* Errors */
+.error-message {
+  color: #d93025;
+  font-size: 13px;
+  margin-top: -15px;
+  margin-bottom: 10px;
+  display: none;
+  text-align: right;
+  user-select: none;
+}
+#idCheckMessage {
+  color: #d93025;
+  font-size: 14px;
+  margin-bottom: 20px;
+  display: none;
+  text-align: right;
+  user-select: none;
+}
+/* Success message */
+#successMessage {
   display: none;
   background-color: #e6f9f7;
   border: 2px solid #00bfa6;
   color: #00695c;
   padding: 15px;
-  margin-top: 20px;
-  font-size: 16px;
+  margin-top: 25px;
+  font-size: 17px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3);
   text-align: center;
   font-weight: bold;
   animation: fadeInScale 0.5s ease-in-out forwards;
+  position: relative;
+  z-index: 2;
 }
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-  </style>
+</style>
 </head>
 <body>
-  <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" id="logo" />
-  <div class="form-container" role="main" aria-label="نموذج إنشاء حساب جديد">
-    <h2>إنشاء حساب جديد</h2>
-    <form id="createAccountForm" autocomplete="off" novalidate>
-      <input
-        type="text"
-        id="fullName"
-        name="fullName"
-        placeholder="الاسم الثلاثي"
-        pattern="^[\u0621-\u064A\s]+$"
-        title="يرجى إدخال الحروف العربية فقط"
-        required
-        aria-required="true"
-        aria-label="الاسم الثلاثي"
-      />
-      <div id="fullNameError" class="error-message"></div>
+<img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" id="logo" />
+<div class="form-container" role="main" aria-label="نموذج إنشاء حساب جديد">
+  <h2>إنشاء حساب جديد</h2>
+  <form id="createAccountForm" autocomplete="off" novalidate>
+    <input
+      type="text"
+      id="fullName"
+      name="fullName"
+      placeholder="الاسم الثلاثي"
+      pattern="^[\u0621-\u064A\s]+$"
+      title="يرجى إدخال الحروف العربية فقط"
+      required
+      aria-required="true"
+      aria-label="الاسم الثلاثي"
+    />
+    <div id="fullNameError" class="error-message"></div>
 
-      <input
-        type="text"
-        id="idNumber"
-        name="idNumber"
-        placeholder="رقم الهوية"
-        maxlength="15"
-        required
-        aria-required="true"
-        aria-label="رقم الهوية"
-      />
-      <div id="idError" class="error-message"></div>
-      <div id="idCheckMessage">رقم الهوية غير موجود في النظام</div>
+    <input
+      type="text"
+      id="idNumber"
+      name="idNumber"
+      placeholder="رقم الهوية"
+      maxlength="15"
+      required
+      aria-required="true"
+      aria-label="رقم الهوية"
+    />
+    <div id="idError" class="error-message"></div>
+    <div id="idCheckMessage">رقم الهوية غير موجود في النظام</div>
 
-      <div class="password-container">
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="كلمة المرور"
-          required
-          aria-required="true"
-          aria-label="كلمة المرور"
-        />
-        <button type="button" id="togglePasswordButton" aria-label="تبديل إظهار كلمة المرور" tabindex="0">
-            <button type="submit" id="createAccountButton">إنشاء حساب</button>
-<div id="successMessage">
-  ✅ تم إنشاء الحساب بنجاح! سيتم توجيهك الآن...
-</div>
-
-          <img
-            src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png"
-            id="showIcon"
-            class="toggle-icon"
-            alt="إظهار"
-          />
-          <img
-            src="https://cdn4.iconfinder.com/data/icons/liny/24/eye-off-line-512.png"
-            id="hideIcon"
-            class="toggle-icon"
-            alt="إخفاء"
-            style="display: none"
-          />
-        </button>
-      </div>
-      <div id="passwordError" class="error-message"></div>
-
+    <div class="password-container">
       <input
         type="password"
-        id="confirmPassword"
-        name="confirmPassword"
-        placeholder="تأكيد كلمة المرور"
+        id="password"
+        name="password"
+        placeholder="كلمة المرور"
         required
         aria-required="true"
-        aria-label="تأكيد كلمة المرور"
+        aria-label="كلمة المرور"
       />
-      <div id="confirmPasswordError" class="error-message"></div>
-
-      <div class="checkbox-container">
-        <input
-          type="checkbox"
-          id="privacyPolicy"
-          name="privacyPolicy"
-          required
-          aria-required="true"
-          aria-label="الموافقة على سياسة الخصوصية"
+      <button type="button" id="togglePasswordButton" aria-label="تبديل إظهار كلمة المرور" tabindex="0">
+        <img
+          src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png"
+          id="showIcon"
+          class="toggle-icon"
+          alt="إظهار"
         />
-        <label for="privacyPolicy">
-          الموافقة على
-          <a href="PRIVACY POLICY.HTML" target="_blank" rel="noopener noreferrer">سياسة الخصوصية</a>
-        </label>
-      </div>
-      <div id="policyError" class="error-message"></div>
+        <img
+          src="https://cdn4.iconfinder.com/data/icons/liny/24/eye-off-line-512.png"
+          id="hideIcon"
+          class="toggle-icon"
+          alt="إخفاء"
+          style="display: none"
+        />
+      </button>
+    </div>
+    <div id="passwordError" class="error-message"></div>
 
-      <button type="submit" id="createAccountButton">إنشاء حساب</button>
-    </form>
+    <input
+      type="password"
+      id="confirmPassword"
+      name="confirmPassword"
+      placeholder="تأكيد كلمة المرور"
+      required
+      aria-required="true"
+      aria-label="تأكيد كلمة المرور"
+    />
+    <div id="confirmPasswordError" class="error-message"></div>
+
+    <div class="checkbox-container">
+      <input
+        type="checkbox"
+        id="privacyPolicy"
+        name="privacyPolicy"
+        required
+        aria-required="true"
+        aria-label="الموافقة على سياسة الخصوصية"
+      />
+      <label for="privacyPolicy">
+        الموافقة على
+        <a href="PRIVACY POLICY.HTML" target="_blank" rel="noopener noreferrer">سياسة الخصوصية</a>
+      </label>
+    </div>
+    <div id="policyError" class="error-message"></div>
+
+    <button type="submit" id="createAccountButton" disabled>إنشاء حساب</button>
+  </form>
+
+  <div id="successMessage">
+    ✅ تم إنشاء الحساب بنجاح! سيتم توجيهك الآن...
   </div>
-  <a href="index.html" class="return-home-button" aria-label="العودة إلى الصفحة الرئيسية">
-    العودة
-    <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="سهم العودة" class="button-icon" />
-  </a>
+</div>
+<a href="index.html" class="return-home-button" aria-label="العودة إلى الصفحة الرئيسية">
+  العودة
+  <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="سهم العودة" class="button-icon" />
+</a>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const idNumber = document.getElementById('idNumber');
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
-    const privacyPolicy = document.getElementById('privacyPolicy');
-    const createAccountButton = document.getElementById('createAccountButton');
-    const successMessage = document.getElementById('successMessage');
-    const togglePasswordButton = document.getElementById('togglePasswordButton');
-    const showIcon = document.getElementById('showIcon');
-    const hideIcon = document.getElementById('hideIcon');
-    const fullName = document.getElementById('fullName');
-    const idCheckMessage = document.getElementById('idCheckMessage');
-    const confirmPasswordError = document.getElementById('confirmPasswordError');
+document.addEventListener('DOMContentLoaded', () => {
+  const SECRET_KEY = "2shawermaExtrathoRahemdallahy5lleh";
 
-    if (!idNumber || !password || !confirmPassword || !privacyPolicy || !createAccountButton || !togglePasswordButton || !showIcon || !hideIcon || !fullName || !idCheckMessage || !confirmPasswordError) {
-        console.error('One or more elements are missing from the DOM.');
-        return;
-    }
+  const fullName = document.getElementById('fullName');
+  const idNumber = document.getElementById('idNumber');
+  const password = document.getElementById('password');
+  const confirmPassword = document.getElementById('confirmPassword');
+  const privacyPolicy = document.getElementById('privacyPolicy');
+  const createAccountButton = document.getElementById('createAccountButton');
+  const successMessage = document.getElementById('successMessage');
+  const togglePasswordButton = document.getElementById('togglePasswordButton');
+  const showIcon = document.getElementById('showIcon');
+  const hideIcon = document.getElementById('hideIcon');
+  const idCheckMessage = document.getElementById('idCheckMessage');
 
-    function validateIDNumber(showError = true) {
-        const idError = document.getElementById('idError');
-        const idValue = idNumber.value.trim();
+  const fullNameError = document.getElementById('fullNameError');
+  const idError = document.getElementById('idError');
+  const passwordError = document.getElementById('passwordError');
+  const confirmPasswordError = document.getElementById('confirmPasswordError');
+  const policyError = document.getElementById('policyError');
 
-        if (idValue === '') {
-            if (showError) {
-                idError.style.display = 'block';
-                idError.textContent = 'يجب كتابة رقم الهوية أو الإدخال المطلوب';
-            }
-            return false;
-        }
+  let decryptedIDs = [];
 
-        if (idValue.length < 2 || idValue.length > 15) {
-            if (showError) {
-                idError.style.display = 'block';
-                idError.textContent = 'يجب أن يكون الإدخال بين 2 و 15 حرفًا أو رمزًا';
-            }
-            return false;
-        } else {
-            idError.style.display = 'none';
-            return true;
-        }
-    }
-
-    console.log = function() {};
-    console.warn = function() {};
-    console.error = function() {};
-    console.info = function() {};
-    console.debug = function() {};
-
-    function checkIDNumberInSystem() {
-        const idNumberValue = idNumber.value.trim();
-
-        if (idNumberValue === '') {
-            idCheckMessage.style.display = 'none';
-            createAccountButton.disabled = true;
-            return;
-        }
-
-        fetch('https://docs.google.com/spreadsheets/d/1-IAOaZT6c75rKXqoPGgBTlTjt_SpcgfOXMWowSnx20o/export?format=csv')
-            .then(response => {
-                if (!response.ok) throw new Error('sheet error');
-                return response.text();
-            })
-            .then(csv => {
-                const lines = csv.split('\n').map(line => line.trim());
-                const foundInSheet = lines.some(line => {
-                    const cols = line.split(',');
-                    return cols[1] && cols[1].trim() === idNumberValue;
-                });
-
-                if (foundInSheet) {
-                    idCheckMessage.style.display = 'block';
-                    idCheckMessage.textContent = 'رقم الهوية مستخدم من قبل';
-                    createAccountButton.disabled = true;
-                } else {
-                    idCheckMessage.style.display = 'none';
-
-                    // نعيد التحقق من جميع الحقول مرة أخرى
-                    const idValid = validateIDNumber(false);
-                    const passwordValid = validatePassword(false);
-                    const confirmPasswordValid = validateConfirmPassword(false);
-                    const privacyPolicyValid = validatePrivacyPolicy(false);
-                    const fullNameValid = validateFullName(false);
-
-                    const isValid = idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid;
-
-                    createAccountButton.disabled = !isValid;
-                }
-            })
-            .catch(err => {
-                console.error('خطأ في قراءة Google Sheet:', err);
-            });
-    }
-
-    function validatePassword(showError = true) {
-        const passwordError = document.getElementById('passwordError');
-        if (password.value.trim() === '') {
-            if (showError) {
-                passwordError.style.display = 'block';
-                passwordError.textContent = 'يجب كتابة كلمة مرور';
-            }
-            return false;
-        }
-        if (password.value.length < 6) {
-            if (showError) {
-                passwordError.style.display = 'block';
-                passwordError.textContent = 'يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل';
-            }
-            return false;
-        } else {
-            passwordError.style.display = 'none';
-            return true;
-        }
-    }
-
-    function validateConfirmPassword(showError = true) {
-        if (confirmPassword.value.trim() === '') {
-            if (showError) {
-                confirmPasswordError.textContent = 'يجب تأكيد كلمة المرور';
-                confirmPasswordError.style.display = 'block';
-            }
-            return false;
-        }
-        if (password.value !== confirmPassword.value) {
-            if (showError) {
-                confirmPasswordError.textContent = 'كلمتا المرور غير متطابقتين';
-                confirmPasswordError.style.display = 'block';
-            }
-            return false;
-        }
-        confirmPasswordError.style.display = 'none';
-        return true;
-    }
-
-    function validatePrivacyPolicy(showError = true) {
-        const policyError = document.getElementById('policyError');
-        if (!privacyPolicy.checked) {
-            if (showError) {
-                policyError.style.display = 'block';
-                policyError.textContent = 'يجب الموافقة على سياسة الخصوصية';
-            }
-            return false;
-        } else {
-            policyError.style.display = 'none';
-            return true;
-        }
-    }
-
-    function validateFullName(showError = true) {
-        const fullNameError = document.getElementById('fullNameError');
-        const nameParts = fullName.value.trim().split(/\s+/);
-        if (nameParts.length !== 3 || !/^[أ-ي\s]+$/.test(fullName.value)) {
-            if (showError) {
-                fullNameError.style.display = 'block';
-                fullNameError.textContent = 'يرجى كتابة الاسم الثلاثي بشكل صحيح';
-            }
-            return false;
-        } else {
-            fullNameError.style.display = 'none';
-            return true;
-        }
-    }
-
-    function validateForm() {
-        const idValid = validateIDNumber(false);
-        const passwordValid = validatePassword(false);
-        const confirmPasswordValid = validateConfirmPassword(false);
-        const privacyPolicyValid = validatePrivacyPolicy(false);
-        const fullNameValid = validateFullName(false);
-
-        const isValid = idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid;
-        createAccountButton.disabled = !isValid;
-    }
-
-    function handleInput() {
-        validateIDNumber(false);
-        checkIDNumberInSystem(); 
-        validatePassword(false);
-        validateConfirmPassword(false);
-        validateFullName(false);
-        validatePrivacyPolicy(false);
-        validateForm();
-    }
-
-    idNumber.addEventListener('input', handleInput);
-    password.addEventListener('input', handleInput);
-    confirmPassword.addEventListener('input', handleInput);
-    fullName.addEventListener('input', handleInput);
-
-    privacyPolicy.addEventListener('change', handleInput);
-
-    togglePasswordButton.addEventListener('click', function() {
-        if (password.type === 'password') {
-            password.type = 'text';
-            confirmPassword.type = 'text';
-            showIcon.style.display = 'none';
-            hideIcon.style.display = 'inline';
-        } else {
-            password.type = 'password';
-            confirmPassword.type = 'password';
-            showIcon.style.display = 'inline';
-            hideIcon.style.display = 'none';
-        }
-    });
-
-    createAccountButton.addEventListener('click', function(event) {
-        event.preventDefault();
-
-        const idValid = validateIDNumber(true);
-        const passwordValid = validatePassword(true);
-        const confirmPasswordValid = validateConfirmPassword(true);
-        const privacyPolicyValid = validatePrivacyPolicy(true);
-        const fullNameValid = validateFullName(true);
-
-        if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid && idCheckMessage.style.display === 'none') {
-            fetch('https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec', {
-                method: 'POST',
-                body: new URLSearchParams({
-                    'name': fullName.value,
-                    'id': idNumber.value,
-                    'pass': password.value
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    successMessage.style.display = 'block';
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 1500); // إعادة التوجيه بعد 1.5 ثانية
-                } else {
-                    throw new Error('Network response was not ok.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                successMessage.style.display = 'none';
-            });
-        }
-    });
-
-    idNumber.addEventListener('input', function (e) {
-        if (this.value.length > 15) {
-            this.value = this.value.slice(0, 15);
-        }
-    });
-});
-
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }
-});
-
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
-
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
-
-const SECRET_KEY = "2shawermaExtrathoRahemdallahy5lleh";
-
-function customDecrypt(encryptedID) {
+  function customDecrypt(encryptedID) {
     try {
-        const decoded = atob(encryptedID); // فك base64
-        const parts = decoded.split(":");
-        if (parts[0] === SECRET_KEY) {
-            return parts[1]; // يرجع رقم الهوية الأصلي
-        }
-        return null;
+      const decoded = atob(encryptedID.trim());
+      const parts = decoded.split(":");
+      if (parts[0] === SECRET_KEY) {
+        return parts[1];
+      }
+      return null;
     } catch (e) {
-        return null;
+      return null;
     }
-}
+  }
+
+  function loadEncryptedIDs() {
+    fetch('encrypted_ids.txt')
+      .then(response => {
+        if (!response.ok) throw new Error('فشل تحميل ملف الأرقام المشفرة');
+        return response.text();
+      })
+      .then(text => {
+        const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        decryptedIDs = lines.map(customDecrypt).filter(id => id !== null);
+        validateForm();
+      })
+      .catch(err => {
+        console.error(err);
+        decryptedIDs = [];
+      });
+  }
+
+  function validateFullName(showError = true) {
+    const name = fullName.value.trim();
+    const parts = name.split(/\s+/);
+    if (parts.length !== 3 || !/^[\u0621-\u064A\s]+$/.test(name)) {
+      if (showError) {
+        fullNameError.style.display = 'block';
+        fullNameError.textContent = 'يرجى كتابة الاسم الثلاثي بشكل صحيح';
+      }
+      return false;
+    } else {
+      fullNameError.style.display = 'none';
+      return true;
+    }
+  }
+
+  function validateIDNumber(showError = true) {
+    const val = idNumber.value.trim();
+    if (val.length < 2 || val.length > 15) {
+      if (showError) {
+        idError.style.display = 'block';
+        idError.textContent = 'يجب أن يكون رقم الهوية بين 2 و 15 رمزاً';
+      }
+      return false;
+    }
+    idError.style.display = 'none';
+    return true;
+  }
+
+  function checkIDNumberInFile() {
+    const val = idNumber.value.trim();
+    if (!validateIDNumber(false)) {
+      idCheckMessage.style.display = 'none';
+      return false;
+    }
+    if (!decryptedIDs.includes(val)) {
+      idCheckMessage.style.display = 'block';
+      createAccountButton.disabled = true;
+      return false;
+    } else {
+      idCheckMessage.style.display = 'none';
+      return true;
+    }
+  }
+
+  function validatePassword(showError = true) {
+    if (password.value.length < 6) {
+      if (showError) {
+        passwordError.style.display = 'block';
+        passwordError.textContent = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+      }
+      return false;
+    }
+    passwordError.style.display = 'none';
+    return true;
+  }
+
+  function validateConfirmPassword(showError = true) {
+    if (confirmPassword.value !== password.value || confirmPassword.value === '') {
+      if (showError) {
+        confirmPasswordError.style.display = 'block';
+        confirmPasswordError.textContent = 'تأكيد كلمة المرور غير متطابق';
+      }
+      return false;
+    }
+    confirmPasswordError.style.display = 'none';
+    return true;
+  }
+
+  function validatePolicy(showError = true) {
+    if (!privacyPolicy.checked) {
+      if (showError) {
+        policyError.style.display = 'block';
+        policyError.textContent = 'يجب الموافقة على سياسة الخصوصية';
+      }
+      return false;
+    }
+    policyError.style.display = 'none';
+    return true;
+  }
+
+  function validateForm() {
+    const isValid =
+      validateFullName(false) &&
+      validateIDNumber(false) &&
+      checkIDNumberInFile() &&
+      validatePassword(false) &&
+      validateConfirmPassword(false) &&
+      validatePolicy(false);
+
+    createAccountButton.disabled = !isValid;
+    return isValid;
+  }
+
+  togglePasswordButton.addEventListener('click', () => {
+    if (password.type === "password") {
+      password.type = "text";
+      confirmPassword.type = "text";
+      showIcon.style.display = 'none';
+      hideIcon.style.display = 'inline';
+    } else {
+      password.type = "password";
+      confirmPassword.type = "password";
+      showIcon.style.display = 'inline';
+      hideIcon.style.display = 'none';
+    }
+  });
+
+  [fullName, idNumber, password, confirmPassword, privacyPolicy].forEach(el => {
+    el.addEventListener('input', validateForm);
+    el.addEventListener('change', validateForm);
+  });
+
+  fullName.addEventListener('blur', () => validateFullName(true));
+  idNumber.addEventListener('blur', () => {
+    validateIDNumber(true);
+    checkIDNumberInFile();
+  });
+  password.addEventListener('blur', () => validatePassword(true));
+  confirmPassword.addEventListener('blur', () => validateConfirmPassword(true));
+  privacyPolicy.addEventListener('change', () => validatePolicy(true));
+
+  document.getElementById('createAccountForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+    successMessage.style.display = 'block';
+    createAccountButton.disabled = true;
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 3000);
+  });
+
+  loadEncryptedIDs();
+});
 </script>
+</body>
 </html>
