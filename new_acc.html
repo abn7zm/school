@@ -285,6 +285,27 @@
       direction: rtl;
       user-select: none;
     }
+
+
+    /*secss ms */
+ #successMessage {
+  display: none;
+  background-color: #e6f9f7;
+  border: 2px solid #00bfa6;
+  color: #00695c;
+  padding: 15px;
+  margin-top: 25px;
+  font-size: 17px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3);
+  text-align: center;
+  font-weight: bold;
+  animation: fadeInScale 0.5s ease-in-out forwards;
+  position: relative;
+  z-index: 2;
+}
+
+
   </style>
 </head>
 <body>
@@ -329,6 +350,11 @@
           aria-label="كلمة المرور"
         />
         <button type="button" id="togglePasswordButton" aria-label="تبديل إظهار كلمة المرور" tabindex="0">
+            <button type="submit" id="createAccountButton">إنشاء حساب</button>
+<div id="successMessage">
+  ✅ تم إنشاء الحساب بنجاح! سيتم توجيهك الآن...
+</div>
+
           <img
             src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png"
             id="showIcon"
@@ -394,8 +420,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const hideIcon = document.getElementById('hideIcon');
     const fullName = document.getElementById('fullName');
     const idCheckMessage = document.getElementById('idCheckMessage');
+    const confirmPasswordError = document.getElementById('confirmPasswordError');
 
-    if (!idNumber || !password || !confirmPassword || !privacyPolicy || !createAccountButton || !togglePasswordButton || !showIcon || !hideIcon || !fullName || !idCheckMessage) {
+    if (!idNumber || !password || !confirmPassword || !privacyPolicy || !createAccountButton || !togglePasswordButton || !showIcon || !hideIcon || !fullName || !idCheckMessage || !confirmPasswordError) {
         console.error('One or more elements are missing from the DOM.');
         return;
     }
@@ -424,6 +451,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    console.log = function() {};
+    console.warn = function() {};
+    console.error = function() {};
+    console.info = function() {};
+    console.debug = function() {};
+
     function checkIDNumberInSystem() {
         const idNumberValue = idNumber.value.trim();
 
@@ -451,6 +484,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     createAccountButton.disabled = true;
                 } else {
                     idCheckMessage.style.display = 'none';
+
+                    // نعيد التحقق من جميع الحقول مرة أخرى
                     const idValid = validateIDNumber(false);
                     const passwordValid = validatePassword(false);
                     const confirmPasswordValid = validateConfirmPassword(false);
@@ -458,6 +493,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const fullNameValid = validateFullName(false);
 
                     const isValid = idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid;
+
                     createAccountButton.disabled = !isValid;
                 }
             })
@@ -487,8 +523,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function validateConfirmPassword(showError = false) {
-        const confirmPasswordError = document.getElementById('confirmPasswordError');
+    function validateConfirmPassword(showError = true) {
         if (confirmPassword.value.trim() === '') {
             if (showError) {
                 confirmPasswordError.textContent = 'يجب تأكيد كلمة المرور';
@@ -561,18 +596,25 @@ document.addEventListener('DOMContentLoaded', function() {
     password.addEventListener('input', handleInput);
     confirmPassword.addEventListener('input', handleInput);
     fullName.addEventListener('input', handleInput);
+
     privacyPolicy.addEventListener('change', handleInput);
 
     togglePasswordButton.addEventListener('click', function() {
-        const type = password.type === 'password' ? 'text' : 'password';
-        password.type = type;
-        confirmPassword.type = type;
-        showIcon.style.display = type === 'password' ? 'inline' : 'none';
-        hideIcon.style.display = type === 'password' ? 'none' : 'inline';
+        if (password.type === 'password') {
+            password.type = 'text';
+            confirmPassword.type = 'text';
+            showIcon.style.display = 'none';
+            hideIcon.style.display = 'inline';
+        } else {
+            password.type = 'password';
+            confirmPassword.type = 'password';
+            showIcon.style.display = 'inline';
+            hideIcon.style.display = 'none';
+        }
     });
 
     createAccountButton.addEventListener('click', function(event) {
-        event.preventDefault(); 
+        event.preventDefault();
 
         const idValid = validateIDNumber(true);
         const passwordValid = validatePassword(true);
@@ -580,14 +622,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const privacyPolicyValid = validatePrivacyPolicy(true);
         const fullNameValid = validateFullName(true);
 
-        if (
-            idValid &&
-            passwordValid &&
-            confirmPasswordValid &&
-            privacyPolicyValid &&
-            fullNameValid &&
-            idCheckMessage.style.display === 'none'
-        ) {
+        if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid && idCheckMessage.style.display === 'none') {
             fetch('https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec', {
                 method: 'POST',
                 body: new URLSearchParams({
@@ -601,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     successMessage.style.display = 'block';
                     setTimeout(() => {
                         window.location.href = 'index.html';
-                    }, 500);
+                    }, 1500); // إعادة التوجيه بعد 1.5 ثانية
                 } else {
                     throw new Error('Network response was not ok.');
                 }
@@ -613,9 +648,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    idNumber.addEventListener('input', function () {
+    idNumber.addEventListener('input', function (e) {
         if (this.value.length > 15) {
-            this.value = this.value.slice(0, 10);
+            this.value = this.value.slice(0, 15);
         }
     });
 });
@@ -623,10 +658,33 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('keydown', function(event) {
     if (event.key === 'F12') {
         event.preventDefault();
+        return false;
     }
 });
+
 document.addEventListener('contextmenu', function(event) {
     event.preventDefault();
 });
+
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+
+const SECRET_KEY = "2shawermaExtrathoRahemdallahy5lleh";
+
+function customDecrypt(encryptedID) {
+    try {
+        const decoded = atob(encryptedID); // فك base64
+        const parts = decoded.split(":");
+        if (parts[0] === SECRET_KEY) {
+            return parts[1]; // يرجع رقم الهوية الأصلي
+        }
+        return null;
+    } catch (e) {
+        return null;
+    }
+}
 </script>
 </html>
