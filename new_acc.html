@@ -1,289 +1,412 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إنشاء حساب جديد ثانوية ابن حزم</title>
-    <link rel="icon" href="https://i.imghippo.com/files/iJhm9520ofU.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>إنشاء حساب جديد</title>
+  <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      direction: rtl;
+      background: #0d1f2d;
+      overflow-x: hidden;
+      position: relative;
+      padding: 10px;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          rgba(24, 24, 24, 0.15) 0,
+          rgba(255, 223, 0, 0.15) 1px,
+          transparent 1px,
+          transparent 20px
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          rgba(24, 24, 24, 0.15) 0,
+          rgba(27, 27, 27, 0.15) 1px,
+          transparent 1px,
+          transparent 20px
+        );
+      z-index: 0;
+      pointer-events: none;
+    }
+    #logo {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      height: 150px;
+      filter: drop-shadow(0 0 10px #00e6f6);
+      z-index: 10;
+      max-width: 150px;
+      width: 15vw;
+      min-width: 100px;
+    }
+    .form-container {
+      position: relative;
+      background: #ffffffee;
+      border-radius: 20px;
+      padding: 35px 25px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      z-index: 1;
+      text-align: center;
+      filter: drop-shadow(0 0 5px #00e6f6);
+      box-sizing: border-box;
+    }
+    h2 {
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #007a8c;
+      user-select: none;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      border: 2px solid #009db2;
+      border-radius: 15px;
+      font-size: 16px;
+      text-align: right;
+      background: #f0fbff;
+      color: #00454d;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #007a8c;
+      outline: none;
+      background: #e0f5fa;
+    }
+    .password-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      position: relative;
+    }
+    .password-container input {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .password-container button {
+      background: #009db2;
+      border: none;
+      border-radius: 15px;
+      padding: 12px;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 157, 178, 0.4);
+      color: white;
+      user-select: none;
+      flex-shrink: 0;
+      position: relative;
+      top: -10px;
+    }
+    .password-container button:hover {
+      background: #007a8c;
+      box-shadow: 0 6px 15px rgba(0, 122, 140, 0.6);
+    }
+    .toggle-icon {
+      width: 24px;
+      height: 24px;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.25));
+      user-select: none;
+    }
+    button[type="submit"] {
+      width: 100%;
+      background: linear-gradient(90deg, #009db2, #007a8c);
+      padding: 16px;
+      border: none;
+      border-radius: 20px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0, 157, 178, 0.7);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      text-transform: uppercase;
+    }
+    button[type="submit"]:disabled {
+      background: #cccccc;
+      color: #888888;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    button[type="submit"]:hover:not(:disabled) {
+      background: linear-gradient(90deg, #007a8c, #005f6b);
+      box-shadow: 0 8px 25px rgba(0, 122, 140, 0.8);
+    }
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-start;
+      margin-bottom: 25px;
+      direction: rtl;
+      font-size: 14px;
+      color: #00454d;
+    }
+    .checkbox-container input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      transition: outline 0.3s ease;
+    }
+    .checkbox-container label a {
+      color: #007a8c;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .checkbox-container label a:hover {
+      color: #005f6b;
+      text-decoration: underline;
+    }
+    .return-home-button {
+      position: fixed;
+      top: 40px;
+      right: 20px;
+      padding: 14px 26px;
+      background: #009db2;
+      color: white;
+      font-weight: 700;
+      border-radius: 40px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 7px 22px rgba(0, 157, 178, 0.8);
+      transition: background 0.3s ease, transform 0.3s ease;
+      border: 1px solid white;
+      user-select: none;
+      z-index: 20;
+    }
+    .return-home-button:hover {
+      background: #007a8c;
+      transform: scale(1.1);
+      box-shadow: 0 9px 30px rgba(0, 122, 140, 1);
+    }
+    .button-icon {
+      width: 22px;
+      height: 22px;
+      filter: drop-shadow(0 0 4px rgba(0,0,0,0.25));
+    }
+    /* Responsive Styles */
+    @media (max-width: 480px) {
+      #logo {
+        top: 15px;
+        left: 15px;
+        height: 100px;
+        width: 25vw;
+        min-width: 80px;
+      }
+      .form-container {
+        padding: 25px 15px;
+        max-width: 100%;
+      }
+      h2 {
+        font-size: 22px;
+      }
+      input[type="text"], input[type="password"] {
+        padding: 12px 14px;
+        font-size: 14px;
+      }
+      .password-container {
+        flex-wrap: nowrap;
+      }
+      .password-container input {
+        font-size: 14px;
+      }
+      .password-container button {
+        width: 44px;
+        height: 44px;
+        padding: 10px;
+        top: -6px;
+      }
+      button[type="submit"] {
+        font-size: 16px;
+        padding: 14px;
+      }
+      .return-home-button {
+        top: 15px;
+        right: 15px;
+        padding: 12px 20px;
+        font-size: 14px;
+        gap: 8px;
+      }
+      .button-icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+    /* أخطاء بسيطة تظهر تحت الحقول */
+    .error-message {
+      color: #d93025;
+      font-size: 13px;
+      margin-top: -15px;
+      margin-bottom: 10px;
+      display: none;
+      text-align: right;
+      direction: rtl;
+      user-select: none;
+    }
+    #idCheckMessage {
+      color: #d93025;
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: none;
+      text-align: right;
+      direction: rtl;
+      user-select: none;
+    }
 
+
+    /*secss ms */
+ #successMessage {
+  display: none;
+  background-color: #e6f9f7;
+  border: 2px solid #00bfa6;
+  color: #00695c;
+  padding: 15px;
+  margin-top: 25px;
+  font-size: 17px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3);
+  text-align: center;
+  font-weight: bold;
+  animation: fadeInScale 0.5s ease-in-out forwards;
+  position: relative;
+  z-index: 2;
+}
+
+
+  </style>
 </head>
 <body>
+  <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" id="logo" />
+  <div class="form-container" role="main" aria-label="نموذج إنشاء حساب جديد">
+    <h2>إنشاء حساب جديد</h2>
+    <form id="createAccountForm" autocomplete="off" novalidate>
+      <input
+        type="text"
+        id="fullName"
+        name="fullName"
+        placeholder="الاسم الثلاثي"
+        pattern="^[\u0621-\u064A\s]+$"
+        title="يرجى إدخال الحروف العربية فقط"
+        required
+        aria-required="true"
+        aria-label="الاسم الثلاثي"
+      />
+      <div id="fullNameError" class="error-message"></div>
 
-    <header class="header">
-        <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="شعار" class="logo">
-    </header>
+      <input
+        type="text"
+        id="idNumber"
+        name="idNumber"
+        placeholder="رقم الهوية"
+        maxlength="15"
+        required
+        aria-required="true"
+        aria-label="رقم الهوية"
+      />
+      <div id="idError" class="error-message"></div>
+      <div id="idCheckMessage">رقم الهوية غير موجود في النظام</div>
 
-    <div class="background">
-        
-    </div>
+      <div class="password-container">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="كلمة المرور"
+          required
+          aria-required="true"
+          aria-label="كلمة المرور"
+        />
+        <button type="button" id="togglePasswordButton" aria-label="تبديل إظهار كلمة المرور" tabindex="0">
+            <button type="submit" id="createAccountButton">إنشاء حساب</button>
+<div id="successMessage">
+  ✅ تم إنشاء الحساب بنجاح! سيتم توجيهك الآن...
+</div>
 
-    <div class="form-container">
-        <h2 class="new">إنشاء حساب جديد</h2>
+          <img
+            src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png"
+            id="showIcon"
+            class="toggle-icon"
+            alt="إظهار"
+          />
+          <img
+            src="https://cdn4.iconfinder.com/data/icons/liny/24/eye-off-line-512.png"
+            id="hideIcon"
+            class="toggle-icon"
+            alt="إخفاء"
+            style="display: none"
+          />
+        </button>
+      </div>
+      <div id="passwordError" class="error-message"></div>
 
-        <form id="createAccountForm">
-            <input type="text" id="fullName" name="name" placeholder="اسم صاحب الهوية الثلاثي" pattern="[أ-ي ]+" title="يرجى إدخال الحروف العربية فقط" required>
-            <div class="error-message" id="fullNameError">يرجى كتابة الاسم الثلاثي بشكل صحيح</div>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        placeholder="تأكيد كلمة المرور"
+        required
+        aria-required="true"
+        aria-label="تأكيد كلمة المرور"
+      />
+      <div id="confirmPasswordError" class="error-message"></div>
 
-            <input type="text" id="idNumber" name="id" placeholder="رقم الهوية" maxlength="15" required>
-            <div class="error-message" id="idError">يتكون رقم الهوية من 10 أرقام فقط</div>
+      <div class="checkbox-container">
+        <input
+          type="checkbox"
+          id="privacyPolicy"
+          name="privacyPolicy"
+          required
+          aria-required="true"
+          aria-label="الموافقة على سياسة الخصوصية"
+        />
+        <label for="privacyPolicy">
+          الموافقة على
+          <a href="PRIVACY POLICY.HTML" target="_blank" rel="noopener noreferrer">سياسة الخصوصية</a>
+        </label>
+      </div>
+      <div id="policyError" class="error-message"></div>
 
-            <div class="password-container">
-                <input type="password" id="password" name="pass" placeholder="كلمة المرور" required>
-                <button type="button" id="togglePasswordButton">
-                    <img src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png" alt="إظهار" id="showIcon" class="toggle-icon">
-                    <img src="https://cdn4.iconfinder.com/data/icons/liny/24/eye-off-line-512.png" alt="إخفاء" id="hideIcon" class="toggle-icon" style="display: none;">
-                </button>
-            </div>
-            <div class="error-message" id="passwordError">يجب كتابة كلمة مرور</div>
-            
-            <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور" required>
-            <div class="error-message" id="confirmPasswordError">كلمتا المرور غير متطابقتين</div>
-            
-            <div class="checkbox-container">
-                <input type="checkbox" id="privacyPolicy" required>
-                <label for="privacyPolicy">
-                    <a href="PRIVACY POLICY.HTML" target="_blank" class="privacy-policy-link">الموافقة على سياسة الخصوصيه</a>
-                </label>
-            </div>
-            <div class="error-message" id="policyError">يجب الموافقه على سياسة الخصوصيه</div>
-            
-            <button type="submit" id="createAccountButton" disabled>إنشاء حساب</button>
-        </form>
+      <button type="submit" id="createAccountButton">إنشاء حساب</button>
+    </form>
+  </div>
+  <a href="index.html" class="return-home-button" aria-label="العودة إلى الصفحة الرئيسية">
+    العودة
+    <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="سهم العودة" class="button-icon" />
+  </a>
 
-        <div class="success-message" id="successMessage">تم انشاء حسابك بنجاح</div>
-        <div class="error-message" id="idCheckMessage">انت لست مسجلا ً في النظام الرجاء مراجعة إدارة المدرسة</div>
-    </div>
- 
-    <div class="half-circle"></div>
-    <div class="content"></div>
-
-    <a href="index.html" class="return-home-button">العودة
-        <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Arrow" class="button-icon">
-    </a>
-
-
-</body>
-<style>
-    body, html {
-    height: 100%;
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    overflow-x: hidden;
-    background-size: cover;
-}
-
-.background {
-    height: 100%;
-    background: linear-gradient(135deg, #009db2 25%, #007a8c 25%, #007a8c 50%, #ffffff 50%, #ffffff 75%, #484646 75%);
-    background-size: cover;
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
-
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: auto;
-    padding: 10px;
-    z-index: 10; 
-}
-
-.logo {
-    height: 8vw;
-    width: auto;
-}
-
-.new {
-    color: #ffffff;
-}
-
-.form-container {
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 400px;
-    background-color: #484646;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    padding: 30px;
-    text-align: center;
-    z-index: 1;
-}
-
-input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 15px;
-    margin: 12px 0;
-    border: 2px solid #000000;
-    border-radius: 5px;
-    box-sizing: border-box;
-    text-align: right;
-    font-size: 16px;
-    background-color: #afafaf;
-    user-select: none;
-}
-
-.password-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-#togglePasswordButton {
-    padding: 5px;
-    background-color: #009db2;
-    color: white;
-    border: 2px solid #000000;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 6%;
-    transition: background-color 0.45s ease;
-    display: flex;
-    align-items: center;
-}
-
-.toggle-icon {
-    height: 20px;
-    width: 20px;
-}
-
-#togglePasswordButton:hover {
-    background-color: #007a8c;
-}
-
-.error-message {
-    background-color: #706d6d;
-    color: #ffffff;
-    padding: 10px;
-    border: 1px solid #484646;
-    border-radius: 5px;
-    display: none;
-    margin-top: -10px;
-    text-align: left;
-    font-size: 14px;
-}
-
-.success-message {
-    color: rgb(66, 202, 66);
-    display: none;
-    margin-top: 20px;
-}
-
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 20px;
-    color: #ffffff;
-    margin-left: 70px;
-}
-
-.checkbox-container input {
-    margin-left: 30px;
-}
-
-.privacy-policy-link {
-    color: #ffffff;
-    text-decoration: none;
-    margin-left: 15px;
-}
-
-.privacy-policy-link:hover {
-    text-decoration: underline;
-}
-
-button {
-    padding: 12px 20px;
-    background-color: #009db2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.45s ease;
-}
-
-button:hover {
-    background-color: #007a8c;
-}
-
-button:disabled {
-    background-color: #ccc;
-}
-
-body::-webkit-scrollbar {
-    display: none;
-}
-
-.return-home-button {
-    position: absolute;
-    top: 40px; 
-    right: 78px;  
-    padding: 10px 18px;
-    background-color: #007a8c;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    border: 1px solid white; 
-    transition: background-color 0.45s ease;
-    font-size: 20px;
-    z-index: 1000;
-}
-
-
-.return-home-button:hover {
-    background-color: #484646;
-}
-
-.button-icon {
-    margin-left: 10px;
-    width: 20px;
-    height: 20px;
-}
-
-#idCheckMessage {
-    margin-top: 20px;
-    color: #ffffff;
-    display: none;
-    text-align: center;
-    font-size: 16px;
-}
-
-@media screen and (max-width: 425px) {
-    .background {
-        background-size: 110% 110%; 
-        background-position: center; 
-    }
-
-    .logo {
-        height: 12vw; 
-    }
-
-    .form-container {
-        max-width: 90%; 
-        padding: 20px;
-    }
-    
-    .return-home-button {
-        top: 10px;
-        right: 10px;
-        font-size: 16px; 
-    }
-}
-
-::placeholder {
-    color: #ffffff;
-}
-
-</style>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const idNumber = document.getElementById('idNumber');
@@ -297,8 +420,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const hideIcon = document.getElementById('hideIcon');
     const fullName = document.getElementById('fullName');
     const idCheckMessage = document.getElementById('idCheckMessage');
+    const confirmPasswordError = document.getElementById('confirmPasswordError');
 
-    if (!idNumber || !password || !confirmPassword || !privacyPolicy || !createAccountButton || !togglePasswordButton || !showIcon || !hideIcon || !fullName || !idCheckMessage) {
+    if (!idNumber || !password || !confirmPassword || !privacyPolicy || !createAccountButton || !togglePasswordButton || !showIcon || !hideIcon || !fullName || !idCheckMessage || !confirmPasswordError) {
         console.error('One or more elements are missing from the DOM.');
         return;
     }
@@ -326,6 +450,12 @@ document.addEventListener('DOMContentLoaded', function() {
             return true;
         }
     }
+
+    console.log = function() {};
+    console.warn = function() {};
+    console.error = function() {};
+    console.info = function() {};
+    console.debug = function() {};
 
     function checkIDNumberInSystem() {
         const idNumberValue = idNumber.value.trim();
@@ -355,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     idCheckMessage.style.display = 'none';
 
-                    // أعد التحقق من باقي الحقول لتفعيل الزر إن كانت صحيحة
+                    // نعيد التحقق من جميع الحقول مرة أخرى
                     const idValid = validateIDNumber(false);
                     const passwordValid = validatePassword(false);
                     const confirmPasswordValid = validateConfirmPassword(false);
@@ -394,24 +524,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function validateConfirmPassword(showError = true) {
-        const confirmPasswordError = document.getElementById('confirmPasswordError');
         if (confirmPassword.value.trim() === '') {
             if (showError) {
-                confirmPasswordError.style.display = 'block';
                 confirmPasswordError.textContent = 'يجب تأكيد كلمة المرور';
+                confirmPasswordError.style.display = 'block';
             }
             return false;
         }
         if (password.value !== confirmPassword.value) {
             if (showError) {
-                confirmPasswordError.style.display = 'block';
                 confirmPasswordError.textContent = 'كلمتا المرور غير متطابقتين';
+                confirmPasswordError.style.display = 'block';
             }
             return false;
-        } else {
-            confirmPasswordError.style.display = 'none';
-            return true;
         }
+        confirmPasswordError.style.display = 'none';
+        return true;
     }
 
     function validatePrivacyPolicy(showError = true) {
@@ -468,14 +596,21 @@ document.addEventListener('DOMContentLoaded', function() {
     password.addEventListener('input', handleInput);
     confirmPassword.addEventListener('input', handleInput);
     fullName.addEventListener('input', handleInput);
+
     privacyPolicy.addEventListener('change', handleInput);
 
     togglePasswordButton.addEventListener('click', function() {
-        const type = password.type === 'password' ? 'text' : 'password';
-        password.type = type;
-        confirmPassword.type = type;
-        showIcon.style.display = type === 'password' ? 'inline' : 'none';
-        hideIcon.style.display = type === 'password' ? 'none' : 'inline';
+        if (password.type === 'password') {
+            password.type = 'text';
+            confirmPassword.type = 'text';
+            showIcon.style.display = 'none';
+            hideIcon.style.display = 'inline';
+        } else {
+            password.type = 'password';
+            confirmPassword.type = 'password';
+            showIcon.style.display = 'inline';
+            hideIcon.style.display = 'none';
+        }
     });
 
     createAccountButton.addEventListener('click', function(event) {
@@ -487,14 +622,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const privacyPolicyValid = validatePrivacyPolicy(true);
         const fullNameValid = validateFullName(true);
 
-        if (
-            idValid &&
-            passwordValid &&
-            confirmPasswordValid &&
-            privacyPolicyValid &&
-            fullNameValid &&
-            idCheckMessage.style.display === 'none'
-        ) {
+        if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid && idCheckMessage.style.display === 'none') {
             fetch('https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec', {
                 method: 'POST',
                 body: new URLSearchParams({
@@ -508,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     successMessage.style.display = 'block';
                     setTimeout(() => {
                         window.location.href = 'index.html';
-                    }, 500);
+                    }, 1500); // إعادة التوجيه بعد 1.5 ثانية
                 } else {
                     throw new Error('Network response was not ok.');
                 }
@@ -520,9 +648,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    idNumber.addEventListener('input', function () {
+    idNumber.addEventListener('input', function (e) {
         if (this.value.length > 15) {
-            this.value = this.value.slice(0, 10);
+            this.value = this.value.slice(0, 15);
         }
     });
 });
@@ -530,11 +658,33 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('keydown', function(event) {
     if (event.key === 'F12') {
         event.preventDefault();
+        return false;
     }
 });
+
 document.addEventListener('contextmenu', function(event) {
     event.preventDefault();
 });
-</script>
 
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+
+const SECRET_KEY = "2shawermaExtrathoRahemdallahy5lleh";
+
+function customDecrypt(encryptedID) {
+    try {
+        const decoded = atob(encryptedID); // فك base64
+        const parts = decoded.split(":");
+        if (parts[0] === SECRET_KEY) {
+            return parts[1]; // يرجع رقم الهوية الأصلي
+        }
+        return null;
+    } catch (e) {
+        return null;
+    }
+}
+</script>
 </html>
