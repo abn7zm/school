@@ -1,3 +1,8 @@
+1 رسالة انشاء الحساب سيئه وليست حتى متناسقه مع الشاشه ومتداخله مع باقي النصوص
+
+2 اصبح يقبل اي رقم هويه حتى لو انه ليس مسجل في ملف encrypted_ids.txt 
+وتذكر لا تقم بتخريب الكود انما تصليحه وهذا هو الكود الكامل اقراه كامل للتاكد من كل مشكله وحلها 
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -288,23 +293,30 @@
 
 
     /*secss ms */
- #successMessage {
+    #successMessage {
   display: none;
   background-color: #e6f9f7;
   border: 2px solid #00bfa6;
   color: #00695c;
   padding: 15px;
-  margin-top: 25px;
-  font-size: 17px;
+  margin-top: 20px;
+  font-size: 16px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3);
   text-align: center;
   font-weight: bold;
   animation: fadeInScale 0.5s ease-in-out forwards;
-  position: relative;
-  z-index: 2;
 }
-
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
   </style>
 </head>
