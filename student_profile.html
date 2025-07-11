@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الملف الشخصي</title>
+  <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #ffffff;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+      margin-top: 20px;
+      color: #005d7e;
+    }
+
+    .info {
+      margin-top: 30px;
+      font-size: 18px;
+      text-align: right;
+      line-height: 2;
+      color: #333;
+    }
+
+    .back-btn {
+      margin-top: 30px;
+      background-color: #f6b100;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #c58d00;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile" class="profile-img">
+    <h2 id="userName">اسم الطالب</h2>
+
+    <div class="info">
+      <p><strong>رقم الهوية:</strong> <span id="studentId">202300123</span></p>
+      <p><strong>الصف:</strong> ثالث ثانوي</p>
+      <p><strong>البريد الإلكتروني:</strong> student@example.com</p>
+    </div>
+
+    <button class="back-btn" onclick="window.history.back()">رجوع</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const userName = localStorage.getItem('userName');
+      if (userName) {
+        document.getElementById('userName').textContent = userName;
+      } else {
+        document.getElementById('userName').textContent = 'غير معروف';
+      }
+
+      // لو تحب تحفظ بيانات أكثر وتعرضها هنا تقدر تضيفها بنفس الطريقة
+      const studentId = localStorage.getItem('studentId');
+      if (studentId) {
+        document.getElementById('studentId').textContent = studentId;
+      }
+    });
+  </script>
+
+</body>
+</html>
