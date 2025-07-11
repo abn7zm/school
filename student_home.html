@@ -242,24 +242,18 @@
     a {
       text-decoration: none;
     }
-    .user-container {
-  display: flex;
-  align-items: center;
-  flex-direction: row-reverse; /* يجعل الصورة يمين والنص يسار */
-  gap: 10px;
-}
+    .user-container:hover {
+      background-color: #004761;
 
-.user-container h2 {
-    margin: 0;
-    color: #fff;
-    font-size: 18px;
-}
+    }
+
 
 .profile {
     width: 50px; /* تصغير حجم الصورة */
     height: 50px;
     border-radius: 50%; /* شكل دائري إن أردت */
     object-fit: cover;
+     
 }
 
     /* استايلات الجوال */
@@ -343,10 +337,14 @@
 
     <div class="right-section">
       
-        <div class="user-container">
-    <h2><span class="userName" id="userName"></span></h2>
-    <img class="profile" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image">
-</div>
+      <a href="student_profile.html" class="user-container" style= "padding: 6px 12px; color: rgb(255, 255, 255); font-size: 14px; border-radius: 5px; margin-right: 10px;"  >
+ <img class="profile" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image">
+        <h2><span class="userName" id="userName"></span></h2>
+        👁 عرض الملف الشخصي
+  
+  
+</a>
+  
       <div class="right-buttons">
         <a href="support_std.html"><button>الدعم الفني</button></a>
         <a href="vis_student.html"><button>التحديثات</button></a>
