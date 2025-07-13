@@ -9,21 +9,23 @@
   <style>
     body {
       font-family: 'Cairo', sans-serif;
-      background: linear-gradient(135deg, #e0f7fa, #f8bbd0);
+      background: linear-gradient(135deg, #007a8c, #005f6b);
       margin: 0;
       padding: 0;
       direction: rtl;
+      color: #fff;
     }
 
     .container {
       max-width: 650px;
       margin: 60px auto;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
       padding: 40px 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
       border-radius: 20px;
       text-align: center;
-      position: relative;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .profile-img {
@@ -31,15 +33,15 @@
       height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      border: 4px solid #f06292;
+      border: 4px solid #ffffff;
       margin-top: -80px;
       background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.25);
     }
 
     h2 {
       margin-top: 20px;
-      color: #d81b60;
+      color: #ffffff;
       font-size: 26px;
     }
 
@@ -48,7 +50,6 @@
       font-size: 18px;
       text-align: right;
       line-height: 2;
-      color: #444;
     }
 
     .info input {
@@ -57,40 +58,46 @@
       margin-top: 8px;
       margin-bottom: 18px;
       font-size: 16px;
-      border: 1px solid #ddd;
+      border: none;
       border-radius: 10px;
+      background-color: rgba(255,255,255,0.9);
+      color: #003b47;
       text-align: right;
       transition: 0.3s;
     }
 
     .info input:focus {
-      border-color: #f06292;
-      box-shadow: 0 0 5px rgba(240, 98, 146, 0.5);
       outline: none;
+      box-shadow: 0 0 5px #ffffff;
     }
 
     .save-btn, .back-btn {
       margin-top: 20px;
-      background-color: #f06292;
-      color: #fff;
+      background-color: #ffffff;
+      color: #005f6b;
       border: none;
       padding: 12px 25px;
       font-size: 17px;
       border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, color 0.3s;
       margin-inline: 5px;
     }
 
     .save-btn:hover, .back-btn:hover {
-      background-color: #d81b60;
+      background-color: #005f6b;
+      color: #ffffff;
     }
 
     .success-message {
-      color: green;
+      color: #c8ffcc;
       margin-top: 20px;
       font-size: 16px;
       display: none;
+    }
+
+    label {
+      color: #ffffff;
     }
 
     @media (max-width: 600px) {
@@ -129,7 +136,6 @@
   <script>
     const sheetURL = "https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
 
-    // دوال تشفير وفك التشفير (Base64)
     function encrypt(text) {
       return btoa(unescape(encodeURIComponent(text)));
     }
@@ -146,7 +152,6 @@
       const userName = localStorage.getItem('userName') || 'غير معروف';
       document.getElementById('userName').textContent = userName;
 
-      // فك التشفير عند عرض البيانات
       const emailEncrypted = localStorage.getItem('email');
       const phoneEncrypted = localStorage.getItem('phone');
 
@@ -156,7 +161,6 @@
       document.getElementById('email').value = email;
       document.getElementById('phone').value = phone;
 
-      // جلب رقم الهوية من Google Sheets
       try {
         const res = await fetch(sheetURL);
         const data = await res.json();
@@ -178,7 +182,6 @@
       const phone = document.getElementById('phone').value.trim();
 
       if (email && phone) {
-        // تشفير البيانات قبل التخزين
         localStorage.setItem('email', encrypt(email));
         localStorage.setItem('phone', encrypt(phone));
 
