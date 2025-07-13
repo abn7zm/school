@@ -103,51 +103,71 @@
     <button class="back-btn" onclick="window.history.back()">رجوع</button>
   </div>
 
-  <script>
-    const sheetURL = "https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
+<script>
+  const sheetURL = "https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
 
-    document.addEventListener('DOMContentLoaded', async function () {
-      const userName = localStorage.getItem('userName') || 'غير معروف';
-      document.getElementById('userName').textContent = userName;
+  // دوال تشفير وفك التشفير (Base64)
+  function encrypt(text) {
+    return btoa(unescape(encodeURIComponent(text)));
+  }
 
-      const email = localStorage.getItem('email') || '';
-      const phone = localStorage.getItem('phone') || '';
-
-      document.getElementById('email').value = email;
-      document.getElementById('phone').value = phone;
-
-      try {
-        const res = await fetch(sheetURL);
-        const data = await res.json();
-        const match = data.find(entry => entry.name.trim() === userName.trim());
-
-        if (match) {
-          document.getElementById('studentId').textContent = match.id;
-        } else {
-          document.getElementById('studentId').textContent = "غير موجود";
-        }
-      } catch (err) {
-        console.error("فشل في جلب البيانات من Google Sheets", err);
-        document.getElementById('studentId').textContent = "خطأ في التحميل";
-      }
-    });
-
-    function saveProfile() {
-      const email = document.getElementById('email').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-
-      if (email && phone) {
-        localStorage.setItem('email', email);
-        localStorage.setItem('phone', phone);
-
-        const msg = document.getElementById('successMessage');
-        msg.style.display = 'block';
-        setTimeout(() => msg.style.display = 'none', 3000);
-      } else {
-        alert("يرجى إدخال البريد الإلكتروني ورقم الهاتف بشكل صحيح.");
-      }
+  function decrypt(text) {
+    try {
+      return decodeURIComponent(escape(atob(text)));
+    } catch {
+      return "";
     }
-  </script>
+  }
+
+  document.addEventListener('DOMContentLoaded', async function () {
+    const userName = localStorage.getItem('userName') || 'غير معروف';
+    document.getElementById('userName').textContent = userName;
+
+    // فك التشفير عند عرض البيانات
+    const emailEncrypted = localStorage.getItem('email');
+    const phoneEncrypted = localStorage.getItem('phone');
+
+    const email = emailEncrypted ? decrypt(emailEncrypted) : '';
+    const phone = phoneEncrypted ? decrypt(phoneEncrypted) : '';
+
+    document.getElementById('email').value = email;
+    document.getElementById('phone').value = phone;
+
+    // جلب رقم الهوية من Google Sheets
+    try {
+      const res = await fetch(sheetURL);
+      const data = await res.json();
+      const match = data.find(entry => entry.name.trim() === userName.trim());
+
+      if (match) {
+        document.getElementById('studentId').textContent = match.id;
+      } else {
+        document.getElementById('studentId').textContent = "غير موجود";
+      }
+    } catch (err) {
+      console.error("فشل في جلب البيانات من Google Sheets", err);
+      document.getElementById('studentId').textContent = "خطأ في التحميل";
+    }
+  });
+
+  function saveProfile() {
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+
+    if (email && phone) {
+      // تشفير البيانات قبل التخزين
+      localStorage.setItem('email', encrypt(email));
+      localStorage.setItem('phone', encrypt(phone));
+
+      const msg = document.getElementById('successMessage');
+      msg.style.display = 'block';
+      setTimeout(() => msg.style.display = 'none', 3000);
+    } else {
+      alert("يرجى إدخال البريد الإلكتروني ورقم الهاتف بشكل صحيح.");
+    }
+  }
+</script>
+
 
 </body>
 </html>
