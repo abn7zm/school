@@ -5,23 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>الملف الشخصي</title>
   <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #f8bbd0);
       margin: 0;
       padding: 0;
       direction: rtl;
     }
 
     .container {
-      max-width: 600px;
-      margin: 50px auto;
+      max-width: 650px;
+      margin: 60px auto;
       background: #ffffff;
-      padding: 30px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      border-radius: 10px;
+      padding: 40px 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border-radius: 20px;
       text-align: center;
+      position: relative;
     }
 
     .profile-img {
@@ -29,12 +31,16 @@
       height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      border: 4px solid #f06292;
+      margin-top: -80px;
+      background: #fff;
     }
 
     h2 {
       margin-top: 20px;
-      color: #005d7e;
+      color: #d81b60;
+      font-size: 26px;
     }
 
     .info {
@@ -42,41 +48,56 @@
       font-size: 18px;
       text-align: right;
       line-height: 2;
-      color: #333;
+      color: #444;
     }
 
     .info input {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      margin-bottom: 15px;
+      padding: 12px;
+      margin-top: 8px;
+      margin-bottom: 18px;
       font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
       text-align: right;
+      transition: 0.3s;
+    }
+
+    .info input:focus {
+      border-color: #f06292;
+      box-shadow: 0 0 5px rgba(240, 98, 146, 0.5);
+      outline: none;
     }
 
     .save-btn, .back-btn {
       margin-top: 20px;
-      background-color: #f6b100;
+      background-color: #f06292;
       color: #fff;
       border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 6px;
+      padding: 12px 25px;
+      font-size: 17px;
+      border-radius: 10px;
       cursor: pointer;
       transition: background-color 0.3s;
+      margin-inline: 5px;
     }
 
     .save-btn:hover, .back-btn:hover {
-      background-color: #c58d00;
+      background-color: #d81b60;
     }
 
     .success-message {
       color: green;
-      margin-top: 15px;
+      margin-top: 20px;
       font-size: 16px;
       display: none;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
     }
   </style>
 </head>
@@ -89,85 +110,86 @@
     <div class="info">
       <p><strong>رقم الهوية:</strong> <span id="studentId">جارٍ التحميل...</span></p>
       <p><strong>الصف:</strong> ثالث ثانوي</p>
-      
+
       <label for="email"><strong>البريد الإلكتروني:</strong></label>
       <input type="email" id="email" placeholder="example@email.com" />
 
       <label for="phone"><strong>رقم الهاتف:</strong></label>
       <input type="tel" id="phone" placeholder="05XXXXXXXX" />
 
-      <button class="save-btn" onclick="saveProfile()">حفظ</button>
-      <p class="success-message" id="successMessage">تم حفظ البيانات بنجاح!</p>
-    </div>
+      <div style="text-align:center;">
+        <button class="save-btn" onclick="saveProfile()">💾 حفظ</button>
+        <button class="back-btn" onclick="window.history.back()">🔙 رجوع</button>
+      </div>
 
-    <button class="back-btn" onclick="window.history.back()">رجوع</button>
+      <p class="success-message" id="successMessage">✅ تم حفظ البيانات بنجاح!</p>
+    </div>
   </div>
 
-<script>
-  const sheetURL = "https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
+  <script>
+    const sheetURL = "https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
 
-  // دوال تشفير وفك التشفير (Base64)
-  function encrypt(text) {
-    return btoa(unescape(encodeURIComponent(text)));
-  }
-
-  function decrypt(text) {
-    try {
-      return decodeURIComponent(escape(atob(text)));
-    } catch {
-      return "";
+    // دوال تشفير وفك التشفير (Base64)
+    function encrypt(text) {
+      return btoa(unescape(encodeURIComponent(text)));
     }
-  }
 
-  document.addEventListener('DOMContentLoaded', async function () {
-    const userName = localStorage.getItem('userName') || 'غير معروف';
-    document.getElementById('userName').textContent = userName;
-
-    // فك التشفير عند عرض البيانات
-    const emailEncrypted = localStorage.getItem('email');
-    const phoneEncrypted = localStorage.getItem('phone');
-
-    const email = emailEncrypted ? decrypt(emailEncrypted) : '';
-    const phone = phoneEncrypted ? decrypt(phoneEncrypted) : '';
-
-    document.getElementById('email').value = email;
-    document.getElementById('phone').value = phone;
-
-    // جلب رقم الهوية من Google Sheets
-    try {
-      const res = await fetch(sheetURL);
-      const data = await res.json();
-      const match = data.find(entry => entry.name.trim() === userName.trim());
-
-      if (match) {
-        document.getElementById('studentId').textContent = match.id;
-      } else {
-        document.getElementById('studentId').textContent = "غير موجود";
+    function decrypt(text) {
+      try {
+        return decodeURIComponent(escape(atob(text)));
+      } catch {
+        return "";
       }
-    } catch (err) {
-      console.error("فشل في جلب البيانات من Google Sheets", err);
-      document.getElementById('studentId').textContent = "خطأ في التحميل";
     }
-  });
 
-  function saveProfile() {
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
+    document.addEventListener('DOMContentLoaded', async function () {
+      const userName = localStorage.getItem('userName') || 'غير معروف';
+      document.getElementById('userName').textContent = userName;
 
-    if (email && phone) {
-      // تشفير البيانات قبل التخزين
-      localStorage.setItem('email', encrypt(email));
-      localStorage.setItem('phone', encrypt(phone));
+      // فك التشفير عند عرض البيانات
+      const emailEncrypted = localStorage.getItem('email');
+      const phoneEncrypted = localStorage.getItem('phone');
 
-      const msg = document.getElementById('successMessage');
-      msg.style.display = 'block';
-      setTimeout(() => msg.style.display = 'none', 3000);
-    } else {
-      alert("يرجى إدخال البريد الإلكتروني ورقم الهاتف بشكل صحيح.");
+      const email = emailEncrypted ? decrypt(emailEncrypted) : '';
+      const phone = phoneEncrypted ? decrypt(phoneEncrypted) : '';
+
+      document.getElementById('email').value = email;
+      document.getElementById('phone').value = phone;
+
+      // جلب رقم الهوية من Google Sheets
+      try {
+        const res = await fetch(sheetURL);
+        const data = await res.json();
+        const match = data.find(entry => entry.name.trim() === userName.trim());
+
+        if (match) {
+          document.getElementById('studentId').textContent = match.id;
+        } else {
+          document.getElementById('studentId').textContent = "غير موجود";
+        }
+      } catch (err) {
+        console.error("فشل في جلب البيانات من Google Sheets", err);
+        document.getElementById('studentId').textContent = "خطأ في التحميل";
+      }
+    });
+
+    function saveProfile() {
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (email && phone) {
+        // تشفير البيانات قبل التخزين
+        localStorage.setItem('email', encrypt(email));
+        localStorage.setItem('phone', encrypt(phone));
+
+        const msg = document.getElementById('successMessage');
+        msg.style.display = 'block';
+        setTimeout(() => msg.style.display = 'none', 3000);
+      } else {
+        alert("يرجى إدخال البريد الإلكتروني ورقم الهاتف بشكل صحيح.");
+      }
     }
-  }
-</script>
-
+  </script>
 
 </body>
 </html>
