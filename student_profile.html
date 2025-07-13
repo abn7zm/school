@@ -45,8 +45,19 @@
       color: #333;
     }
 
-    .back-btn {
-      margin-top: 30px;
+    .info input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-align: right;
+    }
+
+    .save-btn, .back-btn {
+      margin-top: 20px;
       background-color: #f6b100;
       color: #fff;
       border: none;
@@ -57,8 +68,15 @@
       transition: background-color 0.3s;
     }
 
-    .back-btn:hover {
+    .save-btn:hover, .back-btn:hover {
       background-color: #c58d00;
+    }
+
+    .success-message {
+      color: green;
+      margin-top: 15px;
+      font-size: 16px;
+      display: none;
     }
   </style>
 </head>
@@ -69,29 +87,66 @@
     <h2 id="userName">اسم الطالب</h2>
 
     <div class="info">
-      <p><strong>رقم الهوية:</strong> <span id="studentId">202300123</span></p>
+      <p><strong>رقم الهوية:</strong> <span id="studentId">جارٍ التحميل...</span></p>
       <p><strong>الصف:</strong> ثالث ثانوي</p>
-      <p><strong>البريد الإلكتروني:</strong> student@example.com</p>
+      
+      <label for="email"><strong>البريد الإلكتروني:</strong></label>
+      <input type="email" id="email" placeholder="example@email.com" />
+
+      <label for="phone"><strong>رقم الهاتف:</strong></label>
+      <input type="tel" id="phone" placeholder="05XXXXXXXX" />
+
+      <button class="save-btn" onclick="saveProfile()">حفظ</button>
+      <p class="success-message" id="successMessage">تم حفظ البيانات بنجاح!</p>
     </div>
 
     <button class="back-btn" onclick="window.history.back()">رجوع</button>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const userName = localStorage.getItem('userName');
-      if (userName) {
-        document.getElementById('userName').textContent = userName;
-      } else {
-        document.getElementById('userName').textContent = 'غير معروف';
-      }
+    const sheetURL = "https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
 
-      // لو تحب تحفظ بيانات أكثر وتعرضها هنا تقدر تضيفها بنفس الطريقة
-      const studentId = localStorage.getItem('studentId');
-      if (studentId) {
-        document.getElementById('studentId').textContent = studentId;
+    document.addEventListener('DOMContentLoaded', async function () {
+      const userName = localStorage.getItem('userName') || 'غير معروف';
+      document.getElementById('userName').textContent = userName;
+
+      const email = localStorage.getItem('email') || '';
+      const phone = localStorage.getItem('phone') || '';
+
+      document.getElementById('email').value = email;
+      document.getElementById('phone').value = phone;
+
+      try {
+        const res = await fetch(sheetURL);
+        const data = await res.json();
+        const match = data.find(entry => entry.name.trim() === userName.trim());
+
+        if (match) {
+          document.getElementById('studentId').textContent = match.id;
+        } else {
+          document.getElementById('studentId').textContent = "غير موجود";
+        }
+      } catch (err) {
+        console.error("فشل في جلب البيانات من Google Sheets", err);
+        document.getElementById('studentId').textContent = "خطأ في التحميل";
       }
     });
+
+    function saveProfile() {
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (email && phone) {
+        localStorage.setItem('email', email);
+        localStorage.setItem('phone', phone);
+
+        const msg = document.getElementById('successMessage');
+        msg.style.display = 'block';
+        setTimeout(() => msg.style.display = 'none', 3000);
+      } else {
+        alert("يرجى إدخال البريد الإلكتروني ورقم الهاتف بشكل صحيح.");
+      }
+    }
   </script>
 
 </body>
