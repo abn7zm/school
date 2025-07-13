@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -288,24 +289,48 @@
 
 
     /*secss ms */
+<<<<<<< HEAD
+    #successMessage {
+=======
  #successMessage {
+>>>>>>> ee9f9daf53a8bc137f8a493fd4a27397b5e14b8a
   display: none;
   background-color: #e6f9f7;
   border: 2px solid #00bfa6;
   color: #00695c;
   padding: 15px;
+<<<<<<< HEAD
+  margin-top: 20px;
+  font-size: 16px;
+=======
   margin-top: 25px;
   font-size: 17px;
+>>>>>>> ee9f9daf53a8bc137f8a493fd4a27397b5e14b8a
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3);
   text-align: center;
   font-weight: bold;
   animation: fadeInScale 0.5s ease-in-out forwards;
+<<<<<<< HEAD
+}
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+=======
   position: relative;
   z-index: 2;
 }
 
 
+>>>>>>> ee9f9daf53a8bc137f8a493fd4a27397b5e14b8a
   </style>
 </head>
 <body>
@@ -350,6 +375,65 @@
           aria-label="كلمة المرور"
         />
         <button type="button" id="togglePasswordButton" aria-label="تبديل إظهار كلمة المرور" tabindex="0">
+<<<<<<< HEAD
+            <button type="submit" id="createAccountButton">إنشاء حساب</button>
+<div id="successMessage">
+  ✅ تم إنشاء الحساب بنجاح! سيتم توجيهك الآن...
+</div>
+
+          <img
+            src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png"
+            id="showIcon"
+            class="toggle-icon"
+            alt="إظهار"
+          />
+          <img
+            src="https://cdn4.iconfinder.com/data/icons/liny/24/eye-off-line-512.png"
+            id="hideIcon"
+            class="toggle-icon"
+            alt="إخفاء"
+            style="display: none"
+          />
+        </button>
+      </div>
+      <div id="passwordError" class="error-message"></div>
+
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        placeholder="تأكيد كلمة المرور"
+        required
+        aria-required="true"
+        aria-label="تأكيد كلمة المرور"
+      />
+      <div id="confirmPasswordError" class="error-message"></div>
+
+      <div class="checkbox-container">
+        <input
+          type="checkbox"
+          id="privacyPolicy"
+          name="privacyPolicy"
+          required
+          aria-required="true"
+          aria-label="الموافقة على سياسة الخصوصية"
+        />
+        <label for="privacyPolicy">
+          الموافقة على
+          <a href="PRIVACY POLICY.HTML" target="_blank" rel="noopener noreferrer">سياسة الخصوصية</a>
+        </label>
+      </div>
+      <div id="policyError" class="error-message"></div>
+
+      <button type="submit" id="createAccountButton">إنشاء حساب</button>
+    </form>
+  </div>
+  <a href="index.html" class="return-home-button" aria-label="العودة إلى الصفحة الرئيسية">
+    العودة
+    <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="سهم العودة" class="button-icon" />
+  </a>
+
+=======
             
 <div id="successMessage">
   ✅ تم إنشاء الحساب بنجاح! سيتم توجيهك الآن...
@@ -407,6 +491,7 @@
     <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="سهم العودة" class="button-icon" />
   </a>
 
+>>>>>>> ee9f9daf53a8bc137f8a493fd4a27397b5e14b8a
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const idNumber = document.getElementById('idNumber');
@@ -687,4 +772,8 @@ function customDecrypt(encryptedID) {
     }
 }
 </script>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> ee9f9daf53a8bc137f8a493fd4a27397b5e14b8a
