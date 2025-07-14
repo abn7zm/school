@@ -254,7 +254,90 @@
     }
 
     /* استايلات الجوال */
-    @media (max-width: 768px) {
+     @media (width:768px ) {
+    .top-bar {
+      background-color: #005d7e;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      color: #fff;
+      justify-content: space-between;
+      position: relative;
+      flex-wrap: nowrap;
+    }
+
+      .left-section, .right-section {
+        flex: 1 1 100%;
+        justify-content: center;
+
+      }
+
+      .page-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      color: #ffffff;
+      user-select: none;
+      white-space: nowrap;
+      top: 5px;
+    }
+
+      .right-section {
+        order: 3;
+        flex-wrap: nowrap;
+        justify-content: center;
+        direction: rtl;
+      }
+
+      .profile-img {
+        height: 50px;
+        width: 50px;
+      }
+
+      .user-name {
+        font-size: 16px;
+        max-width: 80px;
+      }
+
+      .right-buttons a > button {
+        padding: 8px 12px;
+        font-size: 14px;
+        position: relative;
+        left: 50px;
+        top: 20px;
+      }
+
+      .logout-button {
+        padding: 8px 12px;
+        font-size: 14px;
+        position: relative;
+        right:135px;
+        top: 15px;
+      }
+
+      .main-buttons button {
+        width: 150px;
+        height: 150px;
+      }
+
+      .main-buttons button img {
+        height: 100px;
+      }
+      .logo{
+        right: 110px;
+        top: 20px;
+        position: relative;
+      }
+      .user-container{
+        position: relative;
+        left: 50px;
+      }
+   }
+    /* استايلات الجوال */
+    @media (max-width: 425px) {
       .top-bar {
         flex-wrap: wrap;
         justify-content: center;
@@ -269,13 +352,15 @@
       }
 
       .page-title {
-        position: static;
+        position: relative;
         transform: none;
         font-size: 28px;
-        margin: 5px 0;
+        margin: 10px 0;
         width: 100%;
         text-align: center;
         order: 1;
+        top: -90px;
+        left: 2px;
       }
 
       .right-section {
@@ -303,6 +388,9 @@
       .logout-button {
         padding: 8px 12px;
         font-size: 14px;
+        position: relative;
+        right:-40px;
+        top: 50px;
       }
 
       .main-buttons button {
@@ -313,6 +401,12 @@
       .main-buttons button img {
         height: 100px;
       }
+      .logo{
+        left: -40px;
+        top: 50px;
+        position: relative;
+      }
+      
     }
   </style>
 </head>
