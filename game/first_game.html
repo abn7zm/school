@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لعبة تعليمية</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(to top, #87ceeb 70%, #ffffff 100%);
+      overflow: hidden;
+    }
+
+    #game-area {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background-color: #cceeff;
+    }
+
+    #ground {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 80px;
+      background-color: #4CAF50;
+    }
+
+    .character {
+      position: absolute;
+      bottom: 80px;
+      width: 80px;
+      height: 80px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    #player {
+      left: 50px;
+      bottom: 80px;
+      background-image: url('https://i.postimg.cc/L86y8vDt/ai-generated-3d-cartoon-child-character-wearing-a-backpack-isolated-on-transparent-background-png.webp'); /* صورة إنسان */
+    }
+
+    #enemy {
+      left: 800px;
+      bottom: 80px;
+      background-image: url('https://i.postimg.cc/x1CW49wV/cute-one-eyed-monster-cartoon-2793c9.webp'); /* صورة وحش */
+    }
+
+    #questionBox {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: #fff;
+      padding: 20px;
+      border: 3px solid #4caf50;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      display: none;
+      text-align: center;
+      z-index: 10;
+    }
+
+    #questionBox input {
+      padding: 8px;
+      font-size: 16px;
+      width: 80px;
+      text-align: center;
+      margin: 10px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+
+    #questionBox button {
+      padding: 8px 15px;
+      font-size: 16px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="game-area">
+  <div id="ground"></div>
+
+  <div class="character" id="player"></div>
+  <div class="character" id="enemy"></div>
+
+  <div id="questionBox">
+    <p>ما هو ناتج 6 × 2 ؟</p>
+    <input id="answer" type="text" autocomplete="off" autofocus>
+    <button onclick="checkAnswer()">تحقق</button>
+  </div>
+</div>
+
+<script>
+  const player = document.getElementById('player');
+  const enemy = document.getElementById('enemy');
+  const questionBox = document.getElementById('questionBox');
+
+  let playerPos = 50;
+  const speed = 10;
+  let questionShown = false;
+  let gameEnded = false;
+
+  // ضبط إحداثيات البداية
+  player.style.left = playerPos + 'px';
+  enemy.style.left = '800px';
+
+  // تحكم بالحركة يمين ويسار
+ document.addEventListener('keydown', (e) => {
+  const key = e.key.toLowerCase();
+  if (key === 'd') {
+    playerPos += speed;
+    player.style.left = playerPos + 'px';
+    console.log('يمين:', playerPos, player.style.left);
+  }
+  if (key === 'a') {
+    playerPos -= speed;
+    if (playerPos < 0) playerPos = 0;
+    player.style.left = playerPos + 'px';
+    console.log('يسار:', playerPos, player.style.left);
+  }
+});
+  function checkProximity() {
+    const enemyPos = parseInt(enemy.style.left);
+    if (!questionShown && Math.abs(playerPos - enemyPos) < 80) {
+      questionBox.style.display = 'block';
+      questionShown = true;
+      document.getElementById('answer').focus();
+    }
+  }
+
+  function checkAnswer() {
+    const ans = document.getElementById('answer').value.trim();
+    if (ans === "12") {
+      alert("إجابة صحيحة! ✅ الوحش اختفى");
+      enemy.style.display = "none";
+      questionBox.style.display = "none";
+      gameEnded = true;
+    } else {
+      alert("خطأ! ❌ لقد خسرت");
+      player.style.display = "none";
+      questionBox.style.display = "none";
+      gameEnded = true;
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+  console.log('تم الضغط على المفتاح:', e.key);
+});
+</script>
+
+</body>
+</html>
