@@ -232,7 +232,7 @@
       <li>📧 <a href="mailto:rsanjalawi007@gmail.com">abn7zm@gmail.com</a></li>
       <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
     </ul>
-    <p class="end">© جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
+    <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
   </div>
   <script>
     const today = new Date();
@@ -293,6 +293,7 @@
     }
 
     window.onload = renderCalendar;
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
