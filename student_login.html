@@ -6,6 +6,24 @@
   <title>تسجيل الدخول طالب</title>
   <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
   <style>
+    .forget {
+      display: inline-block;
+       position: relative;
+       bottom: 25px;
+       left:110px;
+      white-space: nowrap;
+      padding: 0px;
+      color: #005f6b;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-weight: 600;
+      
+    }
+    .forget:hover {
+      text-decoration: underline;
+      color: #003f45;
+
+    }
     @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
     * {
       box-sizing: border-box;
@@ -302,6 +320,7 @@
           />
         </button>
       </div>
+      <a href="" class="forget">نسيت كلمة المرور؟</a>
       <button type="submit">تسجيل دخول</button>
       <p class="login">ليس لديك حساب؟</p>
       <a href="new_acc.html" class="create-account-link">إنشاء حساب جديد</a>
