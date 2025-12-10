@@ -192,7 +192,7 @@
 
     <!-- التذييل -->
     <footer>
-        <p>&copy; 2024 جميع الحقوق محفوظة.</p>
+        <p>&copy; <span id="year"></span> جميع الحقوق محفوظة.</p>
     </footer>
 <script>
                 document.addEventListener('keydown', function(event) {
@@ -210,7 +210,7 @@ console.warn = function() {};
 console.error = function() {};
 console.info = function() {};
 console.debug = function() {};
-
+document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
