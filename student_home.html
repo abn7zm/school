@@ -9,7 +9,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  // عرض اسم المستخدم من localStorage
+ 
   var userName = localStorage.getItem('userName');
   if (userName) {
     document.getElementById('userName').textContent = userName;
@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  // جلب آية عشوائية من quran.txt
   fetch('quran.txt')
     .then(response => response.text())
     .then(text => {
@@ -29,28 +28,32 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .catch(error => console.error('خطأ في تحميل quran.txt:', error));
 
-  // وضع سنة الحقوق في الفوتر
+
   document.getElementById("year").textContent = new Date().getFullYear();
 
-
-  // تشغيل زر تسجيل الخروج
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", function () {
 
-      // حذف بيانات المستخدم
+  
       localStorage.removeItem("userName");
       localStorage.removeItem("userId");
       localStorage.removeItem("phone");
       localStorage.removeItem("email");
 
-      // تحويل للصفحة الرئيسية
+   
       window.location.href = "index.html";
     });
   } else {
     console.error("❌ لم يتم العثور على زر تسجيل الخروج logoutBtn");
   }
 
+});
+
+window.addEventListener("pageshow", function (event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
 });
 </script>
 
