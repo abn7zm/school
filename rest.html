@@ -18,7 +18,7 @@ button:hover {background:var(--button-dark);}
 </head>
 <body>
 <div class="container">
-<h2>نسيت كلمة المرور</h2>
+<h2>اعادة تعيين كلمة المرور</h2>
 <form id="forgotForm">
 <label>الاسم الثلاثي</label>
 <input type="text" id="fullname" required>
@@ -33,7 +33,7 @@ button:hover {background:var(--button-dark);}
 <button type="submit">إرسال الطلب</button>
 </form>
 <div class="success" id="successMsg">
-تم إرسال طلبك بنجاح، سيتم التواصل معك خلال 24 ساعة.
+تم إرسال طلبك بنجاح، سيتم التواصل معك على الهاتف او الايميل خلال 24 ساعة.
 </div>
 </div>
 
@@ -57,10 +57,10 @@ document.getElementById("forgotForm").addEventListener("submit", async (e)=>{
             document.getElementById("forgotForm").reset();
 
         } else {
-            alert("حدث خطأ، لم يتم إرسال البيانات.");
+            
         }
     }catch(err){
-        alert("خطأ في الإرسال، تأكد من رابط Google Script.");
+     
     }
 });
 </script>
