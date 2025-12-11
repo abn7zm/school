@@ -11,48 +11,171 @@
       box-sizing: border-box;
     }
 
+    li:hover {
+      text-decoration: underline;
+    }
     body {
       margin: 0;
       padding: 0;
       font-family: 'Cairo', sans-serif;
-      background: linear-gradient(135deg, #007a8c, #005f6b);
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       direction: rtl;
-    }
-
-    .container {
-      background-color: #ffffff;
-      width: 100%;
-      max-width: 480px;
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      background-color: #f2f2f2;
       text-align: center;
     }
 
+    /* ===== شريط الأعلى ===== */
+    .top-bar {
+      position: relative;
+      width: 100%;
+      height: 130px;
+      background-color: #005d7e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    #logo {
+      width: 150px;
+      height: 150px;
+      max-width: 150px;
+      width: 20vw;
+      min-width: 100px;
+      filter: drop-shadow(0 0 10px #00e6f6);
+    }
+    .return {
+      position: absolute;
+      top: 30px;
+      left: 20px;
+      background-color: #f6b100;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 15px;
+      font-weight: bold;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .return:hover {
+      background-color: #c99000;
+      transform: scale(1.05);
+    }
+
+    .return img {
+      margin-left: 10px;
+      width: 20px;
+    }
+
+
     .profile-img {
-      width: 110px;
-      height: 110px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
       border: 4px solid #007a8c;
       background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      margin: 20px auto 100px  auto;
+      margin-right: 120px;
+      display: block;
+      
     }
 
     h2 {
-      margin: 10px 0 20px;
       color: #005f6b;
+      font-size: 24px;
+      justify-content: flex-start;
+      position: absolute;
+      top: 140px;
+      right: 245px;
+
+    }
+    .footer {
+      background-color: #005d7e;
+      color: #ffffff;
+      padding: 25px 40px;
+      width: 100%;
+      text-align: right;
+      margin-top: 260px;
+      box-sizing: border-box;
+    }
+
+    .footer h3 {
+      margin-bottom: 15px;
       font-size: 22px;
+      color: #ffffff;
+      font-weight: bold;
+      border-bottom: 2px solid #f6b100;
+      padding-bottom: 5px;
+    }
+    .id {
+      position: absolute;
+      top: 200px;
+      right: 245px;
+      color: #005f6b;
     }
 
     .info {
+      display: inline-block;
       text-align: right;
       color: #333;
+      width: 90%;
+      max-width: 400px;
+    }
+    .email {
+      position: relative;
+      left: 720px;
+      bottom: 55%;
+    }
+    .email_input {
+      position: absolute;
+      right: 25px;
+      bottom: 50%;
+      width: 200px;
+    }
+    .email_edit{
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      right: 600px;
+      bottom: 50%;
+      border: none;
+      font-size: 20px;
+      color:#f6b100;
+      background: none;
+    }
+    .email_edit:hover {
+      text-decoration: underline;
+      color:#d69a01;
+   }
+    .phone {
+      position: absolute;
+      right: 20px;
+      bottom: 40%;
+    }
+    .phone_input {
+      position: absolute;
+      right: 20px;
+      bottom: 35%;
+    }
+    .edit_phone {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      right: 600px;
+      bottom: 35%;
+      border: none;
+      font-size: 20px;
+      color: #f6b100;
+      background: none;
+    }
+    .edit_phone:hover {
+      text-decoration: underline;
+      color: #d69a01;
     }
 
     .info p {
@@ -62,23 +185,28 @@
 
     .info label {
       display: block;
-      margin-top: 20px;
+      margin-top: 15px;
       font-weight: bold;
       color: #005f6b;
     }
 
     .info input {
-      width: 100%;
+      width: 30%;
       padding: 10px;
       margin-top: 5px;
       border-radius: 8px;
       border: 1px solid #ccc;
       font-size: 16px;
       color: #333;
+
     }
 
     .btn-group {
       margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .btn-group button {
@@ -89,8 +217,9 @@
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
-      margin: 0 8px;
       transition: 0.3s;
+      min-width: 120px;
+      flex: 1;
     }
 
     .btn-group button:hover {
@@ -103,33 +232,67 @@
       font-size: 15px;
       display: none;
     }
+    .student_info {
+      position: absolute;
+      background-color: #d9d9d9;
+      width: 350px;
+      height: 450px;
+      left: 250px;
+      top: 180px;
+      border-radius: 30px;
+    }
+    h1 {
+      color: #007a8c;
+    }
+
+    @media screen and (max-width: 425px) {
+      .btn-group button {
+        flex: 1 1 100%;
+      }
+      .id {
+        position: fixed;
+        right: 0px;
+      }
+      .id_name {
+        position: fixed;
+        top: 180px;
+      }
+    }
   </style>
 </head>
 <body>
+  
 
-  <div class="container">
-    <img src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile" class="profile-img">
-    <h2 id="userName">اسم الطالب</h2>
-
-    <div class="info">
-      <p><strong>رقم الهوية:</strong> <span id="studentId">جارٍ التحميل...</span></p>
-      
-
-      <label for="email">البريد الإلكتروني:</label>
-      <input type="email" id="email" placeholder="example@email.com">
-
-      <label for="phone">رقم الهاتف:</label>
-      <input type="tel" id="phone" placeholder="05XXXXXXXX">
-    </div>
-
-    <div class="btn-group">
-      <button onclick="saveProfile()">💾 حفظ</button>
-      <button onclick="window.history.back()">🔙 رجوع</button>
-    </div>
-
-    <p class="success-message" id="successMessage">✅ تم حفظ البيانات بنجاح!</p>
+  <div class="top-bar">
+    <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" id="logo" />
+    <a href="student_home.html" class="return">
+      عودة
+      <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Arrow">
+    </a>
   </div>
 
+  <img src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile" class="profile-img">
+  <h2 id="userName">اسم الطالب</h2>
+
+    <p class="id"><strong class="id_name">رقم الهوية:</strong> <span id="studentId">جارٍ التحميل...</span></p>
+  <div class="info">
+    
+    <label for="email" class="email">البريد الإلكتروني:</label>
+    <input type="email" id="email" placeholder="example@email.com" class="email_input">
+    <button class="email_edit" onclick="enableEdit('email')">تعديل</button>
+    <label for="phone" class="phone">رقم الهاتف:</label>
+    <button class="edit_phone" onclick="enableEdit('phone')">تعديل</button>
+    <input type="tel" id="phone" placeholder="05XXXXXXXX" class="phone_input">
+  </div>
+
+  <div class="student_info">
+    <h1>بيانات الطالب</h1>
+  </div>
+  
+
+ 
+
+  <p class="success-message" id="successMessage">✅ تم حفظ البيانات بنجاح!</p>
   <script>
     const sheetURL = "https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
 
@@ -144,6 +307,13 @@
         return "";
       }
     }
+    function enableEdit(fieldId) {
+  const input = document.getElementById(fieldId);
+  input.disabled = false;          // يفك القفل
+  input.focus();                   // يحط المؤشر داخل الحقل
+  input.style.background = "#fff"; // شكل بسيط يوضح إنه مفتوح
+}
+
 
     document.addEventListener('DOMContentLoaded', async function () {
       const userName = localStorage.getItem('userName') || 'غير معروف';
@@ -183,6 +353,15 @@
       }
     }
   </script>
-
+<div class="footer">
+    <h3>معلومات الاتصال</h3>
+    <ul class="contact-list">
+      <li>📞 <a href="tel:+966539084645" style="color:#ffffff; text-decoration: none; ">+966 536382599</a></li>
+      <li>📧 <a href="mailto:rsanjalawi007@gmail.com" style="color: #ffffff; text-decoration:none ;">abn7zm@gmail.com</a></li>
+      <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
+    </ul>
+    <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
+  </div>
 </body>
 </html>
+
