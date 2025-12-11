@@ -1,367 +1,253 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>الملف الشخصي</title>
-  <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة الملف الشخصي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; transition: all 0.3s ease; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    background-color: #f0f2f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-    li:hover {
-      text-decoration: underline;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Cairo', sans-serif;
-      min-height: 100vh;
-      direction: rtl;
-      background-color: #f2f2f2;
-      text-align: center;
-    }
+  /* ===== الشريط العلوي ===== */
+  .top-bar {
+    width: 100%;
+    height: 80px;
+    background-color: #005d7e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  .top-bar img { height: 60px; border-radius: 10px; }
+  .return {
+    background-color: #f6b100;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .return:hover { background-color: #d69a01; }
 
-    /* ===== شريط الأعلى ===== */
-    .top-bar {
-      position: relative;
-      width: 100%;
-      height: 130px;
-      background-color: #005d7e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
+  /* ===== حاوية المحتوى ===== */
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+  }
 
-    #logo {
-      width: 150px;
-      height: 150px;
-      max-width: 150px;
-      width: 20vw;
-      min-width: 100px;
-      filter: drop-shadow(0 0 10px #00e6f6);
-    }
-    .return {
-      position: absolute;
-      top: 30px;
-      left: 20px;
-      background-color: #f6b100;
-      color: #ffffff;
-      padding: 10px 20px;
-      border-radius: 15px;
-      font-weight: bold;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      transition: all 0.3s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .return:hover {
-      background-color: #c99000;
-      transform: scale(1.05);
-    }
+  /* ===== بطاقة الملف الشخصي ===== */
+  .profile-card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+  .profile-card img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+  }
+  .profile-card img:hover { transform: scale(1.05) rotate(2deg); }
+  .profile-card h2 { color: #007a8c; font-size: 26px; margin-bottom: 5px; }
+  .profile-card .id { color: #005f6b; font-weight: bold; margin-bottom: 20px; }
 
-    .return img {
-      margin-left: 10px;
-      width: 20px;
-    }
+  /* ===== بطاقة تحرير البيانات ===== */
+  .edit-card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .edit-card label { font-weight: bold; color: #005f6b; }
+  .edit-card input {
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 100%;
+  }
+  .edit-card .edit-btn {
+    background: none;
+    border: none;
+    color: #f6b100;
+    cursor: pointer;
+    font-size: 16px;
+    align-self: flex-end;
+  }
+  .edit-card .edit-btn:hover { color: #d69a01; text-decoration: underline; }
+  .edit-card .btn-save {
+    background-color: #007a8c;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    width: 100%;
+  }
+  .edit-card .btn-save:hover { background-color: #005f6b; transform: translateY(-2px); }
 
+  .success-message { color: green; font-size: 15px; display: none; margin-top: 10px; }
 
-    .profile-img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #007a8c;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.15);
-      margin: 20px auto 100px  auto;
-      margin-right: 120px;
-      display: block;
-      
-    }
+  /* ===== بطاقة بيانات الطالب ===== */
+  .student-card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+  .student-card h3 { color: #007a8c; margin-bottom: 10px; }
+  .student-card .data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(120px,1fr));
+    gap: 15px;
+  }
+  .student-card .data-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s;
+  }
+  .student-card .data-item:hover { transform: scale(1.05); background-color: #e0f0f5; }
 
-    h2 {
-      color: #005f6b;
-      font-size: 24px;
-      justify-content: flex-start;
-      position: absolute;
-      top: 140px;
-      right: 245px;
+  /* ===== الفوتر ===== */
+  .footer {
+    background-color: #005d7e;
+    color: #fff;
+    padding: 25px;
+    width: 100%;
+    margin-top: auto;
+    text-align: right;
+    font-size: 14px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+  }
+  .footer h3 { border-bottom: 2px solid #f6b100; display: inline-block; padding-bottom: 4px; }
 
-    }
-    .footer {
-      background-color: #005d7e;
-      color: #ffffff;
-      padding: 25px 40px;
-      width: 100%;
-      text-align: right;
-      margin-top: 260px;
-      box-sizing: border-box;
-    }
-
-    .footer h3 {
-      margin-bottom: 15px;
-      font-size: 22px;
-      color: #ffffff;
-      font-weight: bold;
-      border-bottom: 2px solid #f6b100;
-      padding-bottom: 5px;
-    }
-    .id {
-      position: absolute;
-      top: 200px;
-      right: 245px;
-      color: #005f6b;
-    }
-
-    .info {
-      display: inline-block;
-      text-align: right;
-      color: #333;
-      width: 90%;
-      max-width: 400px;
-    }
-    .email {
-      position: relative;
-      left: 720px;
-      bottom: 55%;
-    }
-    .email_input {
-      position: absolute;
-      right: 25px;
-      bottom: 50%;
-      width: 200px;
-    }
-    .email_edit{
-      width: 40px;
-      height: 40px;
-      position: absolute;
-      right: 600px;
-      bottom: 50%;
-      border: none;
-      font-size: 20px;
-      color:#f6b100;
-      background: none;
-    }
-    .email_edit:hover {
-      text-decoration: underline;
-      color:#d69a01;
-   }
-    .phone {
-      position: absolute;
-      right: 20px;
-      bottom: 40%;
-    }
-    .phone_input {
-      position: absolute;
-      right: 20px;
-      bottom: 35%;
-    }
-    .edit_phone {
-      width: 40px;
-      height: 40px;
-      position: absolute;
-      right: 600px;
-      bottom: 35%;
-      border: none;
-      font-size: 20px;
-      color: #f6b100;
-      background: none;
-    }
-    .edit_phone:hover {
-      text-decoration: underline;
-      color: #d69a01;
-    }
-
-    .info p {
-      margin: 10px 0;
-      font-size: 16px;
-    }
-
-    .info label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-      color: #005f6b;
-    }
-
-    .info input {
-      width: 30%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      color: #333;
-
-    }
-
-    .btn-group {
-      margin-top: 25px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn-group button {
-      background-color: #007a8c;
-      color: #fff;
-      border: none;
-      padding: 12px 22px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-      min-width: 120px;
-      flex: 1;
-    }
-
-    .btn-group button:hover {
-      background-color: #005f6b;
-    }
-
-    .success-message {
-      margin-top: 20px;
-      color: green;
-      font-size: 15px;
-      display: none;
-    }
-    .student_info {
-      position: absolute;
-      background-color: #d9d9d9;
-      width: 350px;
-      height: 450px;
-      left: 250px;
-      top: 180px;
-      border-radius: 30px;
-    }
-    h1 {
-      color: #007a8c;
-    }
-
-    @media screen and (max-width: 425px) {
-      .btn-group button {
-        flex: 1 1 100%;
-      }
-      .id {
-        position: fixed;
-        right: 0px;
-      }
-      .id_name {
-        position: fixed;
-        top: 180px;
-      }
-    }
-  </style>
+  /* ===== استجابة ===== */
+  @media(max-width:900px){
+    .container { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>
 </head>
 <body>
-  
 
-  <div class="top-bar">
-    <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" id="logo" />
-    <a href="student_home.html" class="return">
-      عودة
-      <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Arrow">
-    </a>
+<div class="top-bar">
+  <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo">
+  <a href="student_home.html" class="return">عودة</a>
+</div>
+
+<div class="container">
+  <!-- بطاقة الملف الشخصي -->
+  <div class="profile-card">
+    <img src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile">
+    <h2 id="userName">اسم الطالب</h2>
+    <p class="id"><strong>رقم الهوية:</strong> <span id="studentId">جارٍ التحميل...</span></p>
   </div>
 
-  <img src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile" class="profile-img">
-  <h2 id="userName">اسم الطالب</h2>
+  <!-- بطاقة تحرير البيانات -->
+  <div class="edit-card">
+    <label for="email">البريد الإلكتروني:</label>
+    <input type="email" id="email" placeholder="example@email.com" disabled>
+    <button class="edit-btn" onclick="enableEdit('email')">تعديل</button>
 
-    <p class="id"><strong class="id_name">رقم الهوية:</strong> <span id="studentId">جارٍ التحميل...</span></p>
-  <div class="info">
-    
-    <label for="email" class="email">البريد الإلكتروني:</label>
-    <input type="email" id="email" placeholder="example@email.com" class="email_input">
-    <button class="email_edit" onclick="enableEdit('email')">تعديل</button>
-    <label for="phone" class="phone">رقم الهاتف:</label>
-    <button class="edit_phone" onclick="enableEdit('phone')">تعديل</button>
-    <input type="tel" id="phone" placeholder="05XXXXXXXX" class="phone_input">
+    <label for="phone">رقم الهاتف:</label>
+    <input type="tel" id="phone" placeholder="05XXXXXXXX" disabled>
+    <button class="edit-btn" onclick="enableEdit('phone')">تعديل</button>
+
+    <button class="btn-save" onclick="saveProfile()">حفظ التغييرات</button>
+    <p class="success-message" id="successMessage">✅ تم حفظ البيانات بنجاح!</p>
+
+    <!-- بطاقة بيانات الطالب -->
+    <div class="student-card">
+      <h3>بيانات الطالب</h3>
+      <div class="data-grid">
+        <div class="data-item">الصف: 12</div>
+        <div class="data-item">الشعبة: أ</div>
+        <div class="data-item">المعدل: 95%</div>
+        <div class="data-item">الغياب: 2 أيام</div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="student_info">
-    <h1>بيانات الطالب</h1>
-  </div>
-  
+<div class="footer">
+  <h3>معلومات الاتصال</h3>
+  <ul>
+    <li>📞 <a href="tel:+966539084645">+966 536382599</a></li>
+    <li>📧 <a href="mailto:rsanjalawi007@gmail.com">abn7zm@gmail.com</a></li>
+    <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
+  </ul>
+  <p>©2023-<span id="year"></span> جميع الحقوق الفكرية محفوظة.</p>
+</div>
 
- 
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
 
-  <p class="success-message" id="successMessage">✅ تم حفظ البيانات بنجاح!</p>
-  <script>
-    const sheetURL = "https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
+function encrypt(text){return btoa(unescape(encodeURIComponent(text)));}
+function decrypt(text){try{return decodeURIComponent(escape(atob(text)));}catch{return"";}}
 
-    function encrypt(text) {
-      return btoa(unescape(encodeURIComponent(text)));
-    }
-
-    function decrypt(text) {
-      try {
-        return decodeURIComponent(escape(atob(text)));
-      } catch {
-        return "";
-      }
-    }
-    function enableEdit(fieldId) {
+function enableEdit(fieldId){
   const input = document.getElementById(fieldId);
-  input.disabled = false;          // يفك القفل
-  input.focus();                   // يحط المؤشر داخل الحقل
-  input.style.background = "#fff"; // شكل بسيط يوضح إنه مفتوح
+  input.disabled=false;
+  input.focus();
+  input.style.background="#fff";
 }
 
+function saveProfile(){
+  const email=document.getElementById('email').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  if(email && phone){
+    localStorage.setItem('email',encrypt(email));
+    localStorage.setItem('phone',encrypt(phone));
+    const msg=document.getElementById('successMessage');
+    msg.style.display='block';
+    setTimeout(()=>msg.style.display='none',3000);
+  } else alert("يرجى إدخال البريد الإلكتروني ورقم الهاتف بشكل صحيح.");
+}
 
-    document.addEventListener('DOMContentLoaded', async function () {
-      const userName = localStorage.getItem('userName') || 'غير معروف';
-      document.getElementById('userName').textContent = userName;
+document.addEventListener('DOMContentLoaded', async function(){
+  const userName = localStorage.getItem('userName') || 'غير معروف';
+  document.getElementById('userName').textContent=userName;
 
-      const emailEncrypted = localStorage.getItem('email');
-      const phoneEncrypted = localStorage.getItem('phone');
+  const emailEncrypted=localStorage.getItem('email');
+  const phoneEncrypted=localStorage.getItem('phone');
+  document.getElementById('email').value=emailEncrypted?decrypt(emailEncrypted):'';
+  document.getElementById('phone').value=phoneEncrypted?decrypt(phoneEncrypted):'';
 
-      document.getElementById('email').value = emailEncrypted ? decrypt(emailEncrypted) : '';
-      document.getElementById('phone').value = phoneEncrypted ? decrypt(phoneEncrypted) : '';
+  const sheetURL="https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
+  try{
+    const res=await fetch(sheetURL);
+    const data=await res.json();
+    const match=data.find(entry=>entry.name.trim()===userName.trim());
+    document.getElementById('studentId').textContent=match?match.id:"غير موجود";
+  }catch{
+    document.getElementById('studentId').textContent="خطأ في التحميل";
+  }
+});
+</script>
 
-      try {
-        const res = await fetch(sheetURL);
-        const data = await res.json();
-        const match = data.find(entry => entry.name.trim() === userName.trim());
-
-        document.getElementById('studentId').textContent = match ? match.id : "غير موجود";
-      } catch (err) {
-        console.error("فشل في جلب البيانات من Google Sheets", err);
-        document.getElementById('studentId').textContent = "خطأ في التحميل";
-      }
-    });
-
-    function saveProfile() {
-      const email = document.getElementById('email').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-
-      if (email && phone) {
-        localStorage.setItem('email', encrypt(email));
-        localStorage.setItem('phone', encrypt(phone));
-
-        const msg = document.getElementById('successMessage');
-        msg.style.display = 'block';
-        setTimeout(() => msg.style.display = 'none', 3000);
-      } else {
-        alert("يرجى إدخال البريد الإلكتروني ورقم الهاتف بشكل صحيح.");
-      }
-    }
-  </script>
-<div class="footer">
-    <h3>معلومات الاتصال</h3>
-    <ul class="contact-list">
-      <li>📞 <a href="tel:+966539084645" style="color:#ffffff; text-decoration: none; ">+966 536382599</a></li>
-      <li>📧 <a href="mailto:rsanjalawi007@gmail.com" style="color: #ffffff; text-decoration:none ;">abn7zm@gmail.com</a></li>
-      <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
-    </ul>
-    <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
-  </div>
 </body>
 </html>
-
