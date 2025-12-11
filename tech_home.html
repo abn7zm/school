@@ -5,40 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>الرئيسيه طالب</title>
   <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-    document.addEventListener('DOMContentLoaded', function () {
-      var userName = localStorage.getItem('userName');
-      if (userName) {
-        document.getElementById('userName').textContent = userName;
-      } else {
-        alert('لم يتم العثور على اسم المستخدم.');
-        window.location.href = 'student_login.html';
-      }
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-      fetch('quran.txt')
-        .then(response => {
-          if (!response.ok) throw new Error('Network response was not ok');
-          return response.text();
-        })
-        .then(text => {
-          const lines = text.split('\n');
-          const randomLine = lines[Math.floor(Math.random() * lines.length)];
-          document.getElementById('random-line').textContent = randomLine;
-        })
-        .catch(error => console.error('Error loading file:', error));
+
+  var userName = localStorage.getItem('userName');
+  if (userName) {
+    document.getElementById('userName').textContent = userName;
+  } else {
+    alert('لم يتم العثور على اسم المستخدم.');
+    window.location.href = 'tech_login.html';
+    return;
+  }
+
+  fetch('quran.txt')
+    .then(response => response.text())
+    .then(text => {
+      const lines = text.split('\n');
+      const randomLine = lines[Math.floor(Math.random() * lines.length)];
+      document.getElementById('random-line').textContent = randomLine;
+    })
+    .catch(error => console.error('Error:', error));
+
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+  const logoutButtons = document.querySelectorAll(".logout-button");
+  logoutButtons.forEach(btn => {
+    btn.addEventListener("click", function (event) {
+
+      event.preventDefault(); 
+
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("phone");
+      localStorage.removeItem("email");
+
+   
+      window.location.href = "index.html";
     });
+  });
 
-    document.addEventListener('contextmenu', function (event) {
-      event.preventDefault();
-    });
+});
 
-    console.log = function () {};
-    console.warn = function () {};
-    console.error = function () {};
-    console.info = function () {};
-    console.debug = function () {};
-  </script>
+// تعطيل قائمة الضغط يمين
+document.addEventListener('contextmenu', function (event) {
+  event.preventDefault();
+});
+
+// تعطيل الكونسول
+console.log = function () {};
+console.warn = function () {};
+console.error = function () {};
+console.info = function () {};
+console.debug = function () {};
+</script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -449,9 +470,6 @@
         <a href="tech_cry.html"><button class="bu">
             <img src="https://i.postimg.cc/bJ73rm3N/cryp.png" alt="Button 3">
         </button></a>
-        <a href="tech_add.html"><button class="bu">
-            <img src="https://i.postimg.cc/2SbFZM0F/3-removebg-preview.png" alt="Button 3">
-        </button></a>
 
     </div>
   <div id="random-line" class="quran"></div>
@@ -460,7 +478,7 @@
     <h3>معلومات الاتصال</h3>
     <ul class="contact-list">
       <li>📞 <a href="tel:+966539084645">+966 536382599</a></li>
-      <li>📧 <a href="mailto:rsanjalawi007@gmail.com">abn7zm@gmail.com</a></li>
+      <li>📧 <a href="mailto:abn7zm@gmail.com">abn7zm@gmail.com</a></li>
       <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
     </ul>
     <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
