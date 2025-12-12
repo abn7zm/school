@@ -9,9 +9,7 @@
 *{margin:0; padding:0; box-sizing:border-box; font-family:"Tajawal",sans-serif;}
 body{background:#ffffff; color:#1a1a1a; overflow-x:hidden; }
 
-/* ====================
-   HEADER
-==================== */
+
 .header-line{
     width:100%;
     height:100px;
@@ -49,24 +47,37 @@ body{background:#ffffff; color:#1a1a1a; overflow-x:hidden; }
 }
 .return img{margin-left:10px;width:20px;}
 
-/* ====================
-   TITLE
-==================== */
-h1{font-size:40px; color:#005d7e; margin-bottom:10px; letter-spacing:-1px;}
-.title-line{width:130px; height:4px; background:#f6b100; margin-bottom:50px; border-radius:3px;}
 
-/* ====================
-   FORM ROWS
-==================== */
+.center-box {
+    width: 90%;
+    max-width: 650px;
+    margin: auto;
+    background: #ffffff;
+    padding: 20px 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+h1{font-size:40px; color:#005d7e; margin-bottom:10px; letter-spacing:-1px; text-align:center;}
+.title-line{width:130px; height:4px; background:#f6b100; margin:0 auto 40px auto; border-radius:3px;}
+
 .form-row{
     margin:20px 0;
     display:flex;
     align-items:flex-start;
     gap:15px;
+    width:100%;
+    position:relative;
 }
 
 .label{
-    width:120px; /* تقليل عرض label لتقليل الفراغ */
+    width:120px;
     font-size:18px;
     font-weight:bold;
     position:relative;
@@ -81,7 +92,6 @@ h1{font-size:40px; color:#005d7e; margin-bottom:10px; letter-spacing:-1px;}
     border-radius:3px;
 }
 
-/* أيقونات الحقول */
 .field-icon{
     display:flex;
     align-items:center;
@@ -89,11 +99,8 @@ h1{font-size:40px; color:#005d7e; margin-bottom:10px; letter-spacing:-1px;}
     flex:1;
 }
 
-.icon{font-size:20px;}
-
-/* الحقول */
 .input{
-    width: 40%;
+    width: 100%;
     padding:15px 20px;
     font-size:16px;
     border:2px solid #005d7e;
@@ -106,13 +113,24 @@ h1{font-size:40px; color:#005d7e; margin-bottom:10px; letter-spacing:-1px;}
     transform:translateX(-3px);
 }
 
-/* نصوص توجيهية وتحذيرات */
-.hint{font-size:13px; color:#005d7e; margin-top:5px; display:inline; position: absolute; right: 45%;}
-.warning{color:#f6b100; font-size:13px; margin-top:3px; display:inline; position: absolute; right: 45%;}
+.hint{
+    font-size:13px;
+    color:#005d7e;
+    margin-top:5px;
+    position:absolute;
+    right:45%;
+    bottom:-18px;
+}
+.warning{
+    color:#f6b100;
+    font-size:13px;
+    margin-top:5px;
+    position:absolute;
+    right:45%;
+    bottom:-18px;
+}
 
-/* ====================
-   BUTTON
-==================== */
+
 button{
     margin-top:30px;
     padding:15px 40px;
@@ -126,9 +144,8 @@ button{
 }
 button:hover{background:#484646;}
 
-/* ====================
-   SUCCESS MESSAGE
-==================== */
+
+
 .success{
     margin-top:25px;
     padding:15px;
@@ -139,9 +156,7 @@ button:hover{background:#484646;}
     display:none;
 }
 
-/* ====================
-   FOOTER
-==================== */
+
 .footer{
     background-color:#005d7e;
     color:#fff;
@@ -163,7 +178,6 @@ button:hover{background:#484646;}
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header-line">
     <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" class="logo">
     <a href="student_home.html" class="return">
@@ -172,70 +186,65 @@ button:hover{background:#484646;}
     </a>
 </div>
 
-<!-- TITLE -->
-<h1>إعادة تعيين كلمة المرور</h1>
-<div class="title-line"></div>
+<div class="center-box">
 
-<!-- FORM ROWS -->
-<div class="form-row">
-    <div class="label">الاسم الثلاثي</div>
-    <div class="field-icon">
+    <h1>إعادة تعيين كلمة المرور</h1>
+    <div class="title-line"></div>
+
+    <div class="form-row">
+        <div class="label">الاسم الثلاثي</div>
+        <div class="field-icon">
+            <input id="fullname" class="input" placeholder="أدخل اسمك الثلاثي" required>
+        </div>
+      
+    </div>
+
+    <div class="form-row">
+        <div class="label">رقم الهوية</div>
+        <div class="field-icon">
+            <input id="idnumber" class="input" placeholder="الرقم الذي انشات به الحساب" required>
+        </div>
+      
+    </div>
+
+    <div class="form-row">
+        <div class="label">رقم الهاتف</div>
+        <div class="field-icon">
+            <input id="phone" class="input" placeholder="05xxxxxxxx" required>
+        </div>
         
-        <input id="fullname" class="input" placeholder="أدخل اسمك الثلاثي" required>
     </div>
-    <span class="hint">كما هو مسجل في الهوية</span>
-</div>
 
-<div class="form-row">
-    <div class="label">رقم الهوية</div>
-    <div class="field-icon">
-        <input id="idnumber" class="input" placeholder="10 أرقام" required>
+    <div class="form-row">
+        <div class="label">البريد الإلكتروني</div>
+        <div class="field-icon">
+            <input id="email" class="input" type="email" placeholder="email@example.com" required>
+        </div>
     </div>
-    <span class="warning">تأكد من صحة الرقم</span>
-</div>
 
-<div class="form-row">
-    <div class="label">رقم الهاتف</div>
-    <div class="field-icon">
-        
-        <input id="phone" class="input" placeholder="05xxxxxxxx" required>
+    <div class="form-row">
+        <div class="label">كلمة المرور التي تذكرها</div>
+        <div class="field-icon">
+            <input id="oldpass" class="input" placeholder="********" required>
+        </div>
     </div>
-    <span class="hint">للتواصل عند الحاجة</span>
-</div>
 
-<div class="form-row">
-    <div class="label">البريد الإلكتروني</div>
-    <div class="field-icon">
-        
-        <input id="email" class="input" type="email" placeholder="email@example.com" required>
-    </div>
-</div>
+    <button id="submitBtn">إرسال الطلب</button>
+    <div class="success" id="successMsg">تم إرسال طلبك بنجاح!</div>
 
-<div class="form-row">
-    <div class="label">كلمة المرور القديمة</div>
-    <div class="field-icon">
-    <input id="oldpass" class="input" placeholder="********" required>
-    </div>
 </div>
-
-<!-- BUTTON -->
-<button id="submitBtn">إرسال الطلب</button>
-<div class="success" id="successMsg">تم إرسال طلبك بنجاح!</div>
 
 <!-- FOOTER -->
 <div class="footer">
   <h3>معلومات الاتصال</h3>
   <ul>
-    <li>📞 <a href="tel:+966539084645">+966 536382599</a></li>
-    <li>📧 <a href="mailto:rsanjalawi007@gmail.com">abn7zm@gmail.com</a></li>
+    <li>📞 <a href="tel:+966536382599">+966 536382599</a></li>
+    <li>📧 <a href="mailto:abn7zm@gmail.com">abn7zm@gmail.com</a></li>
     <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
   </ul>
   <p>©2023-<span id="year"></span> جميع الحقوق الفكرية محفوظة.</p>
 </div>
 
-<!-- ====================
-   JAVASCRIPT
-==================== -->
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -257,7 +266,9 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
             fullname.value=""; idnumber.value=""; phone.value=""; email.value=""; oldpass.value="";
             setTimeout(()=> document.getElementById("successMsg").style.display="none", 3000);
         }
-    } catch(err){ console.error(err); }
+    } catch(err){ 
+        console.error(err); 
+    }
 });
 </script>
 
