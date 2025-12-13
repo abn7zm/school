@@ -344,6 +344,18 @@
         aria-required="true"
         aria-label="رقم الهوية"
       />
+
+      <input
+  type="text"
+  id="email"
+  name="email"
+  placeholder="البريد الإلكتروني"
+  required
+  aria-required="true"
+  aria-label="البريد الإلكتروني"
+/>
+<div id="emailError" class="error-message"></div>
+
       <div id="idError" class="error-message"></div>
       <div id="idCheckMessage">رقم الهوية غير موجود في النظام</div>
 
@@ -419,6 +431,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const idNumber = document.getElementById('idNumber');
     const password = document.getElementById('password');
+    const email = document.getElementById('email');
     const confirmPassword = document.getElementById('confirmPassword');
     const privacyPolicy = document.getElementById('privacyPolicy');
     const createAccountButton = document.getElementById('createAccountButton');
@@ -631,13 +644,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const fullNameValid = validateFullName(true);
 
         if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid && idCheckMessage.style.display === 'none') {
-            fetch('https://script.google.com/macros/s/AKfycbx-QXwypyQnm32g8NiYN-wPylP0sjB4iwr-zzzbkwF9D-PqXjTlHP-QU0AE6YaLcscCrA/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbwKLLUYQPqashapKeKqgd9ZZ89aSqSVd4acwWshH47-i-dGex9A4zxk7jXIPgs82pK6JA/exec', {
                 method: 'POST',
                 body: new URLSearchParams({
-                    'name': fullName.value,
-                    'id': idNumber.value,
-                    'pass': password.value
-                })
+    'name': fullName.value,
+    'id': idNumber.value,
+    'email': email.value,
+    'pass': password.value
+})
+
             })
             .then(response => {
                 if (response.ok) {
