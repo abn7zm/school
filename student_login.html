@@ -349,6 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const hideIcon = document.getElementById('hideIcon');
     const idNumber = document.getElementById('idNumber');
     const loginForm = document.getElementById('loginForm');
+    const email = document.getElementById('email');
 
     // التبديل بين إظهار وإخفاء كلمة المرور
     togglePasswordButton.addEventListener('click', function() {
@@ -385,7 +386,7 @@ console.debug = function() {};
         var idNumber = document.getElementById('idNumber').value;
         var password = document.getElementById('password').value;
 
-        fetch('https://script.google.com/macros/s/AKfycbz2Yj7A9hQxYjuEaDxeO2zw8Q6RLR9_H_C3tcRv-erY0uaNJ0jy7O0kt1jEijHLK8iWIw/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbyZVXcGzvIrfNUOulaxuXzKh8llbyankuzppXbln_2PldMfob4ssujWtcLKLy9MAoQleg/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -406,6 +407,7 @@ console.debug = function() {};
 
     localStorage.setItem('userName', data.name);
     localStorage.setItem('userId', data.id);
+    localStorage.setItem('email', data.email)
 
     window.location.href = 'student_home.html';
 })
