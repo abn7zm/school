@@ -364,7 +364,7 @@
           type="password"
           id="password"
           name="password"
-          placeholder="كلمة المرور"
+          placeholder="كلمة المرور (6 خانات او اكثر)"
           required
           aria-required="true"
           aria-label="كلمة المرور"
@@ -694,21 +694,6 @@ console.warn = function() {};
 console.error = function() {};
 console.info = function() {};
 console.debug = function() {};
-
-const SECRET_KEY = "2shawermaExtrathoRahemdallahy5lleh";
-
-function customDecrypt(encryptedID) {
-    try {
-        const decoded = atob(encryptedID); // فك base64
-        const parts = decoded.split(":");
-        if (parts[0] === SECRET_KEY) {
-            return parts[1]; // يرجع رقم الهوية الأصلي
-        }
-        return null;
-    } catch (e) {
-        return null;
-    }
-}
 </script>
 
 </html>
