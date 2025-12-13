@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', async function(){
   document.getElementById('email').value=emailEncrypted?decrypt(emailEncrypted):'';
   document.getElementById('phone').value=phoneEncrypted?decrypt(phoneEncrypted):'';
 
-  const sheetURL="https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
+  const sheetURL="https://script.google.com/macros/s/AKfycbw-8zgl5DFpm0Q4PQIYdPcR-dTNhUT3B6mI0NvCFkpkzE2t7qa5p-V0NL1CP-lR29pc6w/exec";
   try{
     const res=await fetch(sheetURL);
     const data=await res.json();
