@@ -385,7 +385,7 @@ console.debug = function() {};
         var idNumber = document.getElementById('idNumber').value;
         var password = document.getElementById('password').value;
 
-        fetch('https://script.google.com/macros/s/AKfycbwMKjyVVnvgCbPO9gkW1l0U2Rs_6dIF_1X0xm6s_mQsZqUh4efokZtRx4hL8PdtY1KTRw/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbz2Yj7A9hQxYjuEaDxeO2zw8Q6RLR9_H_C3tcRv-erY0uaNJ0jy7O0kt1jEijHLK8iWIw/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -397,13 +397,19 @@ console.debug = function() {};
         })
         .then(response => response.text())
         .then(result => {
-            if (result !== 'incorrect_password' && result !== 'incorrect_id') {
-                localStorage.setItem('userName', result);
-                window.location.href = 'student_home.html';
-            } else {
-                alert('يرجى التحقق من رقم الهوية/كلمة المرور');
-            }
-        })
+    if (result === 'incorrect_password' || result === 'incorrect_id') {
+        alert('رقم الهوية أو كلمة المرور غير صحيحة');
+        return;
+    }
+
+    const data = JSON.parse(result);
+
+    localStorage.setItem('userName', data.name);
+    localStorage.setItem('userId', data.id);
+
+    window.location.href = 'student_home.html';
+})
+
         .catch(error => console.error('Error:', error));
     });
 });
