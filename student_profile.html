@@ -171,11 +171,11 @@
   <div class="edit-card">
     <label for="email">البريد الإلكتروني:</label>
     <input type="email" id="email" placeholder="example@email.com" disabled>
-    <button class="edit-btn" onclick="enableEdit('email')">تعديل</button>
+
 
     <label for="phone">رقم الهاتف:</label>
     <input type="tel" id="phone" placeholder="05XXXXXXXX" disabled>
-    <button class="edit-btn" onclick="enableEdit('phone')">تعديل</button>
+
 
     <button class="btn-save" onclick="saveProfile()">حفظ التغييرات</button>
     <p class="success-message" id="successMessage">✅ تم حفظ البيانات بنجاح!</p>
@@ -232,12 +232,13 @@ document.addEventListener('DOMContentLoaded', async function(){
   const userName = localStorage.getItem('userName') || 'غير معروف';
   document.getElementById('userName').textContent=userName;
 
-  const emailEncrypted=localStorage.getItem('email');
-  const phoneEncrypted=localStorage.getItem('phone');
-  document.getElementById('email').value=emailEncrypted?decrypt(emailEncrypted):'';
-  document.getElementById('phone').value=phoneEncrypted?decrypt(phoneEncrypted):'';
+  const emailStored = localStorage.getItem('email');
+document.getElementById('email').value = emailStored
+  ? (decrypt(emailStored) || emailStored)
+  : '';
 
-  const sheetURL="https://script.google.com/macros/s/AKfycbw-8zgl5DFpm0Q4PQIYdPcR-dTNhUT3B6mI0NvCFkpkzE2t7qa5p-V0NL1CP-lR29pc6w/exec";
+
+  const sheetURL="https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
   try{
     const res=await fetch(sheetURL);
     const data=await res.json();
