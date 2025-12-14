@@ -170,25 +170,32 @@
   <!-- بطاقة تحرير البيانات -->
   <div class="edit-card">
     <label for="email">البريد الإلكتروني:</label>
-    <input type="email" id="email" placeholder="example@email.com" disabled>
+    <input type="email" id="email" placeholder="example@email.com" disabled
+    style="direction: ltr !important;">
 
 
     <label for="phone">رقم الهاتف:</label>
-    <input type="tel" id="phone" placeholder="05XXXXXXXX" disabled>
+    <input
+  type="tel"
+  id="phone"
+  placeholder="+966 5XXXXXXXX"
+  disabled
+>
 
 
-    <button class="btn-save" onclick="saveProfile()">حفظ التغييرات</button>
-    <p class="success-message" id="successMessage">✅ تم حفظ البيانات بنجاح!</p>
+
 
     <!-- بطاقة بيانات الطالب -->
     <div class="student-card">
       <h3>بيانات الطالب</h3>
       <div class="data-grid">
-        <div class="data-item">الصف: 12</div>
-        <div class="data-item">الشعبة: أ</div>
-        <div class="data-item">المعدل: 95%</div>
-        <div class="data-item">الغياب: 2 أيام</div>
+        <div class="data-item">الصف: </div>
+        <div class="data-item">الشعبة:</div>
+        <div class="data-item">المسار :</div>
       </div>
+          <button class="btn-save" onclick="saveProfile()">حفظ التغييرات</button>
+    <p class="success-message" id="successMessage">✅ تم حفظ البيانات بنجاح!</p>
+
     </div>
   </div>
 </div>
@@ -216,17 +223,6 @@ function enableEdit(fieldId){
   input.style.background="#fff";
 }
 
-function saveProfile(){
-  const email=document.getElementById('email').value.trim();
-  const phone=document.getElementById('phone').value.trim();
-  if(email && phone){
-    localStorage.setItem('email',encrypt(email));
-    localStorage.setItem('phone',encrypt(phone));
-    const msg=document.getElementById('successMessage');
-    msg.style.display='block';
-    setTimeout(()=>msg.style.display='none',3000);
-  } else alert("يرجى إدخال البريد الإلكتروني ورقم الهاتف بشكل صحيح.");
-}
 
 document.addEventListener('DOMContentLoaded', async function(){
   const userName = localStorage.getItem('userName') || 'غير معروف';
@@ -237,8 +233,13 @@ document.getElementById('email').value = emailStored
   ? (decrypt(emailStored) || emailStored)
   : '';
 
+  const phoneStored = localStorage.getItem('phone');
+const rawPhone = phoneStored ? (decrypt(phoneStored) || phoneStored) : '';
+setPhoneWithPrefix(rawPhone);
 
-  const sheetURL="https://script.google.com/macros/s/AKfycbxu1ITIMnChWJq7Fp_PvKCzU0Gu1oBBfBi8cvhNLT6kueV5BwLAIiaVAIXOBqLyV7E7jA/exec";
+
+
+  const sheetURL="https://script.google.com/macros/s/AKfycbxCz4FurDicJYm9V-tJrSEsFcubmviwDJ5Q8rBt7AhEH5BrQuAkvC7lvNQR0XQeL_GT/exec";
   try{
     const res=await fetch(sheetURL);
     const data=await res.json();
@@ -248,6 +249,13 @@ document.getElementById('email').value = emailStored
     document.getElementById('studentId').textContent="خطأ في التحميل";
   }
 });
+
+function setPhoneWithPrefix(value) {
+  const input = document.getElementById('phone');
+  const clean = value.replace(/^\+966\s?/, '');
+  input.value = '+966 ' + clean;
+}
+
 </script>
 
 </body>

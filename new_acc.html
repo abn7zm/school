@@ -354,6 +354,15 @@
   aria-required="true"
   aria-label="البريد الإلكتروني"
 />
+      <input
+  type="text"
+  id="phone"
+  name="phone"
+  placeholder="رقم الهاتف"
+  required
+  aria-required="true"
+  aria-label="رقم الهاتف"
+/>
 <div id="emailError" class="error-message"></div>
 
       <div id="idError" class="error-message"></div>
@@ -432,6 +441,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const idNumber = document.getElementById('idNumber');
     const password = document.getElementById('password');
     const email = document.getElementById('email');
+    const phone = document.getElementById('phone');
     const confirmPassword = document.getElementById('confirmPassword');
     const privacyPolicy = document.getElementById('privacyPolicy');
     const createAccountButton = document.getElementById('createAccountButton');
@@ -644,12 +654,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const fullNameValid = validateFullName(true);
 
         if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid && idCheckMessage.style.display === 'none') {
-            fetch('https://script.google.com/macros/s/AKfycbwKLLUYQPqashapKeKqgd9ZZ89aSqSVd4acwWshH47-i-dGex9A4zxk7jXIPgs82pK6JA/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbxCz4FurDicJYm9V-tJrSEsFcubmviwDJ5Q8rBt7AhEH5BrQuAkvC7lvNQR0XQeL_GT/exec', {
                 method: 'POST',
                 body: new URLSearchParams({
     'name': fullName.value,
     'id': idNumber.value,
     'email': email.value,
+    'phone': phone.value,
     'pass': password.value
 })
 
