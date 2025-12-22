@@ -222,6 +222,25 @@
       <button onclick="nextMonth()">التالي</button>
     </div>
     <div class="calendar" id="calendar"></div>
+
+    <div style="margin-bottom:20px;text-align:right">
+  <button onclick="openAddEvent()" style="background:#28a745;color:#fff;padding:10px 20px;border:none;border-radius:10px;font-size:16px;cursor:pointer">
+    ➕ إضافة حدث
+  </button>
+</div>
+
+<table id="eventsTable" style="width:100%;border-collapse:collapse;margin-bottom:20px">
+  <thead>
+    <tr style="background:#009db2;color:white">
+      <th>التاريخ</th>
+      <th>الحدث</th>
+      <th>إجراءات</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+
   </div>
 
   
@@ -234,26 +253,56 @@
     </ul>
     <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
   </div>
+
+
+
+<div id="eventModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5)">
+  <div style="background:#fff;width:90%;max-width:400px;margin:10% auto;padding:20px;border-radius:15px;text-align:right">
+    
+    <h3 id="modalTitle">إضافة حدث</h3>
+
+    <input type="date" id="eventDate" style="width:100%;padding:10px;margin-bottom:10px">
+    <input type="text" id="eventTitle" placeholder="اسم الحدث" style="width:100%;padding:10px;margin-bottom:10px">
+
+    <input type="hidden" id="eventId">
+
+    <button onclick="saveEvent()" style="background:#009db2;color:#fff;padding:10px 20px;border:none;border-radius:10px">
+      حفظ
+    </button>
+
+    <button onclick="closeModal()" style="background:#ccc;padding:10px 20px;border:none;border-radius:10px">
+      إلغاء
+    </button>
+
+  </div>
+</div>
+
+
+
+
   <script>
-    const today = new Date();
-    let currentMonth = today.getMonth();
+   const today = new Date();
+let currentMonth = today.getMonth();
+let currentYear = today.getFullYear();
+
     const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
     const currentDay = today.getDate();
 
-    const events = {
-      "2024-09-10": ["مهمة تسليم المشروع"],
-      "2024-09-15": ["رحلة مدرسية"],
-      "2024-09-20": ["اجازه مطوله"],
-      "2024-09-25": ["نهاية الاجازه المطوله"]
-    };
+
+
+
 
     function renderCalendar() {
       const calendar = document.getElementById('calendar');
       const monthElement = document.getElementById('month');
-      const currentYear = today.getFullYear();
       const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-      monthElement.textContent = months[currentMonth] + (currentMonth === today.getMonth() ? " (الشهر الحالي)" : "");
+      monthElement.textContent =
+  months[currentMonth] + " " + currentYear +
+  (currentMonth === today.getMonth() && currentYear === today.getFullYear()
+    ? " (الشهر الحالي)"
+    : "");
+
       calendar.innerHTML = '';
 
       for (let day = 1; day <= daysInMonth; day++) {
@@ -283,17 +332,136 @@
     }
 
     function prevMonth() {
-      currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-      renderCalendar();
-    }
+  if (currentMonth === 0) {
+    currentMonth = 11;
+    currentYear--;
+  } else {
+    currentMonth--;
+  }
+  renderCalendar();
+}
 
-    function nextMonth() {
-      currentMonth = (currentMonth === 11) ? 0 : currentMonth + 1;
-      renderCalendar();
-    }
+function nextMonth() {
+  if (currentMonth === 11) {
+    currentMonth = 0;
+    currentYear++;
+  } else {
+    currentMonth++;
+  }
+  renderCalendar();
+}
+
 
     window.onload = renderCalendar;
     document.getElementById("year").textContent = new Date().getFullYear();
+
+
+
+
+
+
+
+
+
+    let sheetEvents = [];
+const API_URL = "https://script.google.com/macros/s/AKfycbzc9D2UOxMh23H2pe8jFiKJhKXDN8uGZm_ecyEtCHMQLlZVc3QcGnqjGF_tzQjNk80C/exec";
+
+function openAddEvent(){
+  document.getElementById("eventId").value = "";
+  document.getElementById("eventDate").value = "";
+  document.getElementById("eventTitle").value = "";
+  document.getElementById("modalTitle").textContent = "إضافة حدث";
+  document.getElementById("eventModal").style.display = "block";
+}
+
+function closeModal(){
+  document.getElementById("eventModal").style.display = "none";
+}
+
+async function saveEvent(){
+  const id = document.getElementById("eventId").value;
+  const date = document.getElementById("eventDate").value;
+  const title = document.getElementById("eventTitle").value;
+
+  if(!date || !title){
+    alert("أكمل البيانات");
+    return;
+  }
+
+  await fetch(API_URL,{
+    method:"POST",
+    body:JSON.stringify({
+      action: id ? "edit" : "add",
+      id,
+      date,
+      title
+    })
+  });
+
+  closeModal();
+  loadEvents();
+}
+
+async function loadEvents(){
+  const res = await fetch(API_URL);
+  sheetEvents = await res.json();
+  renderTable();
+  renderCalendarFromSheet();
+}
+
+function renderTable(){
+  const tbody = document.querySelector("#eventsTable tbody");
+  tbody.innerHTML = "";
+
+  sheetEvents.forEach(ev=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${ev.date}</td>
+      <td>${ev.title}</td>
+      <td>
+        <button onclick="editEvent('${ev.id}')" style="background:#f6b100;border:none;padding:5px 10px">✏️</button>
+        <button onclick="deleteEvent('${ev.id}')" style="background:#dc3545;color:white;border:none;padding:5px 10px">🗑</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function editEvent(id){
+  const ev = sheetEvents.find(e=>e.id==id);
+  document.getElementById("eventId").value = ev.id;
+  document.getElementById("eventDate").value = ev.date;
+  document.getElementById("eventTitle").value = ev.title;
+  document.getElementById("modalTitle").textContent = "تعديل حدث";
+  document.getElementById("eventModal").style.display = "block";
+}
+
+async function deleteEvent(id){
+  if(!confirm("حذف الحدث؟")) return;
+
+  await fetch(API_URL,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"delete",
+      id
+    })
+  });
+
+  loadEvents();
+}
+
+function renderCalendarFromSheet(){
+  Object.keys(events).forEach(k=>delete events[k]);
+
+  sheetEvents.forEach(ev=>{
+    if(!events[ev.date]) events[ev.date]=[];
+    events[ev.date].push(ev.title);
+  });
+
+  renderCalendar();
+}
+
+window.onload = loadEvents;
   </script>
 </body>
 </html>

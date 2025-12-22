@@ -235,34 +235,68 @@
     <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
   </div>
   <script>
-    const today = new Date();
-    let currentMonth = today.getMonth();
+   const today = new Date();
+let currentMonth = today.getMonth();
+let currentYear = today.getFullYear();
+
     const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
     const currentDay = today.getDate();
 
-    const events = {
-      "2024-09-10": ["مهمة تسليم المشروع"],
-      "2024-09-15": ["رحلة مدرسية"],
-      "2024-09-20": ["اجازه مطوله"],
-      "2024-09-25": ["نهاية الاجازه المطوله"]
-    };
+ 
+
+    const API_URL = "https://script.google.com/macros/s/AKfycbzc9D2UOxMh23H2pe8jFiKJhKXDN8uGZm_ecyEtCHMQLlZVc3QcGnqjGF_tzQjNk80C/exec";
+const events = {};
+
+async function loadEvents() {
+  const res = await fetch(API_URL);
+  const data = await res.json();
+
+ data.forEach(ev => {
+  const d = new Date(ev.date);
+
+  const fixedDate =
+    d.getFullYear() + "-" +
+    String(d.getMonth() + 1).padStart(2, "0") + "-" +
+    String(d.getDate()).padStart(2, "0");
+
+  if (!events[fixedDate]) events[fixedDate] = [];
+  events[fixedDate].push(ev.title);
+});
+
+
+  renderCalendar();
+}
+
+window.onload = loadEvents;
+
+
+
 
     function renderCalendar() {
       const calendar = document.getElementById('calendar');
       const monthElement = document.getElementById('month');
-      const currentYear = today.getFullYear();
       const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-      monthElement.textContent = months[currentMonth] + (currentMonth === today.getMonth() ? " (الشهر الحالي)" : "");
+      monthElement.textContent =
+  months[currentMonth] + " " + currentYear +
+  (currentMonth === today.getMonth() && currentYear === today.getFullYear()
+    ? " (الشهر الحالي)"
+    : "");
+
       calendar.innerHTML = '';
 
       for (let day = 1; day <= daysInMonth; day++) {
         const dayElement = document.createElement('div');
         dayElement.className = 'day';
 
-        if (currentMonth === today.getMonth() && day === currentDay) {
-          dayElement.classList.add('current-day');
-        }
+       if (
+  currentMonth === today.getMonth() &&
+  currentYear === today.getFullYear() &&
+  day === currentDay
+) {
+  dayElement.classList.add('current-day');
+}
+
 
         dayElement.innerHTML = `<span class="day-number">${day}</span>`;
 
@@ -282,17 +316,27 @@
       }
     }
 
-    function prevMonth() {
-      currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-      renderCalendar();
-    }
+   function prevMonth() {
+  if (currentMonth === 0) {
+    currentMonth = 11;
+    currentYear--;
+  } else {
+    currentMonth--;
+  }
+  renderCalendar();
+}
 
-    function nextMonth() {
-      currentMonth = (currentMonth === 11) ? 0 : currentMonth + 1;
-      renderCalendar();
-    }
+function nextMonth() {
+  if (currentMonth === 11) {
+    currentMonth = 0;
+    currentYear++;
+  } else {
+    currentMonth++;
+  }
+  renderCalendar();
+}
 
-    window.onload = renderCalendar;
+
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
