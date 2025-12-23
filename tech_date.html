@@ -364,7 +364,7 @@ function nextMonth() {
 
 
     let sheetEvents = [];
-const API_URL = "https://script.google.com/macros/s/AKfycbzc9D2UOxMh23H2pe8jFiKJhKXDN8uGZm_ecyEtCHMQLlZVc3QcGnqjGF_tzQjNk80C/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxB_rIAVzV5PN0xbnXtBg69KmvEbpssFK5lL4AzetsBtQVU9l3PtZk3O9bmy1cosTPw/exec";
 
 function openAddEvent(){
   document.getElementById("eventId").value = "";
@@ -416,7 +416,8 @@ function renderTable(){
   sheetEvents.forEach(ev=>{
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${ev.date}</td>
+      <td>${formatDate(ev.date)}</td>
+
       <td>${ev.title}</td>
       <td>
         <button onclick="editEvent('${ev.id}')" style="background:#f6b100;border:none;padding:5px 10px">✏️</button>
@@ -462,6 +463,18 @@ function renderCalendarFromSheet(){
 }
 
 window.onload = loadEvents;
+
+
+function formatDate(dateValue) {
+  const d = new Date(dateValue);
+
+  return (
+    d.getFullYear() + "-" +
+    String(d.getMonth() + 1).padStart(2, "0") + "-" +
+    String(d.getDate()).padStart(2, "0")
+  );
+}
+
   </script>
 </body>
 </html>
