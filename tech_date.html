@@ -269,7 +269,7 @@
   </button>
 </div>
 
-<table id="eventsTable" style="width:100%;border-collapse:collapse;margin-bottom:20px">
+<table id="eventsTable" style="width:100%;border-collapse:collapse;margin-bottom:20px ; margin-bottom: 100px;">
   <thead>
     <tr style="background:#009db2;color:white">
       <th>التاريخ</th>
@@ -512,12 +512,20 @@ function renderCalendarFromSheet(){
   Object.keys(events).forEach(k=>delete events[k]);
 
   sheetEvents.forEach(ev=>{
-    if(!events[ev.date]) events[ev.date]=[];
-    events[ev.date].push(ev.title);
+    const d = new Date(ev.date);
+
+    const fixedDate =
+      d.getFullYear() + "-" +
+      String(d.getMonth() + 1).padStart(2, "0") + "-" +
+      String(d.getDate()).padStart(2, "0");
+
+    if (!events[fixedDate]) events[fixedDate] = [];
+    events[fixedDate].push(ev.title);
   });
 
   renderCalendar();
 }
+
 
 window.onload = () => {
   loadEvents();
