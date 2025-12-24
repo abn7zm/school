@@ -204,6 +204,43 @@
         grid-template-columns: repeat(2, 1fr);
       }
     }
+
+
+
+    #loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader-box {
+  text-align: center;
+  font-size: 18px;
+  color: #005d7e;
+  font-weight: bold;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #e0e0e0;
+  border-top: 5px solid #009db2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
   </style>
 </head>
 <body>
@@ -215,16 +252,19 @@
     </a>
   </div>
 
-  <div class="calendar-container">
-    <div class="month" id="month"></div>
-    <div class="navigation">
-      <button onclick="prevMonth()">السابق</button>
-      <button onclick="nextMonth()">التالي</button>
-    </div>
-    <div class="calendar" id="calendar"></div>
+<div id="loadingOverlay">
+  <div class="loader-box">
+    <div class="spinner"></div>
+    <p>جاري تحميل التقويم...</p>
+  </div>
+</div>
 
-    <div style="margin-bottom:20px;text-align:right">
-  <button onclick="openAddEvent()" style="background:#28a745;color:#fff;padding:10px 20px;border:none;border-radius:10px;font-size:16px;cursor:pointer">
+
+
+  <div class="calendar-container">
+
+        <div style="margin-bottom:20px;text-align:right">
+      <button onclick="openAddEvent()" style="background:#28a745;color:#fff;padding:10px 20px;border:none;border-radius:10px;font-size:16px;cursor:pointer">
     ➕ إضافة حدث
   </button>
 </div>
@@ -239,6 +279,15 @@
   </thead>
   <tbody></tbody>
 </table>
+
+
+    <div class="month" id="month"></div>
+    <div class="navigation">
+      <button onclick="prevMonth()">السابق</button>
+      <button onclick="nextMonth()">التالي</button>
+    </div>
+    <div class="calendar" id="calendar"></div>
+
 
 
   </div>
@@ -352,7 +401,7 @@ function nextMonth() {
 }
 
 
-    window.onload = renderCalendar;
+
     document.getElementById("year").textContent = new Date().getFullYear();
 
 
@@ -364,6 +413,8 @@ function nextMonth() {
 
 
     let sheetEvents = [];
+    let events = {};
+
 const API_URL = "https://script.google.com/macros/s/AKfycbxB_rIAVzV5PN0xbnXtBg69KmvEbpssFK5lL4AzetsBtQVU9l3PtZk3O9bmy1cosTPw/exec";
 
 function openAddEvent(){
@@ -403,11 +454,17 @@ async function saveEvent(){
 }
 
 async function loadEvents(){
+  showLoading();
+
   const res = await fetch(API_URL);
   sheetEvents = await res.json();
+
   renderTable();
   renderCalendarFromSheet();
+
+  hideLoading();
 }
+
 
 function renderTable(){
   const tbody = document.querySelector("#eventsTable tbody");
@@ -462,7 +519,10 @@ function renderCalendarFromSheet(){
   renderCalendar();
 }
 
-window.onload = loadEvents;
+window.onload = () => {
+  loadEvents();
+};
+
 
 
 function formatDate(dateValue) {
@@ -473,6 +533,13 @@ function formatDate(dateValue) {
     String(d.getMonth() + 1).padStart(2, "0") + "-" +
     String(d.getDate()).padStart(2, "0")
   );
+}
+function showLoading() {
+  document.getElementById("loadingOverlay").style.display = "flex";
+}
+
+function hideLoading() {
+  document.getElementById("loadingOverlay").style.display = "none";
 }
 
   </script>
