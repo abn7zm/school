@@ -222,15 +222,11 @@ button:hover{background:#484646;}
         </div>
     </div>
 
-    <div class="form-row">
-        <div class="label">كلمة المرور التي تذكرها</div>
-        <div class="field-icon">
-            <input id="oldpass" class="input" placeholder="********" required>
-        </div>
-    </div>
-
     <button id="submitBtn">إرسال الطلب</button>
-    <div class="success" id="successMsg">سيتم التواصل معك على الايميل او الهاتف خلال 48 ساعه</div>
+    <div class="success" id="successMsg">
+تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني
+</div>
+
 
 </div>
 
@@ -248,26 +244,41 @@ button:hover{background:#484646;}
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZc6j4CDbuHd6eXpHw7Zh3iza-myYxi8S9jR-AcZZKbiTIbwR8EunKgHjU9vhEktGq1A/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHAC_Q6PP7vID3qNNb5lXOB2DbbkVlk4vhuw5y-CRwYhUj7xwdPgkq7N9kH1h6fkrw/exec";
 
 document.getElementById("submitBtn").addEventListener("click", async () => {
+
+    if(!fullname.value || !idnumber.value || !phone.value || !email.value){
+        alert("الرجاء تعبئة جميع الحقول");
+        return;
+    }
+
     const data = new URLSearchParams();
+    data.append("action", "requestReset");
     data.append("fullname", fullname.value);
     data.append("id", idnumber.value);
     data.append("phone", phone.value);
     data.append("email", email.value);
-    data.append("oldpass", oldpass.value);
-    data.append("timestamp", new Date().toLocaleString("ar-SA"));
 
     try {
-        const res = await fetch(SCRIPT_URL, { method:"POST", body:data });
-        if(res.ok){
-            document.getElementById("successMsg").style.display="block";
-            fullname.value=""; idnumber.value=""; phone.value=""; email.value=""; oldpass.value="";
-            setTimeout(()=> document.getElementById("successMsg").style.display="none", 3000);
+        const res = await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: data
+        });
+
+        const result = await res.text();
+
+        if(result === "sent"){
+            successMsg.style.display = "block";
+            setTimeout(()=> successMsg.style.display="none", 4000);
+            fullname.value = idnumber.value = phone.value = email.value = "";
+        }else{
+            alert("البيانات غير متطابقة");
         }
-    } catch(err){ 
-        console.error(err); 
+
+    } catch(err){
+        alert("حدث خطأ، حاول لاحقًا");
+        console.error(err);
     }
 });
 </script>

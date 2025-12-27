@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعيين كلمة مرور جديدة</title>
+
+<style>
+body{font-family:Tajawal,sans-serif;background:#fff}
+.center-box{
+max-width:500px;margin:120px auto;
+padding:30px;border-radius:20px;
+box-shadow:0 4px 20px rgba(0,0,0,.1)
+}
+h2{text-align:center;color:#005d7e}
+input{
+width:100%;padding:15px;
+border:2px solid #005d7e;
+border-radius:12px;margin-top:20px
+}
+button{
+margin-top:30px;width:100%;
+padding:15px;border:none;
+border-radius:30px;
+background:#005d7e;color:#fff;
+font-size:18px
+}
+.success{display:none;color:green;margin-top:20px;text-align:center}
+.error{display:none;color:red;margin-top:20px;text-align:center}
+</style>
+</head>
+
+<body>
+
+<div class="center-box">
+<h2>تعيين كلمة مرور جديدة</h2>
+<input id="pass1" type="password" placeholder="كلمة المرور الجديدة">
+<input id="pass2" type="password" placeholder="تأكيد كلمة المرور">
+<button onclick="reset()">حفظ</button>
+<div class="success" id="ok">تم تغيير كلمة المرور بنجاح</div>
+<div class="error" id="err"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "رابط_Web_App_الجديد";
+const token = new URLSearchParams(location.search).get("token");
+
+async function reset(){
+  if(pass1.value !== pass2.value){
+    err.textContent = "كلمتا المرور غير متطابقتين";
+    err.style.display = "block";
+    return;
+  }
+
+  const data = new URLSearchParams();
+  data.append("action","resetPassword");
+  data.append("token",token);
+  data.append("newpass",pass1.value);
+
+  const res = await fetch(SCRIPT_URL,{method:"POST",body:data});
+  const t = await res.text();
+
+  if(t === "done"){
+    ok.style.display="block";
+  }else{
+    err.textContent="الرابط غير صالح أو منتهي";
+    err.style.display="block";
+  }
+}
+</script>
+
+</body>
+</html>
