@@ -654,7 +654,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const fullNameValid = validateFullName(true);
 
         if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid && idCheckMessage.style.display === 'none') {
-            fetch('https://script.google.com/macros/s/AKfycbzHAC_Q6PP7vID3qNNb5lXOB2DbbkVlk4vhuw5y-CRwYhUj7xwdPgkq7N9kH1h6fkrw/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbwMKcBRLpUu3D2sml56ANELiW454-1AVG_RaTHGPGc86wOLxnBCfTLrBMGVKSn2Tk2rYQ/exec', {
                 method: 'POST',
                 body: new URLSearchParams({
     'name': fullName.value,

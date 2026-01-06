@@ -244,7 +244,7 @@ button:hover{background:#484646;}
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHAC_Q6PP7vID3qNNb5lXOB2DbbkVlk4vhuw5y-CRwYhUj7xwdPgkq7N9kH1h6fkrw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMKcBRLpUu3D2sml56ANELiW454-1AVG_RaTHGPGc86wOLxnBCfTLrBMGVKSn2Tk2rYQ/exec";
 
 document.getElementById("submitBtn").addEventListener("click", async () => {
 
@@ -261,14 +261,19 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     data.append("email", email.value);
 
     try {
-        const res = await fetch(SCRIPT_URL, {
-            method: "POST",
-            body: data
-        });
+       const res = await fetch(SCRIPT_URL, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: data
+});
+
 
         const result = await res.text();
 
-        if(result === "sent"){
+        if (result.trim() === "sent") {
+
             successMsg.style.display = "block";
             setTimeout(()=> successMsg.style.display="none", 4000);
             fullname.value = idnumber.value = phone.value = email.value = "";
