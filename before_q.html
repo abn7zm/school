@@ -1,223 +1,490 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>صفحة الخيارات</title>
-  <link rel="icon" href="https://i.imghippo.com/files/iJhm9520ofU.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الرئيسيه طالب</title>
+  <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+ 
+  var userName = localStorage.getItem('userName');
+  if (userName) {
+    document.getElementById('userName').textContent = userName;
+  } else {
+    alert('لم يتم العثور على اسم المستخدم.');
+    window.location.href = 'student_login.html';
+    return;
+  }
+
+  fetch('quran.txt')
+    .then(response => response.text())
+    .then(text => {
+      const lines = text.split('\n');
+      const randomLine = lines[Math.floor(Math.random() * lines.length)];
+      document.getElementById('random-line').textContent = randomLine;
+    })
+    .catch(error => console.error('خطأ في تحميل quran.txt:', error));
+
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function () {
+
+  
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("phone");
+      localStorage.removeItem("email");
+
+   
+      window.location.href = "index.html";
+    });
+  } else {
+    console.error("❌ لم يتم العثور على زر تسجيل الخروج logoutBtn");
+  }
+
+});
+
+window.addEventListener("pageshow", function (event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
+});
+</script>
+
+
   <style>
-    /* إعدادات عامة */
     body {
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      font-family: 'Cairo', sans-serif;
+      background: white;
+      color: #000;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .top-bar {
+      background-color: #005d7e;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      color: #fff;
+      justify-content: space-between;
+      position: relative;
+      flex-wrap: nowrap;
+    }
+
+    /* الشعار وزر تسجيل الخروج على اليسار */
+    .left-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo img {
+      height: 90px;
+      filter: drop-shadow(0 0 10px #00e6f6);
+    }
+
+    .logout-button {
+      background-color: #f6b100;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background-color 0.3s;
+    }
+    .logout-button:hover {
+      background-color: #c58d00;
+    }
+    .logout-button img {
+      height: 20px;
+    }
+
+    /* العنوان في الوسط */
+    .page-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      color: #ffffff;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    /* حاوية المستخدم: صورة + اسم + أزرار */
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      direction: rtl; /* عشان ترتيب عربي: الصورة يمين */
+      flex-wrap: nowrap;
+      min-width: 0;
+    }
+
+    .profile-img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    
+
+    .right-buttons {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .right-buttons a > button {
+      background-color: #f6b100;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      white-space: nowrap;
+    
+    }
+
+    .right-buttons a > button:hover {
+      background-color: #c58d00;
+    }
+
+    /* أزرار رئيسية */
+    .main-buttons {
       display: flex;
       justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow: hidden;
-      background: linear-gradient(to bottom, #007a8c, #009db2);
+      gap: 40px;
+      margin: 100px 0;
+      flex-wrap: wrap;
     }
 
-    /* الخلفية */
-    .background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: -1;
-    }
-
-    .shape {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      border-radius: 50%;
-      animation: float 8s infinite ease-in-out;
-    }
-
-    .shape:nth-child(1) {
-      width: 200px;
-      height: 200px;
-      top: 10%;
-      left: 15%;
-      animation-duration: 6s;
-    }
-
-    .shape:nth-child(2) {
+    .main-buttons button {
+      background-color: #ffffff;
+      color: #000;
       width: 300px;
       height: 300px;
-      top: 50%;
-      left: 70%;
-      animation-duration: 10s;
-    }
-
-    .shape:nth-child(3) {
-      width: 150px;
-      height: 150px;
-      top: 80%;
-      left: 25%;
-      animation-duration: 12s;
-    }
-
-    .shape:nth-child(4) {
-      width: 250px;
-      height: 250px;
-      top: 30%;
-      left: 50%;
-      animation-duration: 14s;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-20px) rotate(45deg);
-      }
-    }
-
-    /* النص */
-    h1 {
-      position: absolute;
-      top: 5%;
-      color: #ffffff;
-      font-size: 3.5rem;
-      text-align: center;
-      text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
-      z-index: 1;
-    }
-
-    /* الحاوية */
-    .container {
+      border: none;
+      border-radius: 12px;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 60px;
-      z-index: 1;
-      text-decoration: none;
-    }
-
-    /* المربعات */
-    .box {
-      width: 350px;
-      height: 350px;
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #484646;
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 15px rgba(70, 70, 70, 0.3);
+    }
+
+    .main-buttons button:hover {
+      background-color: #999999;
+      box-shadow: 0 0 25px rgba(41, 41, 41, 0.7);
+    }
+
+    .main-buttons button img {
+      height: 200px;
+      max-width: 90%;
+      object-fit: contain;
+    }
+
+    .quran {
+      height: 80px;
+      color: #000;
+    }
+
+    .footer {
+      background-color: #005d7e;
+      color: #ffffff;
+      padding: 25px 40px;
+      width: 100%;
+      text-align: right;
+      margin-top: auto;
+      box-sizing: border-box;
+    }
+
+    .footer h3 {
+      margin-bottom: 15px;
+      font-size: 22px;
+      color: #ffffff;
+      font-weight: bold;
+      border-bottom: 2px solid #f6b100;
+      padding-bottom: 5px;
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      font-size: 18px;
+    }
+
+    .contact-list li {
+      margin-bottom: 10px;
+    }
+
+    .contact-list li a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-list li a:hover {
+      color: #007a8c;
+      text-decoration: underline;
+    }
+
+    .end {
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    a {
       text-decoration: none;
     }
-
-    /* الأنميشن للمربعات */
-    .box:hover {
-      transform: translateY(-10px) scale(1.05);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    .user-container:hover{
+      background-color: #005d7e;
     }
+    
 
-    /* تأثير داخلي */
-    .box::before {
-      content: '';
-      position: absolute;
-      width: 150%;
-      height: 150%;
-      background: radial-gradient(circle, rgba(0, 157, 178, 0.3), transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      transition: transform 0.6s ease;
-      z-index: 0;
-    }
-
-    .box:hover::before {
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .box span {
+  .profile {
+    width: 50px; /* تصغير حجم الصورة */
+    height: 50px;
+    border-radius: 50%; /* شكل دائري إن أردت */
+    object-fit: cover;
+    color: #ffffff;
+     
+   }
+   @media (width:768px ) {
+    .top-bar {
+      background-color: #005d7e;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      color: #fff;
+      justify-content: space-between;
       position: relative;
-      z-index: 1;
+      flex-wrap: nowrap;
     }
 
-    /* تأثير حركة لطيف */
-    .box:nth-child(odd) {
-      animation: float 4s ease-in-out infinite;
+      .left-section, .right-section {
+        flex: 1 1 100%;
+        justify-content: center;
+
+      }
+
+      .page-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      color: #ffffff;
+      user-select: none;
+      white-space: nowrap;
+      top: 5px;
     }
 
-    .box:nth-child(even) {
-      animation: float 4s ease-in-out infinite reverse;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-15px);
-      }
-    }
-
-    /* استجابة */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-        top: 2%;
+      .right-section {
+        order: 3;
+        flex-wrap: nowrap;
+        justify-content: center;
+        direction: rtl;
       }
 
-      .container {
-        flex-direction: column;
-        gap: 30px;
+      .profile-img {
+        height: 50px;
+        width: 50px;
       }
 
-      .box {
-        width: 280px;
-        height: 280px;
+      .user-name {
+        font-size: 16px;
+        max-width: 80px;
       }
+
+      .right-buttons a > button {
+        padding: 8px 12px;
+        font-size: 14px;
+        position: relative;
+        left: 50px;
+        top: 20px;
+      }
+
+      .logout-button {
+        padding: 8px 12px;
+        font-size: 14px;
+        position: relative;
+        right:135px;
+        top: 15px;
+      }
+
+      .main-buttons button {
+        width: 150px;
+        height: 150px;
+      }
+
+      .main-buttons button img {
+        height: 100px;
+      }
+      .logo{
+        right: 110px;
+        top: 20px;
+        position: relative;
+      }
+      .user-container{
+        position: relative;
+        left: 50px;
+      }
+   }
+    /* استايلات الجوال */
+    @media (max-width: 425px) {
+      .top-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+        position: relative;
+      }
+
+      .left-section, .right-section {
+        flex: 1 1 100%;
+        justify-content: center;
+        margin: 5px 0;
+      }
+
+      .page-title {
+        position: relative;
+        transform: none;
+        font-size: 28px;
+        margin: 10px 0;
+        width: 100%;
+        text-align: center;
+        order: 1;
+        top: -90px;
+        left: 2px;
+      }
+
+      .right-section {
+        order: 3;
+        flex-wrap: nowrap;
+        justify-content: center;
+        direction: rtl;
+      }
+
+      .profile-img {
+        height: 50px;
+        width: 50px;
+      }
+
+      .user-name {
+        font-size: 16px;
+        max-width: 80px;
+      }
+
+      .right-buttons a > button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      .logout-button {
+        padding: 8px 12px;
+        font-size: 14px;
+        position: relative;
+        right:-40px;
+        top: 50px;
+      }
+
+      .main-buttons button {
+        width: 150px;
+        height: 150px;
+      }
+
+      .main-buttons button img {
+        height: 100px;
+      }
+      .logo{
+        left: -40px;
+        top: 50px;
+        position: relative;
+      }
+      
     }
   </style>
 </head>
 <body>
-  <div class="background">
-    <div class="shape"></div>
-    <div class="shape"></div>
-    <div class="shape"></div>
-    <div class="shape"></div>
-  </div>
-  <h1>اختر الفئه المناسبه</h1>
-  <div class="container">
-    <a href="qudrat.html" class="box">
-      <span>قدرات</span>
-    </a>
-    <a href="t79ele.html" class="box">
-      <span>تحصيلي</span>
-    </a>
+  <div class="top-bar">
+    <div class="left-section">
+      <div class="logo">
+        <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" />
+      </div>
+      <button class="logout-button" id="logoutBtn">
+          <img src="https://i.postimg.cc/TY15M5LP/logout.png" alt="Logout" />
+          تسجيل الخروج
+        </button>
+      </a>
+    </div>
+
+    <h1 class="page-title">بوابة الطالب</h1>
+
+    <div class="right-section">
+      
+      <a href="student_profile.html" class="user-container" style= "padding: 6px 12px; color: rgb(255, 255, 255); font-size: 14px; border-radius: 5px; margin-right: 10px;"  >
+ <img class="profile" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image">
+        <h2><span class="userName" id="userName"></span></h2>
+        👁 عرض الملف الشخصي
+  
+  
+</a>
+  
+      <div class="right-buttons">
+        <a href="support_std.html"><button>الدعم الفني</button></a>
+        <a href="vis_student.html"><button>التحديثات</button></a>
+      </div>
+    </div>
   </div>
 
-<script>        document.addEventListener('keydown', function(event) {
-  // تعطيل F12
-  if (event.key === 'F12') {
-      event.preventDefault();
-      return false;
-  }
-})
-document.addEventListener('contextmenu', function(event) {
-  event.preventDefault();
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};</script>
+  <div class="main-buttons">
+    <a href="student_date.html"><button class="bu">
+      <img src="https://i.postimg.cc/MKsyHss0/detep.png" alt="Button 1" />
+    </button></a>
+    <a href="student_ads.html"><button class="bu">
+      <img src="https://i.postimg.cc/zBZJjrfC/adsp.png" alt="Button 2" />
+    </button></a>
+    <a href="before.html"><button class="bu">
+      <img src="https://i.postimg.cc/bJ73rm3N/cryp.png" alt="Button 3" />
+    </button>
+  </div>
+
+  <div id="random-line" class="quran"></div>
+
+  <div class="footer">
+    <h3>معلومات الاتصال</h3>
+    <ul class="contact-list">
+      <li>📞 <a href="tel:+966536382599">+966 536382599</a></li>
+      <li>📧 <a href="mailto:abn7zm@gmail.com">abn7zm@gmail.com</a></li>
+      <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
+    </ul>
+    <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
+  </div>
 </body>
 </html>
