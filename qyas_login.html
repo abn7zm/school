@@ -6,205 +6,199 @@
     <title>تسجيل الدخول</title>
     <link rel="icon" href="https://i.imghippo.com/files/iJhm9520ofU.png">
     <style>
-        /* إعدادات عامة */
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            background-image: linear-gradient(to bottom, #007a8c, #009db2);
-            color: #484646;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        /* الحاوية الرئيسية */
-        .main-container {
-            width: 90%;
-            max-width: 900px;
-            background: white;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 20px;
-            overflow: hidden;
-            animation: fadeIn 1.5s ease-in-out;
-        }
+    header {
+      background-color: #005d7e;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        /* رأس الصفحة */
-        .header {
-            background: #007a8c;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            position: relative;
-            border-radius: 0; /* إزالة منحنيات الزوايا */
-        }
+    header img {
+      height: 120px;
+      filter: drop-shadow(0 0 10px #00e6f6);
+    }
 
-        /* زر العودة */
-        .back-button {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: #ffffff;
-            color: #007a8c;
-            border: 2px solid #007a8c;
-            padding: 5px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
+    .return-home-button {
+      background-color: #f6b100;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
 
-        .back-button:hover {
-            background: #007a8c;
-            color: white;
-            transform: scale(1.1);
-        }
+    .return-home-button:hover {
+      background-color: #c48d01;
+      color: white;
+    }
 
-        /* المحتوى */
-        .content {
-            padding: 40px 20px;
-            text-align: center;
-        }
+    h1 {
+      text-align: center;
+      margin: 40px 0 20px;
+      color: #333;
+      font-size: 36px;
+    }
+     main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .content h1 {
-            font-size: 28px;
-            margin-bottom: 30px;
-            color: #007a8c;
-        }
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-        .buttons-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+    .enter{
+        position: relative;
+      background: white;
+      background-size: 200% 200%;
+      animation: gradientShift 5s ease infinite;
+      color: rgb(0, 0, 0);
+      width: 250px;
+      height:250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(59, 59, 59, 0.4);
+      transition: all 0.5s ease;
+      overflow: hidden;
+      z-index: 1;
+      flex-direction: column;
+      margin: 70px;
+    }
+    .enter::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.3), transparent 70%);
+      transform: rotate(45deg);
+      transition: all 0.5s ease;
+      z-index: -1;
+    }
 
-        .card {
-            width: 200px;
-            padding: 20px;
-            background: #f9f9f9;
-            border: 2px solid #007a8c;
-            border-radius: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    .enter:hover::before {
+      top: -20%;
+      left: -20%;
+    }
 
-        .card:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
+    .enter:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(59, 59, 59, 0.7);
+    }
 
-        .card img {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 10px;
-        }
+ .footer {
+      background-color: #005d7e;
+      color: #ffffff;
+      padding: 25px 40px;
+      width: 100%;
+      text-align: right;
+      margin-top: auto;
+      box-sizing: border-box;
+    }
 
-        .card span {
-            display: block;
-            font-size: 18px;
-            font-weight: bold;
-        }
+    .footer h3 {
+      margin-bottom: 15px;
+      font-size: 22px;
+      color: #ffffff;
+      font-weight: bold;
+      border-bottom: 2px solid #f6b100;
+      padding-bottom: 5px;
+    }
 
-        /* إشعار إضافي */
-        .notification {
-            margin-top: 30px;
-            padding: 15px;
-            background: #009db2;
-            color: white;
-            border-radius: 0; /* جعل الزوايا قائمة */
-            animation: slideIn 1.5s ease-in-out;
-        }
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      font-size: 18px;
+    }
 
-        /* الفوتر */
-        .footer {
-            background: #484646;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-size: 14px;
-            animation: slideInReverse 1.5s ease-in-out;
-        }
+    .contact-list li {
+      margin-bottom: 10px;
+    }
 
-        /* تأثيرات */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .contact-list li a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
+    .contact-list li a:hover {
+      color: #007a8c;
+      text-decoration: underline;
+    }
+    .end {
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+      margin-top: 15px;
+    }
 
-        @keyframes slideInReverse {
-            from {
-                opacity: 0;
-                transform: translateX(-100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
+    a {
+      text-decoration: none;
+    }
+
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <!-- رأس الصفحة -->
-        <div class="header">
-            <button class="back-button" onclick="window.location.href='index.html'">عودة</button>
-            نظام تسجيل الدخول
-        </div>
-
+    <header>
+        <a href="tech_home.html" class="return-home-button">العودة</a>
+        <h1 style="color: #ffffff; position: relative; right: 30px;">نظام تسجيل الدخول لقياس</h1>
+        <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="logo">
+  </header>
         <!-- المحتوى الرئيسي -->
-        <div class="content">
-            <h1>اختر طريقة تسجيل الدخول</h1>
-            <div class="buttons-container">
-                <div class="card" onclick="window.location.href='qyas_st.html'">
-                    <img src="https://i.postimg.cc/sDrNkKJQ/8-removebg-preview.png" alt="طالب">
-                    <span>طالب</span>
-                </div>
-                <div class="card" onclick="window.location.href='qyas_te.html'">
-                    <img src="https://i.postimg.cc/Vk7ZbwPn/9-removebg-preview.png" alt="معلم">
-                    <span>معلم</span>
-                </div>
-            </div>
-        </div>
+        <h2 style="position: relative; top: 40px;">الدخول كـــ</h2>
+        <main class="buttons-container">
+                <a href="" class="enter">
+                    <img src="https://i.postimg.cc/MHF98QvM/reading.png" alt="" width="200px" height="200px"> 
+                    الدخول كطالب
+                </a>
+                <a href="" class="enter"> 
+                    <img src="https://i.postimg.cc/y6bjx08W/teacher.png" alt="" width="200px" height="200px">
+                    الدخول كمعلم
 
-        <!-- إشعار إضافي -->
-        <div class="notification">
-            يرجى اختيار الفئة المناسبة قبل المتابعة. تأكد من إدخال بيانات صحيحة.
-        </div>
-
-        <!-- الفوتر -->
-        <div class="footer">
-            حقوق الملكية والفكرة والتطبيقية تابعة لثانوية ابن حزم©<br>
-            ويمنع تقليد الفكرة دون إذن ورقي من إدارة ثانوية ابن حزم.
-        </div>
+                </a>
+        </main>
     </div>
+    <div class="footer">
+    <h3>معلومات الاتصال</h3>
+    <ul class="contact-list">
+      <li>📞 <a href="tel:+966536382599">+966 536382599</a></li>
+      <li>📧 <a href="mailto:abn7zm@gmail.com">abn7zm@gmail.com</a></li>
+      <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
+    </ul>
+    <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
+  </div>
 
     <script>
                 document.addEventListener('keydown', function(event) {
@@ -214,14 +208,7 @@
         return false;
     }
 })
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
-    </script>
+</script>
 </body>
 </html>
+
