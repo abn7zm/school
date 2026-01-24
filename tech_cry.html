@@ -32,7 +32,7 @@
     }
 
     header img {
-      height: 90px;
+      height: 120px;
       filter: drop-shadow(0 0 10px #00e6f6);
     }
 
@@ -80,19 +80,22 @@
       background-size: 200% 200%;
       animation: gradientShift 5s ease infinite;
       color: rgb(0, 0, 0);
-      width: 300px;
-      height: 300px;
+      width: 250px;
+      height: 350px;
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 20px;
       text-decoration: none;
-      font-size: 28px;
+      font-size: 20px;
       font-weight: bold;
       box-shadow: 0 0 15px rgba(59, 59, 59, 0.4);
       transition: all 0.5s ease;
       overflow: hidden;
       z-index: 1;
+      margin: 100px;
+      flex-direction: column;
+      gap: 40px ;
     }
 
     .grade-btn::before {
@@ -201,15 +204,25 @@
 <body>
   <header>
     <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="logo">
+    <h1 style="color: #ffffff; position: relative; right: 30px;">الرد على الشكاوي</h1>
     <a href="tech_home.html" class="return-home-button">العودة</a>
   </header>
-
+  <h2 style="position: relative; top: 50px;">اختر المرحلة المراد عرض شكاويها</h2>
+  <br>
   <main>
     <div class="buttons-container">
-      <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=1932908203#gid=1932908203" class="grade-btn">أول ثانوي</a>
-      <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=403420124#gid=403420124" class="grade-btn">ثاني ثانوي</a>
-      <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=0#gid=0" class="grade-btn">ثالث ثانوي</a>
-      <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=274027731#gid=274027731" class="grade-btn">غير مرتبط بهوية والاقتراحات</a>
+      <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=1932908203#gid=1932908203" class="grade-btn">أول ثانوي
+        <img src="https://i.postimg.cc/h4m3RJpy/open-book.png" alt="" width="150px" height="150px">
+      </a>
+      <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=403420124#gid=403420124" class="grade-btn">ثاني ثانوي
+        <img src="https://i.postimg.cc/PqqFg2RY/book.png" alt="" width="150px" height="150px">
+      </a>
+      <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=0#gid=0" class="grade-btn">ثالث ثانوي
+        <img src="https://i.postimg.cc/TY8FKjpq/graduate.png" alt="" width="150px" height="150px">
+      </a>
+      <a target="_blank" href="https://docs.google.com/spreadsheets/d/1mXy-BVMPqrPfTfXIFHvUMMOlfZ9a5Cfx7BI4bgxYKPU/edit?gid=274027731#gid=274027731" class="grade-btn">غير مرتبط بهوية والاقتراحات
+        <img src="https://i.postimg.cc/RhWsWhBv/anonymous.png" alt="" width="150px" height="150px">
+      </a>
     </div>
   </main>
 
@@ -226,12 +239,7 @@
   </div>
 
   <script>
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-      }
-    });
+
 
     document.addEventListener('contextmenu', function(event) {
       event.preventDefault();
