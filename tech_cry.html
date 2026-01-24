@@ -239,7 +239,13 @@
   </div>
 
   <script>
-
+    document.addEventListener('keydown', function(event) {
+    // تعطيل F12
+    if (event.key === 'F12') {
+        event.preventDefault();
+        return false;
+    }
+})
 
     document.addEventListener('contextmenu', function(event) {
       event.preventDefault();
