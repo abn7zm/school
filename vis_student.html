@@ -13,8 +13,8 @@
     <header>
       <h1>آخر التحديثات</h1>
     </header>
-    <a href="student_home.html" class="return-home-button">العودة
-    </a>
+       <a href="#" onclick="window.history.back();" class="return-home-button">العودة</a>
+
     <main>
       <section>
         <h2>نوفمبر 2024</h2>
@@ -85,31 +85,23 @@ footer {
   bottom: 0;
   width: 100%;
 }
-.return-home-button {
-            position: fixed;
-            top: 6vh;
-            right: 2vw;
-            padding: 1vh 2vw;
-            background-color: #f6b100;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            font-size: 1vw;
-            display: flex;
-            align-items: center;
-            z-index: 1000;
-        }
+ .return-home-button {
+      background-color: #f6b100;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      top: -100px;
+    }
 
-        .return-home-button:hover {
-            background-color: #c28b00;
-        }
-
-        .button-icon {
-            margin-left: 0.5vw;
-            width: 1.5vw;
-            height: auto;
-        }
+    .return-home-button:hover {
+      background-color: #c48d01;
+      color: white;
+    }
 
   </style>
 
