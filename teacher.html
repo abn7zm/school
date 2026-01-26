@@ -6,7 +6,7 @@
     <title>اختبار القدرات</title>
     <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
    
-  <style>
+   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -120,38 +120,66 @@
     }
 
     /* أزرار رئيسية */
-    .main-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin: 100px 0;
-      flex-wrap: wrap;
-    }
-
-    .main-buttons button {
-      background-color: #ffffff;
-      color: #000;
-      width: 300px;
-      height: 300px;
-      border: none;
-      border-radius: 12px;
+   main {
+      flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
-      transition: background-color 0.3s, box-shadow 0.3s;
-      box-shadow: 0 0 15px rgba(70, 70, 70, 0.3);
     }
 
-    .main-buttons button:hover {
-      background-color: #999999;
-      box-shadow: 0 0 25px rgba(41, 41, 41, 0.7);
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    .main-buttons button img {
-      height: 200px;
-      max-width: 90%;
-      object-fit: contain;
+    /* ✅ تصميم مربعات خرافية */
+    .grade-btn {
+      position: relative;
+      background: white;
+      background-size: 200% 200%;
+      animation: gradientShift 5s ease infinite;
+      color: rgb(0, 0, 0);
+      width: 250px;
+      height: 350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(59, 59, 59, 0.4);
+      transition: all 0.5s ease;
+      overflow: hidden;
+      z-index: 1;
+      margin: 100px;
+      flex-direction: column;
+      gap: 40px ;
+    }
+
+    .grade-btn::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.3), transparent 70%);
+      transform: rotate(45deg);
+      transition: all 0.5s ease;
+      z-index: -1;
+    }
+
+    .grade-btn:hover::before {
+      top: -20%;
+      left: -20%;
+    }
+
+    .grade-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(59, 59, 59, 0.7);
     }
 
     .quran {
@@ -381,7 +409,7 @@
 </head>
 <body>
 
-   <div class="top-bar">
+ <div class="top-bar">
     <div class="left-section">
       <div class="logo">
         <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" />
@@ -393,7 +421,7 @@
       </a>
     </div>
 
-    <h1 class="page-title"></h1>
+    <h1 class="page-title">نظام قياس</h1>
 
     <div class="right-section">
       
@@ -412,17 +440,22 @@
     </div>
   </div>
 
-  <div class="main-buttons">
-    <a href="student_date.html"><button class="bu">
-      <img src="https://i.postimg.cc/MKsyHss0/detep.png" alt="Button 1" />
-    </button></a>
-    <a href="student_ads.html"><button class="bu">
-      <img src="https://i.postimg.cc/zBZJjrfC/adsp.png" alt="Button 2" />
-    </button></a>
-    <a href="before.html"><button class="bu">
-      <img src="https://i.postimg.cc/bJ73rm3N/cryp.png" alt="Button 3" />
-    </button>
+<main>
+   <div class="buttons-container">
+   <a target="_blank" href="" class="grade-btn">
+        <img src="https://i.postimg.cc/wMd8SDXH/online-test.png" alt="" width="150px" height="150px">
+        إدارة الاختبارات
+      </a>
+      <a target="_blank" href="" class="grade-btn">
+      <img src="https://i.postimg.cc/0jtnps2z/webinar.png" alt="" width="150px" height="150px">
+      إدارة الدورات التعليمية
+      </a>
+      <a target="_blank" href="" class="grade-btn">
+        <img src="https://i.postimg.cc/BQ6MJXM5/ranking.png" alt="" width="150px" height="150px">
+        الترتيب
+      </a>
   </div>
+</main>
 
   <div id="random-line" class="quran"></div>
 
@@ -436,22 +469,54 @@
     <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
   </div>
 <script>
-                document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }
-})
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
+ document.addEventListener("DOMContentLoaded", function () {
+
+ 
+  var userName = localStorage.getItem('userName');
+  if (userName) {
+    document.getElementById('userName').textContent = userName;
+  } else {
+    alert('لم يتم العثور على اسم المستخدم.');
+    window.location.href = 'student_login.html';
+    return;
+  }
+
+  fetch('quran.txt')
+    .then(response => response.text())
+    .then(text => {
+      const lines = text.split('\n');
+      const randomLine = lines[Math.floor(Math.random() * lines.length)];
+      document.getElementById('random-line').textContent = randomLine;
+    })
+    .catch(error => console.error('خطأ في تحميل quran.txt:', error));
+
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function () {
+
+  
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("phone");
+      localStorage.removeItem("email");
+
+   
+      window.location.href = "index.html";
+    });
+  } else {
+    console.error("❌ لم يتم العثور على زر تسجيل الخروج logoutBtn");
+  }
+
 });
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
-document.getElementById("year").textContent = new Date().getFullYear();
+
+window.addEventListener("pageshow", function (event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
+});
 </script>
 </body>
 </html>
