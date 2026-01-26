@@ -5,212 +5,518 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اختبار القدرات</title>
     <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type">
-    <style>
-        /* إعدادات الجسم */
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f4f4f4;
-            overflow-x: hidden;
-            overflow-y: hidden;
-        }
+   
+   <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: white;
+      color: #000;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        /* الرأس */
-        header {
-            width: 100%;
-            background-color: #14b9d0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+    .top-bar {
+      background-color: #005d7e;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      color: #fff;
+      justify-content: space-between;
+      position: relative;
+      flex-wrap: nowrap;
+    }
 
-        .logo {
-            width: 10%;
-            max-width: 120px;
-            min-width: 50px;
-        }
+    /* الشعار وزر تسجيل الخروج على اليسار */
+    .left-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-        .tst {
-            color: #fff;
-            font-size: 2rem;
-            font-weight: bold;
-            text-align: center;
-            margin: 0;
-        }
+    .logo img {
+      height: 90px;
+      filter: drop-shadow(0 0 10px #00e6f6);
+    }
 
-        /* زر العودة */
-        .return-home-button {
-            position: fixed; /* تثبيت الزر */
-            top: 1rem; /* المسافة من الأعلى */
-            right: 1rem; /* المسافة من اليمين */
-            padding: 0.8rem 1.5rem;
-            background-color: #484646;
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            z-index: 2000; /* فوق جميع العناصر */
-        }
+    .logout-button {
+      background-color: #f6b100;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background-color 0.3s;
+    }
+    .logout-button:hover {
+      background-color: #c58d00;
+    }
+    .logout-button img {
+      height: 20px;
+    }
 
-        .return-home-button:hover {
-            background-color: #007a8c;
-            transform: scale(1.1); /* تكبير الزر قليلاً */
-        }
+    /* العنوان في الوسط */
+    .page-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      color: #ffffff;
+      user-select: none;
+      white-space: nowrap;
+    }
 
-        /* حاوية الأزرار */
-        .button-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            width: 90%;
-            max-width: 1200px;
-            margin: 2rem auto;
-        }
+    /* حاوية المستخدم: صورة + اسم + أزرار */
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      direction: rtl; /* عشان ترتيب عربي: الصورة يمين */
+      flex-wrap: nowrap;
+      min-width: 0;
+    }
 
-        /* إعدادات الأزرار */
-        .box1,.box2 {
-            background: #484646;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-            text-decoration: none;
-            padding: 2rem 1rem;
+    .profile-img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
 
-        }
-        .box1{
-            position: relative;
-        
-            top: 110%;
+    
 
-        }
-        .box2{
-            position: relative;
-        
-            top:110%;
+    .right-buttons {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
 
-        }
+    .right-buttons a > button {
+      background-color: #f6b100;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      white-space: nowrap;
+    
+    }
 
+    .right-buttons a > button:hover {
+      background-color: #c58d00;
+    }
 
-        .content {
-            color: #fff;
-            font-size: 1.6rem;
-           
-            text-align: center;
-        }
+    /* أزرار رئيسية */
+   main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        
-        .box1:hover ,.box2:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            background: #16a085;
-        }
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-        .box:hover .hidden-content {
-            opacity: 1;
-        }
-        .main-box:hover .hidden-content{
-            opacity: 1;
-        }
+    /* ✅ تصميم مربعات خرافية */
+    .grade-btn {
+      position: relative;
+      background: white;
+      background-size: 200% 200%;
+      animation: gradientShift 5s ease infinite;
+      color: rgb(0, 0, 0);
+      width: 250px;
+      height: 350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(59, 59, 59, 0.4);
+      transition: all 0.5s ease;
+      overflow: hidden;
+      z-index: 1;
+      margin: 100px;
+      flex-direction: column;
+      gap: 40px ;
+    }
 
-        /* التذييل */
-        footer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 1rem;
-            background-color: #333;
-            color: #ecf0f1;
-            margin-top: auto;
-            width: 100%;
-            font-size: 1rem;
-        }
+    .grade-btn::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.3), transparent 70%);
+      transform: rotate(45deg);
+      transition: all 0.5s ease;
+      z-index: -1;
+    }
 
-        /* تحسين الزر للشاشات الصغيرة */
-        @media (max-width: 768px) {
-            .return-home-button {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-                top: 0.5rem;
-                right: 0.5rem;
-            }
+    .grade-btn:hover::before {
+      top: -20%;
+      left: -20%;
+    }
 
-            .content {
-                font-size: 1.2rem;
-            }
+    .grade-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(59, 59, 59, 0.7);
+    }
 
-            .hidden-content {
-                font-size: 0.9rem;
-            }
-        }
-    </style>
+    .quran {
+      height: 80px;
+      color: #000;
+    }
+
+    .footer {
+      background-color: #005d7e;
+      color: #ffffff;
+      padding: 25px 40px;
+      width: 100%;
+      text-align: right;
+      margin-top: auto;
+      box-sizing: border-box;
+    }
+
+    .footer h3 {
+      margin-bottom: 15px;
+      font-size: 22px;
+      color: #ffffff;
+      font-weight: bold;
+      border-bottom: 2px solid #f6b100;
+      padding-bottom: 5px;
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      font-size: 18px;
+    }
+
+    .contact-list li {
+      margin-bottom: 10px;
+    }
+
+    .contact-list li a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-list li a:hover {
+      color: #007a8c;
+      text-decoration: underline;
+    }
+
+    .end {
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+    .user-container:hover{
+      background-color: #005d7e;
+    }
+    
+
+  .profile {
+    width: 50px; /* تصغير حجم الصورة */
+    height: 50px;
+    border-radius: 50%; /* شكل دائري إن أردت */
+    object-fit: cover;
+    color: #ffffff;
+     
+   }
+   @media (width:768px ) {
+    .top-bar {
+      background-color: #005d7e;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      color: #fff;
+      justify-content: space-between;
+      position: relative;
+      flex-wrap: nowrap;
+    }
+
+      .left-section, .right-section {
+        flex: 1 1 100%;
+        justify-content: center;
+
+      }
+
+      .page-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      color: #ffffff;
+      user-select: none;
+      white-space: nowrap;
+      top: 5px;
+    }
+
+      .right-section {
+        order: 3;
+        flex-wrap: nowrap;
+        justify-content: center;
+        direction: rtl;
+      }
+
+      .profile-img {
+        height: 50px;
+        width: 50px;
+      }
+
+      .user-name {
+        font-size: 16px;
+        max-width: 80px;
+      }
+
+      .right-buttons a > button {
+        padding: 8px 12px;
+        font-size: 14px;
+        position: relative;
+        left: 50px;
+        top: 20px;
+      }
+
+      .logout-button {
+        padding: 8px 12px;
+        font-size: 14px;
+        position: relative;
+        right:135px;
+        top: 15px;
+      }
+
+      .main-buttons button {
+        width: 150px;
+        height: 150px;
+      }
+
+      .main-buttons button img {
+        height: 100px;
+      }
+      .logo{
+        right: 110px;
+        top: 20px;
+        position: relative;
+      }
+      .user-container{
+        position: relative;
+        left: 50px;
+      }
+   }
+    /* استايلات الجوال */
+    @media (max-width: 425px) {
+      .top-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+        position: relative;
+      }
+
+      .left-section, .right-section {
+        flex: 1 1 100%;
+        justify-content: center;
+        margin: 5px 0;
+      }
+
+      .page-title {
+        position: relative;
+        transform: none;
+        font-size: 28px;
+        margin: 10px 0;
+        width: 100%;
+        text-align: center;
+        order: 1;
+        top: -90px;
+        left: 2px;
+      }
+
+      .right-section {
+        order: 3;
+        flex-wrap: nowrap;
+        justify-content: center;
+        direction: rtl;
+      }
+
+      .profile-img {
+        height: 50px;
+        width: 50px;
+      }
+
+      .user-name {
+        font-size: 16px;
+        max-width: 80px;
+      }
+
+      .right-buttons a > button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      .logout-button {
+        padding: 8px 12px;
+        font-size: 14px;
+        position: relative;
+        right:-40px;
+        top: 50px;
+      }
+
+      .main-buttons button {
+        width: 150px;
+        height: 150px;
+      }
+
+      .main-buttons button img {
+        height: 100px;
+      }
+      .logo{
+        left: -40px;
+        top: 50px;
+        position: relative;
+      }
+      
+    }
+  </style>
 </head>
 <body>
 
-    <!-- الشعار والعنوان -->
-    <header>
-        <img src="https://i.postimg.cc/gJV7wWxh/logo1.png" alt="logo" class="logo">
-        <h1 class="tst"> اضافة نماذج</h1>
-    </header>
-
-    <!-- زر العودة -->
-    <a href="index.html" class="return-home-button">العودة</a>
-
-    <!-- الأزرار -->
-    <div class="button-container">
-        <a class="box1" href="te_t7sele.html">
-            <p class="content">اضافة نموذج تحصيلي</p>
-            
-        </a>
-        <a class="box1" href="project.html">
-            <p class="content">الاطلاع على النماذج المضافة</p>
-            
-        </a>
-        
-
-
-        <a class="box2" href="te_qudrat.html">
-            <p class="content">اضافة نموذج قدرات</p>
-        </a>
+ <div class="top-bar">
+    <div class="left-section">
+      <div class="logo">
+        <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" />
+      </div>
+      <button class="logout-button" id="logoutBtn">
+          <img src="https://i.postimg.cc/TY15M5LP/logout.png" alt="Logout" />
+          تسجيل الخروج
+        </button>
+      </a>
     </div>
 
-    <!-- التذييل -->
-    <footer>
-        <p>&copy; <span id="year"></span> جميع الحقوق محفوظة.</p>
-    </footer>
+    <h1 class="page-title">نظام قياس</h1>
+
+    <div class="right-section">
+      
+      <a href="student_profile.html" class="user-container" style= "padding: 6px 12px; color: rgb(255, 255, 255); font-size: 14px; border-radius: 5px; margin-right: 10px;"  >
+ <img class="profile" src="https://i.postimg.cc/26GGJNsB/profile.webp" alt="Profile Image">
+        <h2><span class="userName" id="userName"></span></h2>
+        👁 عرض الملف الشخصي
+  
+  
+</a>
+  
+      <div class="right-buttons">
+        <a href="support_std.html"><button>الدعم الفني</button></a>
+        <a href="vis_student.html"><button>التحديثات</button></a>
+      </div>
+    </div>
+  </div>
+
+<main>
+   <div class="buttons-container">
+   <a target="_blank" href="" class="grade-btn">
+        <img src="https://i.postimg.cc/wMd8SDXH/online-test.png" alt="" width="150px" height="150px">
+        إدارة الاختبارات
+      </a>
+      <a target="_blank" href="" class="grade-btn">
+      <img src="https://i.postimg.cc/0jtnps2z/webinar.png" alt="" width="150px" height="150px">
+      إدارة الدورات التعليمية
+      </a>
+      <a target="_blank" href="" class="grade-btn">
+        <img src="https://i.postimg.cc/BQ6MJXM5/ranking.png" alt="" width="150px" height="150px">
+        الترتيب
+      </a>
+  </div>
+</main>
+
+  <div id="random-line" class="quran"></div>
+
+  <div class="footer">
+    <h3>معلومات الاتصال</h3>
+    <ul class="contact-list">
+      <li>📞 <a href="tel:+966536382599">+966 536382599</a></li>
+      <li>📧 <a href="mailto:abn7zm@gmail.com">abn7zm@gmail.com</a></li>
+      <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
+    </ul>
+    <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
+  </div>
 <script>
-                document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }
-})
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
+ document.addEventListener("DOMContentLoaded", function () {
+
+ 
+  var userName = localStorage.getItem('userName');
+  if (userName) {
+    document.getElementById('userName').textContent = userName;
+  } else {
+    alert('لم يتم العثور على اسم المستخدم.');
+    window.location.href = 'student_login.html';
+    return;
+  }
+
+  fetch('quran.txt')
+    .then(response => response.text())
+    .then(text => {
+      const lines = text.split('\n');
+      const randomLine = lines[Math.floor(Math.random() * lines.length)];
+      document.getElementById('random-line').textContent = randomLine;
+    })
+    .catch(error => console.error('خطأ في تحميل quran.txt:', error));
+
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function () {
+
+  
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("phone");
+      localStorage.removeItem("email");
+
+   
+      window.location.href = "index.html";
+    });
+  } else {
+    console.error("❌ لم يتم العثور على زر تسجيل الخروج logoutBtn");
+  }
+
 });
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
-document.getElementById("year").textContent = new Date().getFullYear();
+
+window.addEventListener("pageshow", function (event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
+});
 </script>
 </body>
 </html>

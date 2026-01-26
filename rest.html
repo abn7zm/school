@@ -25,14 +25,14 @@ body{background:#ffffff; color:#1a1a1a; overflow-x:hidden; }
     height:110px;
     filter: drop-shadow(0 0 10px rgba(0, 230, 246, 0.6));
 }
-.return{
+.return-home-button{
     position:absolute;
     top:30px;
     left:20px;
     background-color:#f6b100;
     color:#fff;
     padding:10px 20px;
-    border-radius:25px;
+    border-radius:15px;
     font-weight:bold;
     font-size:16px;
     display:flex;
@@ -41,7 +41,7 @@ body{background:#ffffff; color:#1a1a1a; overflow-x:hidden; }
     transition:all 0.3s;
     box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
-.return:hover{
+.return-home-button:hover{
     background-color:#c99000;
     transform:scale(1.05);
 }
@@ -179,11 +179,9 @@ button:hover{background:#484646;}
 <body>
 
 <div class="header-line">
+    <a href="#" onclick="window.history.back();" class="return-home-button">العودة</a>
     <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" class="logo">
-    <a href="index.html" class="return">
-        عودة  
-      <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="Arrow">
-    </a>
+
 </div>
 
 <div class="center-box">
