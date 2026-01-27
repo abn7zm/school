@@ -196,6 +196,10 @@
 
       <label for="link">رابط (اختياري):</label>
       <input type="url" id="link" name="link">
+      
+      <label for="file">رفع ملف (اختياري)</label>
+      <input type="file" id="file" name="file">
+
 
       <label for="description">وصف الإعلان:</label>
       <textarea id="description" name="description" rows="5" required></textarea>
@@ -224,55 +228,92 @@
   </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxqG_8iEZUPAn2XqNmFf-ktUD9vGUd40zjC9RfR0QchurAB4f5UsQHQviKUEg2_-pMXdw/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkSYu6Ee3hC6rBDwd7u-a8hG-hDtZ9TTfKjbypCk_bLHZkeAT8pPNa9ETzxgGHYYWoPQ/exec';
 
 /* مراجع */
 const titleInput = document.getElementById('title');
 const descriptionInput = document.getElementById('description');
 const linkInput = document.getElementById('link');
+const fileInput = document.getElementById('file'); // جديد: ملف
 const message = document.getElementById('message');
 const adForm = document.getElementById('ad-form');
 const adsList = document.getElementById('adsList');
 
 /* إرسال إعلان جديد */
-adForm.addEventListener('submit', async function (e) {
+adForm.addEventListener('submit', async function(e) {
   e.preventDefault();
 
-  // تعطيل الزر وإظهار التحميل
   const submitBtn = adForm.querySelector('button[type="submit"]');
   submitBtn.disabled = true;
   const originalText = submitBtn.textContent;
-  submitBtn.innerHTML = `جارٍ الإرسال... <span class="spinner" style="display:inline-block;width:16px;height:16px;border:2px solid #fff;border-top:2px solid transparent;border-radius:50%;animation:spin 0.8s linear infinite;"></span>`;
+  submitBtn.innerHTML = `جارٍ الإرسال... <span class="spinner"></span>`;
 
   const title = titleInput.value;
   const description = descriptionInput.value;
   const link = linkInput.value;
 
   try {
-    const res = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      body: new URLSearchParams({
-        action: 'add',
-        title,
-        description,
-        link
-      })
-    });
+    const payload = {
+  action: 'add',
+  title,
+  description,
+  link
+};
 
+if (fileInput && fileInput.files.length > 0) {
+  const file = fileInput.files[0];
+  const base64Data = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+  payload.file = base64Data;
+  payload.fileName = file.name;
+  payload.fileType = file.type;
+}
+
+const res = await fetch(SCRIPT_URL, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(payload)
+});
+console.log('Request sent:', payload);
+
+const data = await res.json();
+console.log('Response received:', data);
+
+if (data.success) {
+  message.textContent = 'تم إرسال الإعلان بنجاح';
+  message.style.color = 'green';
+  adForm.reset();
+  loadAds();
+} else {
+  message.textContent = 'حدث خطأ أثناء الإرسال: ' + data.error;
+  message.style.color = 'red';
+}
+
+handleResponse(res);
+
+
+  } catch (err) {
+    console.error(err);
+    message.textContent = 'حدث خطأ في الاتصال';
+    message.style.color = 'red';
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
+  }
+
+  function handleResponse(res) {
     if (res.ok) {
       message.textContent = 'تم إرسال الإعلان بنجاح';
       message.style.color = 'green';
-      this.reset();
-      await loadAds();
+      adForm.reset();
+      loadAds();
     } else {
       message.textContent = 'حدث خطأ أثناء الإرسال';
       message.style.color = 'red';
     }
-  } catch (err) {
-    message.textContent = 'حدث خطأ في الاتصال';
-    message.style.color = 'red';
-  } finally {
-    // إعادة الزر إلى الحالة الطبيعية
     submitBtn.disabled = false;
     submitBtn.textContent = originalText;
   }
@@ -287,7 +328,8 @@ async function loadAds() {
     const ads = await res.json();
 
     adsList.innerHTML = ''; // إزالة النص بعد التحميل
-    ads.forEach(ad => {
+    // عرض الأحدث أولاً
+    ads.reverse().forEach(ad => {
       adsList.innerHTML += renderAd(ad);
     });
   } catch (err) {
@@ -305,6 +347,7 @@ function renderAd(ad) {
     </div>
     <p class="ad-desc">${ad.description}</p>
     ${ad.link ? `<a class="ad-link" href="${ad.link}" target="_blank">🔗 فتح الرابط</a>` : ''}
+    ${ad.fileUrl ? `<a class="ad-link" href="${ad.fileUrl}" target="_blank">⬇ تحميل الملف</a>` : ''}
     <div class="ad-actions">
       <button class="btn edit" onclick="enableEdit(${ad.row})">تعديل</button>
       <button class="btn delete" onclick="deleteAd(${ad.row})">حذف</button>
@@ -337,15 +380,17 @@ function enableEdit(row) {
 /* حفظ التعديل */
 async function saveEdit(row) {
   await fetch(SCRIPT_URL, {
-    method: 'POST',
-    body: new URLSearchParams({
-      action: 'update',
-      row,
-      title: document.getElementById(`edit-title-${row}`).value,
-      description: document.getElementById(`edit-desc-${row}`).value,
-      link: document.getElementById(`edit-link-${row}`).value
-    })
-  });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    action: 'update',
+    row,
+    title: document.getElementById(`edit-title-${row}`).value,
+    description: document.getElementById(`edit-desc-${row}`).value,
+    link: document.getElementById(`edit-link-${row}`).value
+  })
+});
+
   loadAds();
 }
 
@@ -354,7 +399,9 @@ async function deleteAd(row) {
   if (!confirm('هل أنت متأكد من حذف الإعلان؟')) return;
   await fetch(SCRIPT_URL, {
     method: 'POST',
-    body: new URLSearchParams({ action: 'delete', row })
+    body: JSON.stringify({ action: 'delete', row }),
+headers: { 'Content-Type': 'application/json' }
+
   });
   loadAds();
 }
@@ -363,10 +410,21 @@ async function deleteAd(row) {
 const style = document.createElement('style');
 style.textContent = `
 @keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+.spinner {
+  display:inline-block;
+  width:16px;
+  height:16px;
+  border:2px solid #fff;
+  border-top:2px solid transparent;
+  border-radius:50%;
+  animation: spin 0.8s linear infinite;
+}
 `;
 document.head.appendChild(style);
 
 loadAds();
+
+
 </script>
 
 
