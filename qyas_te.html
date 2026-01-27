@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل دخول اداري</title>
-    <link rel="icon" href="https://i.imghippo.com/files/iJhm9520ofU.png">
-    <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تسجيل الدخول طالب</title>
+  <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Cairo', sans-serif;
@@ -19,168 +17,47 @@
       align-items: center;
       direction: rtl;
       background: #0d1f2d;
-      overflow-x: hidden; /* منع التمرير الأفقي */
+      overflow-x: hidden;
+      padding: 10px;
       position: relative;
-      padding: 10px; /* لتجنب التصاق المحتوى بحواف الشاشة */
     }
-    /* خطوط هندسية خلفية */
     body::before {
       content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
+      position: fixed; top:0; left:0; width:100vw; height:100vh;
       background:
-        repeating-linear-gradient(
-          45deg,
-          rgba(24, 24, 24, 0.15) 0,
-          rgba(255, 223, 0, 0.15) 1px,
-          transparent 1px,
-          transparent 20px
-        ),
-        repeating-linear-gradient(
-          -45deg,
-          rgba(24, 24, 24, 0.15) 0,
-          rgba(27, 27, 27, 0.15) 1px,
-          transparent 1px,
-          transparent 20px
-        );
-      z-index: 0;
-      pointer-events: none;
+        repeating-linear-gradient(45deg, rgba(24,24,24,0.15) 0, rgba(255,223,0,0.15) 1px, transparent 1px, transparent 20px),
+        repeating-linear-gradient(-45deg, rgba(24,24,24,0.15) 0, rgba(27,27,27,0.15) 1px, transparent 1px, transparent 20px);
+      z-index: 0; pointer-events: none;
     }
     #logo {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      height: 150px;
-      filter: drop-shadow(0 0 10px #00e6f6);
-      z-index: 10;
-      max-width: 150px;
-      width: 15vw;
-      min-width: 100px;
+      position: fixed; top: 20px; left: 20px; height: 150px; filter: drop-shadow(0 0 10px #00e6f6); z-index: 10;
+      max-width: 150px; width: 15vw; min-width: 100px;
     }
     .form-container {
-      position: relative;
-      background: #ffffffee;
-      border-radius: 20px;
-      padding: 35px 25px;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-      z-index: 1;
-      text-align: center;
-      filter: drop-shadow(0 0 5px #00e6f6);
-      box-sizing: border-box;
+      position: relative; background: #ffffffee; border-radius: 20px; padding: 35px 25px;
+      max-width: 400px; width: 100%; box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+      z-index: 1; text-align: center; filter: drop-shadow(0 0 5px #00e6f6);
     }
-    h2 {
-      margin-bottom: 30px;
-      font-size: 28px;
-      font-weight: 700;
-      color: #007a8c;
-      user-select: none;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
+    h2 { margin-bottom: 30px; font-size: 28px; font-weight: 700; color: #007a8c; user-select: none; }
     input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 14px 18px;
-      margin-bottom: 20px;
-      border: 2px solid #009db2;
-      border-radius: 15px;
-      font-size: 16px;
-      text-align: right;
-      background: #f0fbff;
-      color: #00454d;
-      transition: border-color 0.3s ease;
+      width: 100%; padding: 14px 18px; margin-bottom: 20px;
+      border: 2px solid #009db2; border-radius: 15px; font-size: 16px; text-align: right;
+      background: #f0fbff; color: #00454d; transition: border-color 0.3s ease;
     }
-    input[type="text"]:focus,
-    input[type="password"]:focus {
-      border-color: #007a8c;
-      outline: none;
-      background: #e0f5fa;
-    }
-    .password-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 30px;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-    }
-    .password-container input {
-      flex: 1 1 auto;
-      min-width: 0; /* لمنع تمدد غير مرغوب */
-    }
-    .password-container button {
-      background: #009db2;
-      border: none;
-      border-radius: 15px;
-      padding: 12px;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: background 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 157, 178, 0.4);
-      color: white;
-      user-select: none;
-      flex-shrink: 0; /* لا يتقلص */
-      position: relative;
-      top: -10px;
-    }
-    .password-container button:hover {
-      background: #007a8c;
-      box-shadow: 0 6px 15px rgba(0, 122, 140, 0.6);
-    }
-    .toggle-icon {
-      width: 24px;
-      height: 24px;
-      filter: drop-shadow(0 0 2px rgba(0,0,0,0.25));
-    }
+    input:focus { border-color: #007a8c; outline: none; background: #e0f5fa; }
     button[type="submit"] {
-      width: 100%;
-      background: linear-gradient(90deg, #009db2, #007a8c);
-      padding: 16px;
-      border: none;
-      border-radius: 20px;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 6px 18px rgba(0, 157, 178, 0.7);
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
-      text-transform: uppercase;
+      width: 100%; background: linear-gradient(90deg, #009db2, #007a8c);
+      padding: 16px; border: none; border-radius: 20px; color: #fff;
+      font-size: 18px; font-weight: 700; cursor: pointer; text-transform: uppercase;
+      box-shadow: 0 6px 18px rgba(0,157,178,0.7); transition: 0.3s ease;
     }
-    button[type="submit"]:hover {
-      background: linear-gradient(90deg, #007a8c, #005f6b);
-      box-shadow: 0 8px 25px rgba(0, 122, 140, 0.8);
-    }
-    .login {
-      margin-top: 22px;
-      font-size: 14px;
-      color: #007a8c;
-      user-select: none;
-    }
-    .create-account-link {
-      display: inline-block;
-      margin-top: 10px;
-      font-weight: 600;
-      color: #005f6b;
-      text-decoration: none;
-      transition: color 0.3s ease;
-      user-select: none;
-    }
-    .create-account-link:hover {
-      color: #003f45;
-      text-decoration: underline;
-    }
+    button[type="submit"]:hover { background: linear-gradient(90deg,#007a8c,#005f6b); }
     .return-home-button {
       position: fixed;
       top: 40px;
       right: 20px;
       padding: 14px 26px;
-      background: #ffbb00;
+      background: #009db2;
       color: white;
       font-weight: 700;
       border-radius: 40px;
@@ -195,7 +72,7 @@
       z-index: 20;
     }
     .return-home-button:hover {
-      background: #d19900;
+      background: #007a8c;
       transform: scale(1.1);
       box-shadow: 0 9px 30px rgba(0, 122, 140, 1);
     }
@@ -263,158 +140,49 @@
   </style>
 </head>
 <body>
-  <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" id="logo" />
-  <div class="form-container" role="main" aria-label="نموذج تسجيل الدخول">
+  <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" id="logo" alt="Logo"/>
+  <div class="form-container">
     <h2>تسجيل الدخول</h2>
-    <form id="loginForm" autocomplete="off">
-      <input
-        type="text"
-        id="idNumber"
-        name="id"
-        placeholder="رقم الهوية"
-        required
-        aria-required="true"
-        aria-label="رقم الهوية"
-      />
-      <div class="password-container">
-        <input
-          type="password"
-          id="password"
-          name="pass"
-          placeholder="كلمة المرور"
-          required
-          aria-required="true"
-          aria-label="كلمة المرور"
-        />
-        <button type="button" id="togglePasswordButton" aria-label="تبديل إظهار كلمة المرور">
-          <img
-            src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png"
-            id="showIcon"
-            class="toggle-icon"
-            alt="إظهار"
-          />
-          <img
-            src="https://cdn4.iconfinder.com/data/icons/liny/24/eye-off-line-512.png"
-            id="hideIcon"
-            class="toggle-icon"
-            alt="إخفاء"
-            style="display: none"
-          />
-        </button>
-      </div>
+    <form id="loginForm">
+      <input type="text" id="idNumber" placeholder="رقم الهوية" required />
+      <input type="password" id="password" placeholder="كلمة المرور" required />
       <button type="submit">تسجيل دخول</button>
-      
     </form>
   </div>
-      <a href="#" onclick="window.history.back();" class="return-home-button">العودة</a>
+  <a href="index.html" class="return-home-button" aria-label="العودة إلى الصفحة الرئيسية">
+    العودة
+    <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="سهم العودة" class="button-icon" />
+  </a>
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbz1eNtbisTSyS-OlXGcFq8GxK4QZAuV8co8V8hlc-8mzCOhGXb8Y0bbI-AqhMxuffWc/exec"; // ضع هنا رابط السكربت الصحيح
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-    <script>
-    document.addEventListener('keydown', function(event) {
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }})
-    document.addEventListener('contextmenu', function(event) {
-        event.preventDefault();
+    document.getElementById("loginForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      const id = document.getElementById("idNumber").value.trim();
+      const pass = document.getElementById("password").value.trim();
+
+      fetch(scriptURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `id=${encodeURIComponent(id)}&pass=${encodeURIComponent(pass)}`
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.success){
+          localStorage.setItem("userName", data.name);
+          window.location.href = "teacher.html";
+        } else {
+          alert("رقم الهوية أو كلمة المرور غير صحيحة");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("فشل الاتصال بالخادم");
+      });
     });
-        let excelData = {};
-        function loadExcelFile() {
-            const url = 'm.csv'; // تم استبدال الملف هنا
-            fetch(url)
-                .then(response => response.arrayBuffer())
-                .then(data => {
-                    const workbook = XLSX.read(data, { type: "array" });
-                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const rawData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-                    console.log("Raw Excel Data:", rawData);
-                    const formattedData = {};
-                    rawData.forEach(row => {
-                        const [id, password, username] = row;
-                        if (id && password && username) {
-                            formattedData[id.toString()] = {password: password.toString().trim(), username: username.toString().trim()};
-                        }
-                    });
-                    excelData = formattedData;
-                    console.log("Formatted Data:", excelData);
-                })
-                .catch(error => console.error("Error loading Excel file:", error));
-        }
-        document.addEventListener('DOMContentLoaded', loadExcelFile);
-        const togglePasswordButton = document.getElementById('togglePasswordButton');
-        const password = document.getElementById('password');
-        const showIcon = document.getElementById('showIcon');
-        const hideIcon = document.getElementById('hideIcon');
-        togglePasswordButton.addEventListener('click', function() {
-            if (password.type === 'password') {
-                password.type = 'text';
-                showIcon.style.display = 'none';
-                hideIcon.style.display = 'inline';
-            } else {
-                password.type = 'password';
-                showIcon.style.display = 'inline';
-                hideIcon.style.display = 'none';
-            }
-        });
-        document.getElementById('idNumber').addEventListener('input', function (e) {
-            this.value = this.value.replace(/\D/g, '');
-            if (this.value.length > 10) {
-                this.value = this.value.slice(0, 10);
-            }
-        });
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const idNumber = document.getElementById('idNumber').value.trim();
-            const password = document.getElementById('password').value.trim();
-            if (idNumber.length !== 10 || password.length < 6) {
-                alert('يرجى التأكد من صحة البيانات');
-                return;
-            }
-            console.log("ID Number:", idNumber);
-            console.log("Password:", password);
-            const userData = excelData[idNumber];
-            if (userData && userData.password === password) {
-                localStorage.setItem('username', userData.username);
-                showSuccessMessage();
-            } else {
-                alert('رقم الهوية أو كلمة المرور غير صحيحة');
-            }
-        });
-        function showSuccessMessage() {
-            const successMessage = document.createElement('p');
-            successMessage.textContent = '! تم تسجيل الدخول كإدراي';
-            successMessage.style.color = 'green';
-            successMessage.style.textAlign = 'center';
-            document.getElementById('loginForm').appendChild(successMessage);
-            setTimeout(() => {window.location.href = 'teacher.html';}, 1000);
-        }
-        function displayUsername() {
-            const username = localStorage.getItem('username');
-            if (username) {
-                const usernameElement = document.createElement('span');
-                usernameElement.textContent = username;
-                usernameElement.classList.add('user-name');
-                document.getElementById('usernameContainer').appendChild(usernameElement);
-            }
-        }
-        document.addEventListener('DOMContentLoaded', displayUsername);
 
- 
-        document.addEventListener('keydown', function(event) {
-    // تعطيل F12
-    if (event.key === 'F12') {
-        event.preventDefault();
-        return false;
-    }
-})
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
-    </script>
+    // منع F12 والزر اليمين
+
+  </script>
 </body>
 </html>
