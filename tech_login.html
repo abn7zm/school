@@ -154,7 +154,7 @@
     <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="سهم العودة" class="button-icon" />
   </a>
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbz1eNtbisTSyS-OlXGcFq8GxK4QZAuV8co8V8hlc-8mzCOhGXb8Y0bbI-AqhMxuffWc/exec"; // ضع هنا رابط السكربت الصحيح
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyL0fz49UrgeNK4APX0rp-toMeLGDNlqCkRgD_TFLF0XPy1fn0nnEHfR1Ggml-xwn5Y/exec"; // ضع هنا رابط السكربت الصحيح
 
     document.getElementById("loginForm").addEventListener("submit", function(e){
       e.preventDefault();
@@ -168,10 +168,16 @@
       })
       .then(res => res.json())
       .then(data => {
-        if(data.success){
-          localStorage.setItem("userName", data.name);
-          window.location.href = "tech_home.html";
-        } else {
+        if (data.success) {
+  if (data.role === "admin" || data.role === "super") {
+    localStorage.setItem("userName", data.name);
+    localStorage.setItem("role", data.role);
+    window.location.href = "tech_home.html";
+  } else {
+    alert("غير مصرح لك بالدخول كإداري");
+  }
+}
+ else {
           alert("رقم الهوية أو كلمة المرور غير صحيحة");
         }
       })

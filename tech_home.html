@@ -6,6 +6,11 @@
   <title>الرئيسيه طالب</title>
   <link rel="icon" href="https://i.postimg.cc/4yF2CKwD/abn.png" type="image/icon type" />
 <script>
+  const role = localStorage.getItem("role");
+
+  if (role !== "admin" && role !== "super") {
+    window.location.href = "index.html";
+  }
 document.addEventListener("DOMContentLoaded", function () {
 
 

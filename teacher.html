@@ -435,7 +435,6 @@
   
       <div class="right-buttons">
         <a href="support_std.html"><button>الدعم الفني</button></a>
-        <a href="vis_student.html"><button>التحديثات</button></a>
       </div>
     </div>
   </div>
@@ -469,6 +468,12 @@
     <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
   </div>
 <script>
+    const role = localStorage.getItem("role");
+
+  if (role !== "teacher" && role !== "super") {
+    window.location.href = "index.html";
+  }
+  
  document.addEventListener("DOMContentLoaded", function () {
 
  
