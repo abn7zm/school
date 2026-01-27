@@ -291,7 +291,7 @@
       showLoading();
 
       try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzd3bmppvAs0E4B2M-XW3SHi0J86AyBFsk-GSu0t05zE67Cj0AStThbrTMEYNwA_znpRg/exec');
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxqG_8iEZUPAn2XqNmFf-ktUD9vGUd40zjC9RfR0QchurAB4f5UsQHQviKUEg2_-pMXdw/exec' + "?forStudent=true");
 
         if (!response.ok) throw new Error("Network response was not ok");
 
