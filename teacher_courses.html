@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>الدورات التعليمية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  font-family:Tahoma,Arial;
+  margin:0;
+  background:#f4f6f8;
+  direction:rtl
+}
+header{
+  background:#005d7e;
+  color:#fff;
+  padding:15px;
+  text-align:center
+}
+#addBtn{
+  margin:20px;
+  padding:10px 20px;
+  background:#28a745;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:15px
+}
+
+/* cards */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:20px;
+  padding:20px
+}
+.test-card{
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 6px 15px rgba(0,0,0,.1);
+  background:#fff;
+  transition:.3s
+}
+.test-card:hover{
+  transform:translateY(-5px)
+}
+.card-top{
+  background:#005d7e;
+  color:#fff;
+  height:120px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
+  padding:10px;
+  cursor:pointer
+}
+.card-bottom{
+  display:flex;
+  justify-content:flex-end;
+  padding:12px 15px;
+  align-items:center
+}
+.type{font-weight:bold}
+.card-actions{
+  display:flex;
+  gap:8px;
+  padding:10px;
+  border-top:1px solid #eee
+}
+.card-actions button{
+  flex:1;
+  padding:7px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer
+}
+.edit-btn{background:#ffc107}
+.delete-btn{background:#dc3545;color:#fff}
+
+/* modal */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4)
+}
+.modal-content{
+  background:#fff;
+  width:400px;
+  max-width:90%;
+  margin:80px auto;
+  padding:20px;
+  border-radius:10px
+}
+.modal-content input,
+.modal-content select{
+  width:100%;
+  padding:10px;
+  margin:8px 0
+}
+.saveBtn{
+  background:#007bff;
+  color:#fff;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer
+}
+
+/* spinner */
+.spinner-container{
+  text-align:center;
+  padding:40px
+}
+.spinner{
+  width:40px;
+  height:40px;
+  border:4px solid #ddd;
+  border-top:4px solid #005d7e;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:0 auto 10px
+}
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>الدورات التعليمية</h2>
+</header>
+
+<button id="addBtn" onclick="openModal()">➕ إضافة دورة</button>
+
+<div id="loading" class="spinner-container">
+  <div class="spinner"></div>
+  <p>جاري تحميل الدورات...</p>
+</div>
+
+<div id="cardsContainer" class="cards"></div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>إضافة / تعديل دورة</h3>
+    <input id="name" placeholder="اسم الدورة">
+    <input id="link" placeholder="رابط الدورة">
+    <select id="type">
+      <option value="">اختر التصنيف</option>
+      <option>قدرات</option>
+      <option>تحصيلي</option>
+    </select>
+    <button class="saveBtn" onclick="saveCourse()">حفظ</button>
+  </div>
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbwFBYZ76ajDs-3ckz1i5eBd-0fLE7XRO-WI9GWEbG3MQHmzjOFOQY_Hm2Dyxf4B6JTs/exec"; // رابط Google Script
+let editIndex = null;
+
+function openModal(){
+  modal.style.display="block";
+}
+
+window.onclick = e=>{
+  if(e.target.id==="modal"){
+    modal.style.display="none";
+    editIndex=null;
+  }
+};
+
+function loadCourses(){
+  loading.style.display="block";
+  cardsContainer.innerHTML="";
+
+  fetch(API_URL)
+    .then(r=>r.json())
+    .then(data=>{
+      loading.style.display="none";
+
+      if(data.length===0){
+        cardsContainer.innerHTML="<p style='text-align:center'>لا توجد دورات</p>";
+        return;
+      }
+
+      data.forEach((c,i)=>{
+        cardsContainer.innerHTML+=`
+        <div class="test-card">
+          <div class="card-top" onclick="window.open('${c.link}','_blank')">
+            ${c.name}
+          </div>
+          <div class="card-bottom">
+            <div class="type">${c.type}</div>
+          </div>
+          <div class="card-actions">
+            <button class="edit-btn" onclick="editCourse(${i})">✏️ تعديل</button>
+            <button class="delete-btn" onclick="deleteCourse(${i})">🗑 حذف</button>
+          </div>
+        </div>`;
+      });
+    })
+    .catch(()=>{
+      loading.innerHTML="❌ فشل تحميل البيانات";
+    });
+}
+
+function saveCourse(){
+  const nameVal = document.getElementById("name").value.trim();
+  const linkVal = document.getElementById("link").value.trim();
+  const typeVal = document.getElementById("type").value;
+
+  if(!nameVal || !linkVal || !typeVal){
+    alert("يرجى تعبئة جميع الحقول");
+    return;
+  }
+
+  const fd = new FormData();
+  fd.append("action", editIndex !== null ? "edit" : "add");
+  if(editIndex !== null) fd.append("index", editIndex);
+  fd.append("name", nameVal);
+  fd.append("link", linkVal);
+  fd.append("type", typeVal);
+
+  fetch(API_URL, { method: "POST", body: fd })
+    .then(() => {
+      document.getElementById("modal").style.display = "none";
+      document.getElementById("name").value = "";
+      document.getElementById("link").value = "";
+      document.getElementById("type").value = "";
+      editIndex = null;
+      loadCourses();
+    });
+}
+
+
+function editCourse(i){
+  editIndex=i;
+  fetch(API_URL)
+    .then(r=>r.json())
+    .then(d=>{
+      const c=d[i];
+      name.value=c.name;
+      link.value=c.link;
+      type.value=c.type;
+      modal.style.display="block";
+    });
+}
+
+function deleteCourse(i){
+  if(!confirm("هل أنت متأكد من الحذف؟")) return;
+  const fd=new FormData();
+  fd.append("action","delete");
+  fd.append("index",i);
+  fetch(API_URL,{method:"POST",body:fd}).then(()=>loadCourses());
+}
+
+loadCourses();
+</script>
+
+</body>
+</html>
