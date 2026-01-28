@@ -174,8 +174,45 @@
         width: 100%;
       }
     }
+    .adsList {
+      border:#ddd solid 2px;
+      border-radius: 6px;
+    }
 
-    
+   .btn {
+     padding: 6px 12px;     /* 👈 هذا الأهم */
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+   }
+    .ad-card {
+  background-color: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  border: 1px solid #eee;
+  transition: 0.3s ease;
+}
+.toggle-ads {
+  text-align: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+  color: #005d7e;
+  user-select: none;
+}
+
+.toggle-ads:hover {
+  color: #009db2;
+}
+
+.hidden {
+  display: none;
+}
   </style>
 </head>
 <body>
@@ -202,15 +239,15 @@
 
       <button type="submit">إرسال الإعلان</button>
       <p class="message" id="message"></p>
+      <div class="left-panel">
+          <h2 class="toggle-ads"> الإعلانات السابقة ▼</h2>
+          <div id="adsList" class="adsList hidden"></div>
+       </div>
     </form>
+  </div>
   </div>
 
   <!-- يسار: الإعلانات السابقة -->
-  <div class="left-panel">
-    <h2 style="text-align:center;margin-bottom:20px;">الإعلانات السابقة</h2>
-    <div id="adsList"></div>
-  </div>
-</div>
 
 
 <div class="footer">
@@ -306,8 +343,8 @@ function renderAd(ad) {
     <p class="ad-desc">${ad.description}</p>
     ${ad.link ? `<a class="ad-link" href="${ad.link}" target="_blank">🔗 فتح الرابط</a>` : ''}
     <div class="ad-actions">
-      <button class="btn edit" onclick="enableEdit(${ad.row})">تعديل</button>
-      <button class="btn delete" onclick="deleteAd(${ad.row})">حذف</button>
+      <button class="btn edit" onclick="enableEdit(${ad.row})">تعديل ✏️</button>
+      <button class="btn delete" onclick="deleteAd(${ad.row})">حذف 🗑️</button>
     </div>
   </div>
   `;
@@ -367,6 +404,18 @@ style.textContent = `
 document.head.appendChild(style);
 
 loadAds();
+const toggleTitle = document.querySelector('.toggle-ads');
+
+toggleTitle.addEventListener('click', () => {
+  adsList.classList.toggle('hidden');
+
+  // تغيير السهم / الإيموجي
+  if (adsList.classList.contains('hidden')) {
+    toggleTitle.textContent = ' الإعلانات السابقة ▼';
+  } else {
+    toggleTitle.textContent = ' الإعلانات السابقة ▲';
+  }
+});
 </script>
 
 
