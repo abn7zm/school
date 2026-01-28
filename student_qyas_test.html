@@ -145,18 +145,15 @@ header{
 <div id="scoreModal">
   <div id="scoreBox">
     <h3>أدخل درجتك للاختبار</h3>
-    <input type="number" min="0" id="scoreInput" placeholder="الدرجة التي حصلت عليها">
-    <select id="scoreMaxSelect">
-      <option value="10">من أصل 10</option>
-      <option value="20">من أصل 20</option>
-      <option value="30">من أصل 30</option>
-    </select>
+   <input type="number" min="0" id="scoreInput" placeholder="الدرجة التي حصلت عليها">
+<p id="scoreMaxText" style="margin-top:10px;">من أصل 0</p>
+
     <button id="saveScoreBtn">حفظ الدرجة</button>
   </div>
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbwXxXTroaLZK4iCEHd5mFAkdEqxMDz7sJ87BLHaIBC-Y2xLwQIZgItVUBM0Wj2aFQXTsg/exec"; // ضع رابط Google Apps Script هنا
+const API_URL = "https://script.google.com/macros/s/AKfycbxw2vzEv0X1A9reYmnlm5hJzqPUHAs-swEefQTerhLYNyHICztUwv24GG_hwUBOdaQ_rA/exec"; // ضع رابط Google Apps Script هنا
 const studentName = localStorage.getItem("userName") || "غير معروف";
 let currentTestTitle = null;
 let currentCard = null;
@@ -198,12 +195,15 @@ function loadTests(){
         `;
 
         // عند الضغط على البطاقة
-        card.querySelector(".card-top").addEventListener("click", ()=>{
-          currentTestTitle = t.title;
-          currentCard = card;
-          window.open(t.link,"_blank");
-          showScoreModal();
-        });
+       // عند الضغط على البطاقة
+card.querySelector(".card-top").addEventListener("click", ()=>{
+  currentTestTitle = t.title;
+  currentCard = card;
+  currentTestMaxScore = t.maxScore; // <-- خزننا الدرجة القصوى
+  window.open(t.link,"_blank");
+  showScoreModal();
+});
+
 
         cardsContainer.appendChild(card);
       });
@@ -215,17 +215,21 @@ function loadTests(){
 }
 
 // --- مودال إدخال الدرجة ---
-function showScoreModal(){document.getElementById("scoreModal").style.display="flex";}
+function showScoreModal(){
+  document.getElementById("scoreMaxText").innerText = "من أصل " + currentTestMaxScore;
+  document.getElementById("scoreModal").style.display="flex";
+}
+
 function hideScoreModal(){document.getElementById("scoreModal").style.display="none";}
 
 // حفظ الدرجة
 document.getElementById("saveScoreBtn").addEventListener("click", ()=>{
   const scoreInput = document.getElementById("scoreInput");
-  const scoreMax = document.getElementById("scoreMaxSelect").value;
-  const score = scoreInput.value;
+  const score = Number(scoreInput.value); // الدرجة التي أدخلها الطالب
 
-  if(score === "" || score < 0 || score > scoreMax){
-    alert("يرجى إدخال درجة صحيحة من 0 إلى " + scoreMax);
+  // تحقق من صحة الدرجة مقابل الدرجة القصوى
+  if(score === "" || score < 0 || score > currentTestMaxScore){
+    alert(`يرجى إدخال درجة صحيحة من 0 إلى ${currentTestMaxScore}`);
     return;
   }
 
@@ -233,14 +237,14 @@ document.getElementById("saveScoreBtn").addEventListener("click", ()=>{
   fd.append("action","saveScore");
   fd.append("student", studentName);
   fd.append("test", currentTestTitle);
-  fd.append("score", score + " من " + scoreMax);
+  fd.append("score", score + " من " + currentTestMaxScore);
 
   fetch(API_URL,{method:"POST",body:fd})
     .then(()=>{
       alert("✅ تم حفظ درجتك");
       scoreInput.value="";
       hideScoreModal();
-      updateLastScore(currentTestTitle, score + " من " + scoreMax);
+      updateLastScore(currentTestTitle, score + " من " + currentTestMaxScore);
     });
 });
 

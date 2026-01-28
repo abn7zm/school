@@ -163,6 +163,7 @@ header{
     <h3>إضافة / تعديل اختبار</h3>
     <input id="title" placeholder="عنوان الاختبار">
     <input id="link" placeholder="رابط الاختبار">
+    <input id="maxScore" placeholder="الدرجة الكاملة" type="number" min="1">
     <select id="type">
       <option value="">اختر التصنيف</option>
       <option>قدرات</option>
@@ -179,7 +180,7 @@ header{
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbwXxXTroaLZK4iCEHd5mFAkdEqxMDz7sJ87BLHaIBC-Y2xLwQIZgItVUBM0Wj2aFQXTsg/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxw2vzEv0X1A9reYmnlm5hJzqPUHAs-swEefQTerhLYNyHICztUwv24GG_hwUBOdaQ_rA/exec";
 let editIndex = null;
 
 function openModal(){
@@ -236,33 +237,36 @@ function loadTests(){
 }
 
 function saveTest(){
-  const titleVal=title.value.trim();
-  const linkVal=link.value.trim();
-  const typeVal=type.value;
-  const levelVal=level.value;
+  const titleVal = title.value.trim();
+  const linkVal = link.value.trim();
+  const typeVal = type.value;
+  const levelVal = level.value;
+  const maxScoreVal = Number(maxScore.value); // هنا تعرف المتغير
 
-  if(!titleVal||!linkVal||!typeVal||!levelVal){
-    alert("يرجى تعبئة جميع الحقول");
+  if(!titleVal || !linkVal || !typeVal || !levelVal || !maxScoreVal){
+    alert("يرجى تعبئة جميع الحقول بما فيها الدرجة الكاملة");
     return;
   }
 
-  const fd=new FormData();
-  fd.append("action",editIndex!==null?"edit":"add");
-  if(editIndex!==null)fd.append("index",editIndex);
-  fd.append("title",titleVal);
-  fd.append("link",linkVal);
-  fd.append("type",typeVal);
-  fd.append("level",levelVal);
+  const fd = new FormData();
+  fd.append("action", editIndex !== null ? "edit" : "add");
+  if(editIndex !== null) fd.append("index", editIndex);
+  fd.append("title", titleVal);
+  fd.append("link", linkVal);
+  fd.append("type", typeVal);
+  fd.append("level", levelVal);
+  fd.append("maxScore", maxScoreVal); // الآن معرف بشكل صحيح
 
-  fetch(API_URL,{method:"POST",body:fd})
+  fetch(API_URL, { method: "POST", body: fd })
     .then(()=>{
-      modal.style.display="none";
-      title.value=link.value="";
-      type.value=level.value="";
-      editIndex=null;
+      modal.style.display = "none";
+      title.value = link.value = maxScore.value = "";
+      type.value = level.value = "";
+      editIndex = null;
       loadTests();
     });
 }
+
 
 function editTest(i){
   editIndex=i;
