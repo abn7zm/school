@@ -180,7 +180,7 @@
     }
 
    .btn {
-     padding: 6px 12px;     /* 👈 هذا الأهم */
+     padding: 6px 12px;     
   font-size: 14px;
   border-radius: 6px;
   border: none;
@@ -225,7 +225,7 @@
   <h1>إرسال إعلان</h1>
 
 <div class="dashboard">
-  <!-- يمين: إضافة إعلان -->
+
   <div class="right-panel">
     <form id="ad-form">
       <label for="title">عنوان الإعلان:</label>
@@ -247,7 +247,7 @@
   </div>
   </div>
 
-  <!-- يسار: الإعلانات السابقة -->
+ 
 
 
 <div class="footer">
@@ -263,7 +263,7 @@
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwNsmCtC4HLbujL0hlqV4YedwhxoEEPJaM2A2ou1FeN6_9Uq7aRkboCbHYCUZMC5lBm/exec';
 
-/* مراجع */
+
 const titleInput = document.getElementById('title');
 const descriptionInput = document.getElementById('description');
 const linkInput = document.getElementById('link');
@@ -271,11 +271,11 @@ const message = document.getElementById('message');
 const adForm = document.getElementById('ad-form');
 const adsList = document.getElementById('adsList');
 
-/* إرسال إعلان جديد */
+
 adForm.addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  // تعطيل الزر وإظهار التحميل
+ 
   const submitBtn = adForm.querySelector('button[type="submit"]');
   submitBtn.disabled = true;
   const originalText = submitBtn.textContent;
@@ -315,7 +315,7 @@ adForm.addEventListener('submit', async function (e) {
   }
 });
 
-/* تحميل الإعلانات */
+
 async function loadAds() {
   adsList.innerHTML = '<p style="text-align:center;color:#555;margin-bottom:15px;">جاري تحميل الإعلانات السابقة...</p>';
 
@@ -323,7 +323,7 @@ async function loadAds() {
     const res = await fetch(SCRIPT_URL);
     const ads = await res.json();
 
-    adsList.innerHTML = ''; // إزالة النص بعد التحميل
+    adsList.innerHTML = '';
     ads.forEach(ad => {
       adsList.innerHTML += renderAd(ad);
     });
@@ -332,7 +332,7 @@ async function loadAds() {
   }
 }
 
-/* شكل الإعلان */
+
 function renderAd(ad) {
   return `
   <div class="ad-card" data-row="${ad.row}">
@@ -350,7 +350,7 @@ function renderAd(ad) {
   `;
 }
 
-/* وضع التعديل */
+
 function enableEdit(row) {
   const box = document.querySelector(`[data-row="${row}"]`);
   const title = box.querySelector('h3').innerText;
@@ -371,7 +371,7 @@ function enableEdit(row) {
   `;
 }
 
-/* حفظ التعديل */
+
 async function saveEdit(row) {
   await fetch(SCRIPT_URL, {
     method: 'POST',
@@ -386,7 +386,7 @@ async function saveEdit(row) {
   loadAds();
 }
 
-/* حذف إعلان */
+
 async function deleteAd(row) {
   if (!confirm('هل أنت متأكد من حذف الإعلان؟')) return;
   await fetch(SCRIPT_URL, {
@@ -396,7 +396,7 @@ async function deleteAd(row) {
   loadAds();
 }
 
-/* Spinner Animation */
+
 const style = document.createElement('style');
 style.textContent = `
 @keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
@@ -409,7 +409,7 @@ const toggleTitle = document.querySelector('.toggle-ads');
 toggleTitle.addEventListener('click', () => {
   adsList.classList.toggle('hidden');
 
-  // تغيير السهم / الإيموجي
+
   if (adsList.classList.contains('hidden')) {
     toggleTitle.textContent = ' الإعلانات السابقة ▼';
   } else {

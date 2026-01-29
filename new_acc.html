@@ -218,7 +218,7 @@
       height: 22px;
       filter: drop-shadow(0 0 4px rgba(0,0,0,0.25));
     }
-    /* Responsive Styles */
+  
     @media (max-width: 480px) {
       #logo {
         top: 15px;
@@ -266,7 +266,7 @@
         height: 18px;
       }
     }
-    /* أخطاء بسيطة تظهر تحت الحقول */
+  
     .error-message {
       color: #d93025;
       font-size: 13px;
@@ -288,7 +288,7 @@
     }
 
 
-    /*secss ms */
+  
     #successMessage {
   display: none;
   background-color: #e6f9f7;
@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     idCheckMessage.style.display = 'none';
 
-                    // نعيد التحقق من جميع الحقول مرة أخرى
+                   
                     const idValid = validateIDNumber(false);
                     const passwordValid = validatePassword(false);
                     const confirmPasswordValid = validateConfirmPassword(false);
@@ -668,7 +668,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     successMessage.style.display = 'block';
                     setTimeout(() => {
                         window.location.href = 'index.html';
-                    }, 1500); // إعادة التوجيه بعد 1.5 ثانية
+                    }, 1500); 
                 } else {
                     throw new Error('Network response was not ok.');
                 }

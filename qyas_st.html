@@ -37,11 +37,11 @@
       align-items: center;
       direction: rtl;
       background: #0d1f2d;
-      overflow-x: hidden; /* منع التمرير الأفقي */
+      overflow-x: hidden; 
       position: relative;
-      padding: 10px; /* لتجنب التصاق المحتوى بحواف الشاشة */
+      padding: 10px;
     }
-    /* خطوط هندسية خلفية */
+  
     body::before {
       content: "";
       position: fixed;
@@ -125,7 +125,7 @@
     }
     .password-container input {
       flex: 1 1 auto;
-      min-width: 0; /* لمنع تمدد غير مرغوب */
+      min-width: 0; 
     }
     .password-container button {
       background: #009db2;
@@ -330,7 +330,7 @@
 
   <script>
     document.addEventListener('keydown', function(event) {
-    // تعطيل F12
+
     if (event.key === 'F12') {
         event.preventDefault();
         return false;
@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const email = document.getElementById('email');
     const phone = document.getElementById('phone');
 
-    // التبديل بين إظهار وإخفاء كلمة المرور
+  
     togglePasswordButton.addEventListener('click', function() {
         if (password.type === 'password') {
             password.type = 'text';

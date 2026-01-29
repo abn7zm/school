@@ -17,7 +17,7 @@
   flex-direction:column;
     }
     .page{
-  flex: 1;          /* هذا اللي يزق الفوتر لتحت */
+  flex: 1;        
 }
     header {
       background-color: #005d7e;
@@ -53,7 +53,7 @@
     .container {
      width: 90%;
   max-width: 1200px;
-  margin: 20px auto 40px;   /* احذف margin-top:150px */
+  margin: 20px auto 40px;  
   padding: 20px;
   background: #ededed;
   border-radius: 10px;
@@ -65,9 +65,9 @@
     }
     #error { color: #c0392b; }
 
-    /* ====== بطاقة الرسالة (مثل الصورة) ====== */
+    
     .message {
-      position: relative;            /* مهم عشان timestamp absolute */
+      position: relative;       
       display: flex;
       flex-direction: row-reverse;
       align-items: stretch;
@@ -79,7 +79,7 @@
       min-height: 90px;
     }
 
-    /* المربع الأزرق الجانبي */
+    
     .side-box {
       width: 90px;
       background: #0b8bb3;
@@ -96,11 +96,11 @@
       filter: drop-shadow(0 0 6px rgba(255,255,255,0.25));
     }
 
-    /* محتوى الرسالة */
+   
     .message-content {
       flex: 1;
       padding: 16px 16px 16px 16px;
-      padding-top: 46px;  /* مساحة للتاريخ (حتى ما يغطي العنوان) */
+      padding-top: 46px; 
       text-align: right;
     }
 
@@ -125,11 +125,10 @@
       font-size: 14px;
     }
 
-    /* التاريخ ثابت أعلى الكرت */
     .timestamp {
       position: absolute;
       top: 10px;
-      right: 12px;        /* RTL: أعلى يمين مثل الصورة */
+      right: 12px;        
       background: #f6b100;
       color: #fff;
       padding: 4px 10px;
@@ -139,7 +138,7 @@
       white-space: nowrap;
     }
 
-    /* Overlay Loading */
+    
     #loadingOverlay {
       position: fixed;
       inset: 0;
@@ -309,20 +308,20 @@
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message';
 
-            // timestamp (ثابت فوق)
+           
             const timestampDiv = document.createElement('div');
             timestampDiv.className = 'timestamp';
             timestampDiv.textContent = formatDate(row[0]);
 
-            // side box (مربع أزرق + أيقونة)
+            
             const sideBox = document.createElement('div');
             sideBox.className = 'side-box';
             const icon = document.createElement('img');
-            icon.src = "https://i.postimg.cc/qMf0jvMw/marketing.png"; // غيّرها لأيقونتك
+            icon.src = "https://i.postimg.cc/qMf0jvMw/marketing.png";
             icon.alt = "icon";
             sideBox.appendChild(icon);
 
-            // content
+           
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
 
@@ -344,7 +343,7 @@
               contentDiv.appendChild(linkDiv);
             }
 
-            // assemble (RTL: خليه مثل الصورة: المربع يسار/يمين حسب اللي تبيه)
+            
             messageDiv.appendChild(timestampDiv);
             messageDiv.appendChild(sideBox);
             messageDiv.appendChild(contentDiv);

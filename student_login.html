@@ -37,11 +37,11 @@
       align-items: center;
       direction: rtl;
       background: #0d1f2d;
-      overflow-x: hidden; /* منع التمرير الأفقي */
+      overflow-x: hidden; 
       position: relative;
-      padding: 10px; /* لتجنب التصاق المحتوى بحواف الشاشة */
+      padding: 10px; 
     }
-    /* خطوط هندسية خلفية */
+    
     body::before {
       content: "";
       position: fixed;
@@ -125,7 +125,7 @@
     }
     .password-container input {
       flex: 1 1 auto;
-      min-width: 0; /* لمنع تمدد غير مرغوب */
+      min-width: 0; 
     }
     .password-container button {
       background: #009db2;
@@ -142,7 +142,7 @@
       box-shadow: 0 4px 10px rgba(0, 157, 178, 0.4);
       color: white;
       user-select: none;
-      flex-shrink: 0; /* لا يتقلص */
+      flex-shrink: 0; 
       position: relative;
       top: -10px;
     }
@@ -223,7 +223,7 @@
       filter: drop-shadow(0 0 4px rgba(0,0,0,0.25));
     }
 
-    /* Responsive Styles */
+   
     @media (max-width: 480px) {
       #logo {
         top: 15px;
@@ -330,7 +330,7 @@
 
   <script>
     document.addEventListener('keydown', function(event) {
-    // تعطيل F12
+   
     if (event.key === 'F12') {
         event.preventDefault();
         return false;
@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const email = document.getElementById('email');
     const phone = document.getElementById('phone');
 
-    // التبديل بين إظهار وإخفاء كلمة المرور
+   
     togglePasswordButton.addEventListener('click', function() {
         if (password.type === 'password') {
             password.type = 'text';
