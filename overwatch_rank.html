@@ -6,18 +6,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{
-  font-family:Tahoma,Arial;
-  margin:0;
-  background:#f4f6f8;
-  direction:rtl
-}
-header{
-  background:#005d7e;
-  color:#fff;
-  padding:15px;
-  text-align:center
-}
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      direction: rtl;
+    }
+
+    header {
+      background-color: #005d7e;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header img {
+      height: 120px;
+      filter: drop-shadow(0 0 10px #00e6f6);
+    }
+
+    .return-home-button {
+      background-color: #f6b100;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .return-home-button:hover {
+      background-color: #c48d01;
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 40px 0 20px;
+      color: #333;
+      font-size: 36px;
+    }
+
 
 /* cards */
 .cards{
@@ -100,22 +142,83 @@ header{
 @keyframes spin{
   to{transform:rotate(360deg)}
 }
+.footer {
+      background-color: #005d7e;
+      color: #ffffff;
+      padding: 25px 40px;
+      width: 100%;
+      text-align: right;
+      margin-top: auto;
+      box-sizing: border-box;
+    }
+
+    .footer h3 {
+      margin-bottom: 15px;
+      font-size: 22px;
+      color: #ffffff;
+      font-weight: bold;
+      border-bottom: 2px solid #f6b100;
+      padding-bottom: 5px;
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      font-size: 18px;
+    }
+
+    .contact-list li {
+      margin-bottom: 10px;
+    }
+
+    .contact-list li a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-list li a:hover {
+      color: #007a8c;
+      text-decoration: underline;
+    }
+
+    .end {
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    a {
+      text-decoration: none;
+    }
 </style>
 </head>
 
 <body>
 
 <header>
-  <h2>ترتيب أعلى الطلاب</h2>
-</header>
+    <a href="#" onclick="window.history.back();" class="return-home-button">العودة</a>
+    <h1 style="color: #ffffff; position: relative; right: 30px;">ترتيب اعلى الطلاب</h1>
+    <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="logo">
 
+  </header>
 <div id="loading" class="spinner-container">
   <div class="spinner"></div>
   <p>جاري تحميل البيانات...</p>
 </div>
 
 <div id="cardsContainer" class="cards"></div>
-
+<div class="footer">
+    <h3>معلومات الاتصال</h3>
+    <ul class="contact-list">
+      <li>📞 <a href="tel:+966536382599">+966 536382599</a></li>
+      <li>📧 <a href="mailto:abn7zm@gmail.com">abn7zm@gmail.com</a></li>
+      <li>🏫 مجمع ثانوية ابن حزم التعليمي, تبوك</li>
+    </ul>
+    <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
+  </div>
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbxw2vzEv0X1A9reYmnlm5hJzqPUHAs-swEefQTerhLYNyHICztUwv24GG_hwUBOdaQ_rA/exec"; // رابط Google Script الحالي
 
