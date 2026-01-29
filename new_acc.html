@@ -652,7 +652,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const fullNameValid = validateFullName(true);
 
         if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid && idCheckMessage.style.display === 'none') {
-            fetch('https://script.google.com/macros/s/AKfycbwMKcBRLpUu3D2sml56ANELiW454-1AVG_RaTHGPGc86wOLxnBCfTLrBMGVKSn2Tk2rYQ/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbyud8NS18rOn7W1YngyRv4cuCFjvnBMQi-gwH_tUsfzIZpKcOENZ6ekH_wINN4wSu-78Q/exec', {
                 method: 'POST',
                 body: new URLSearchParams({
     'name': fullName.value,

@@ -273,7 +273,7 @@ setPhoneWithPrefix(rawPhone);
 
 
 
-  const sheetURL="https://script.google.com/macros/s/AKfycbwMKcBRLpUu3D2sml56ANELiW454-1AVG_RaTHGPGc86wOLxnBCfTLrBMGVKSn2Tk2rYQ/exec";
+  const sheetURL="https://script.google.com/macros/s/AKfycbyud8NS18rOn7W1YngyRv4cuCFjvnBMQi-gwH_tUsfzIZpKcOENZ6ekH_wINN4wSu-78Q/exec";
   try{
     const res=await fetch(sheetURL);
     const data=await res.json();
@@ -287,7 +287,7 @@ setPhoneWithPrefix(rawPhone);
 function setPhoneWithPrefix(value) {
   const input = document.getElementById('phone');
   const clean = value.replace(/^\+966\s?/, '');
-  input.value = '+966 ' + clean;
+  input.value =  clean;
 }
 
 </script>
