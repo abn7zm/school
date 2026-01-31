@@ -154,41 +154,57 @@
     <img src="https://i.postimg.cc/wMQTD7Ds/arrow.png" alt="سهم العودة" class="button-icon" />
   </a>
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyL0fz49UrgeNK4APX0rp-toMeLGDNlqCkRgD_TFLF0XPy1fn0nnEHfR1Ggml-xwn5Y/exec"; // ضع هنا رابط السكربت الصحيح
+  const scriptURL = "https://script.google.com/macros/s/AKfycbyL0fz49UrgeNK4APX0rp-toMeLGDNlqCkRgD_TFLF0XPy1fn0nnEHfR1Ggml-xwn5Y/exec";
 
-    document.getElementById("loginForm").addEventListener("submit", function(e){
-      e.preventDefault();
-      const id = document.getElementById("idNumber").value.trim();
-      const pass = document.getElementById("password").value.trim();
+  // خريطة تحويل حسب الدور
+  const roleRedirectMap = {
+    super: "uper.html",     // عدّلها حسب اسم صفحتك
+    admin: "tech_home.html",       // صفحة المعلم/الفني عندك
+  };
 
-      fetch(scriptURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `id=${encodeURIComponent(id)}&pass=${encodeURIComponent(pass)}`
-      })
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const id = document.getElementById("idNumber").value.trim();
+    const pass = document.getElementById("password").value.trim();
+
+    fetch(scriptURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `id=${encodeURIComponent(id)}&pass=${encodeURIComponent(pass)}`
+    })
       .then(res => res.json())
       .then(data => {
-        if (data.success) {
-  if (data.role === "admin" || data.role === "super") {
-    localStorage.setItem("userName", data.name);
-    localStorage.setItem("role", data.role);
-    window.location.href = "tech_home.html";
-  } else {
-    alert("غير مصرح لك بالدخول كإداري");
-  }
-}
- else {
+        if (!data || !data.success) {
           alert("رقم الهوية أو كلمة المرور غير صحيحة");
+          return;
         }
+
+        // خزّن الجلسة
+        localStorage.setItem("userName", data.name || "");
+        localStorage.setItem("role", data.role || "");
+        localStorage.setItem("userId", data.id || id); // اختياري
+
+        // حدّد صفحة التحويل حسب الدور
+        const redirectTo = roleRedirectMap[data.role];
+
+        if (!redirectTo) {
+          alert("تم تسجيل الدخول لكن الدور غير معروف: " + (data.role || "فارغ"));
+          // تنظف الجلسة عشان ما يعلق
+          localStorage.removeItem("userName");
+          localStorage.removeItem("role");
+          localStorage.removeItem("userId");
+          return;
+        }
+
+        window.location.href = redirectTo;
       })
       .catch(err => {
         console.error(err);
         alert("فشل الاتصال بالخادم");
       });
-    });
+  });
+</script>
 
-   
-
-  </script>
 </body>
 </html>
