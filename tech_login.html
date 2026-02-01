@@ -204,6 +204,14 @@
         alert("فشل الاتصال بالخادم");
       });
   });
+   const data = JSON.parse(result);
+
+    localStorage.setItem('userName', data.name);
+    localStorage.setItem('userId', data.id);
+    localStorage.setItem('email', data.email)
+    localStorage.setItem('phone', data.phone)
+
+    window.location.href = 'student_home.html';
 </script>
 
 </body>
