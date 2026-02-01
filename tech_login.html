@@ -158,7 +158,7 @@
 
   // خريطة تحويل حسب الدور
   const roleRedirectMap = {
-    super: "uper.html",     // عدّلها حسب اسم صفحتك
+    super: "$u&#r.html",     // عدّلها حسب اسم صفحتك
     admin: "tech_home.html",       // صفحة المعلم/الفني عندك
   };
 
@@ -206,12 +206,7 @@
   });
    const data = JSON.parse(result);
 
-    localStorage.setItem('userName', data.name);
-    localStorage.setItem('userId', data.id);
-    localStorage.setItem('email', data.email)
-    localStorage.setItem('phone', data.phone)
-
-    window.location.href = 'student_home.html';
+   
 </script>
 
 </body>
