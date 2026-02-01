@@ -137,17 +137,113 @@
         height: 18px;
       }
     }
+     .password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-container input {
+  width: 100%;
+  padding-left: 45px; /* مساحة للعين */
+}
+
+#togglePasswordButton {
+  position: absolute;
+  left: 2px;
+  top: 37%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background: #009db2;
+      border: none;
+      border-radius: 15px;
+      padding: 12px;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 157, 178, 0.4);
+      color: white;
+      user-select: none;
+      flex-shrink: 0; 
+}
+#togglePasswordButton:hover {
+      background:#007a8c;
+      box-shadow: 0 6px 15px rgba(0, 122, 140, 0.6);
+    }
+
+#togglePasswordButton img {
+  width: 24px;
+      height: 24px;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.25));
+}
+
+#togglePasswordButton:hover img {
+  opacity: 1;
+}
+#loginBtn {
+  position: relative;
+  overflow: hidden;
+}
+
+#loginBtn.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+#loginBtn .btn-loader {
+  display: none;
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+#loginBtn.loading .btn-text {
+  display: none;
+}
+
+#loginBtn.loading .btn-loader {
+  display: block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
   </style>
 </head>
 <body>
-  <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" id="logo" alt="Logo"/>
+    <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" id="logo" alt="Logo"/>
   <div class="form-container">
     <h2>تسجيل الدخول</h2>
     <form id="loginForm">
       <input type="text" id="idNumber" placeholder="رقم الهوية" required />
-      <input type="password" id="password" placeholder="كلمة المرور" required />
-      <button type="submit">تسجيل دخول</button>
-    </form>
+      <div class="password-container">
+  <input type="password" id="password" placeholder="كلمة المرور" required>
+
+  <span id="togglePasswordButton">
+    <img
+      src="https://cdn3.iconfinder.com/data/icons/feather-5/24/eye-512.png"
+      id="showIcon"
+      alt="إظهار">
+    <img
+      src="https://cdn4.iconfinder.com/data/icons/liny/24/eye-off-line-512.png"
+      id="hideIcon"
+      alt="إخفاء"
+      style="display:none">
+  </span>
+</div>
+       <button type="submit" id="loginBtn">
+  <span class="btn-text">تسجيل دخول</span>
+  <span class="btn-loader"></span>
+</button>
+  </form>
   </div>
   <a href="index.html" class="return-home-button" aria-label="العودة إلى الصفحة الرئيسية">
     العودة
@@ -157,37 +253,63 @@
     const scriptURL = "https://script.google.com/macros/s/AKfycbyL0fz49UrgeNK4APX0rp-toMeLGDNlqCkRgD_TFLF0XPy1fn0nnEHfR1Ggml-xwn5Y/exec"; // ضع هنا رابط السكربت الصحيح
 
     document.getElementById("loginForm").addEventListener("submit", function(e){
-      e.preventDefault();
-      const id = document.getElementById("idNumber").value.trim();
-      const pass = document.getElementById("password").value.trim();
+       e.preventDefault();
 
-      fetch(scriptURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `id=${encodeURIComponent(id)}&pass=${encodeURIComponent(pass)}`
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-  if (data.role === "teacher" || data.role === "super") {
-    localStorage.setItem("userName", data.name);
-    localStorage.setItem("role", data.role);
-    window.location.href = "teacher.html";
-  } else {
-    alert("غير مصرح لك بالدخول كمعلم");
-  }
-}
- else {
-          alert("رقم الهوية أو كلمة المرور غير صحيحة");
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        alert("فشل الاتصال بالخادم");
-      });
+  const loginBtn = document.getElementById("loginBtn");
+  loginBtn.classList.add("loading");
+
+  const id = document.getElementById("idNumber").value.trim();
+  const pass = document.getElementById("password").value.trim();
+
+  fetch(scriptURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `id=${encodeURIComponent(id)}&pass=${encodeURIComponent(pass)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      if (data.role === "teacher" || data.role === "super") {
+        localStorage.setItem("userName", data.name);
+        localStorage.setItem("role", data.role);
+        window.location.href = "teacher.html";
+      } else {
+        alert("غير مصرح لك بالدخول كمعلم");
+        loginBtn.classList.remove("loading");
+      }
+    } else {
+      alert("رقم الهوية أو كلمة المرور غير صحيحة");
+      loginBtn.classList.remove("loading");
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("فشل الاتصال بالخادم");
+    loginBtn.classList.remove("loading");
+  });
     });
 
-   
+     
+ document.addEventListener("DOMContentLoaded", () => {
+  const passwordInput = document.getElementById("password");
+  const toggle = document.getElementById("togglePasswordButton");
+  const showIcon = document.getElementById("showIcon");
+  const hideIcon = document.getElementById("hideIcon");
+
+  if (!passwordInput || !toggle) return;
+
+  toggle.addEventListener("click", () => {
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      showIcon.style.display = "none";
+      hideIcon.style.display = "block";
+    } else {
+      passwordInput.type = "password";
+      showIcon.style.display = "block";
+      hideIcon.style.display = "none";
+    }
+  });
+});
 
   </script>
 </body>

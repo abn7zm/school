@@ -278,6 +278,38 @@
         height: 18px;
       }
     }
+    #loginBtn {
+  position: relative;
+  overflow: hidden;
+}
+
+#loginBtn.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+#loginBtn .btn-loader {
+  display: none;
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+#loginBtn.loading .btn-text {
+  display: none;
+}
+
+#loginBtn.loading .btn-loader {
+  display: block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
   </style>
 </head>
 <body>
@@ -321,7 +353,10 @@
         </button>
       </div>
       <a href="rest.html" class="forget">نسيت كلمة المرور؟</a>
-      <button type="submit">تسجيل دخول</button>
+      <button type="submit" id="loginBtn">
+  <span class="btn-text">تسجيل دخول</span>
+  <span class="btn-loader"></span>
+</button>
       <p class="login">ليس لديك حساب؟</p>
       <a href="new_acc.html" class="create-account-link">إنشاء حساب جديد</a>
     </form>
@@ -378,45 +413,49 @@ console.info = function() {};
 console.debug = function() {};
 
 
+loginForm.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    loginForm.addEventListener('submit', function(event) {
-        event.preventDefault(); 
+    const loginBtn = document.getElementById('loginBtn');
+    loginBtn.classList.add('loading');
 
-        var idNumber = document.getElementById('idNumber').value;
-        var password = document.getElementById('password').value;
+    var idNumber = document.getElementById('idNumber').value;
+    var password = document.getElementById('password').value;
 
-        fetch('https://script.google.com/macros/s/AKfycbyud8NS18rOn7W1YngyRv4cuCFjvnBMQi-gwH_tUsfzIZpKcOENZ6ekH_wINN4wSu-78Q/exec', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                'idNumber': idNumber,
-                'password': password
-            })
+    fetch('https://script.google.com/macros/s/AKfycbyud8NS18rOn7W1YngyRv4cuCFjvnBMQi-gwH_tUsfzIZpKcOENZ6ekH_wINN4wSu-78Q/exec', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+            'idNumber': idNumber,
+            'password': password
         })
-        .then(response => response.text())
-        .then(result => {
-    if (result === 'incorrect_password' || result === 'incorrect_id') {
-        alert('رقم الهوية أو كلمة المرور غير صحيحة');
-        return;
-    }
+    })
+    .then(response => response.text())
+    .then(result => {
 
-    const data = JSON.parse(result);
+        if (result === 'incorrect_password' || result === 'incorrect_id') {
+            alert('رقم الهوية أو كلمة المرور غير صحيحة');
+            loginBtn.classList.remove('loading');
+            return;
+        }
 
-    localStorage.setItem('userName', data.name);
-    localStorage.setItem('userId', data.id);
-    localStorage.setItem('email', data.email)
-    localStorage.setItem('phone', data.phone)
+        const data = JSON.parse(result);
 
-    window.location.href = 'before_q.html';
-})
+        localStorage.setItem('userName', data.name);
+        localStorage.setItem('userId', data.id);
+        localStorage.setItem('email', data.email);
+        localStorage.setItem('phone', data.phone);
 
-        .catch(error => console.error('Error:', error));
+        window.location.href = 'before_q.html';
+    })
+    .catch(error => {
+        alert('فشل الاتصال بالخادم');
+        loginBtn.classList.remove('loading');
     });
 });
-
-
+});
 document.addEventListener('keydown', function(event){
     if (event.key === 'F12') {
         event.preventDefault();
