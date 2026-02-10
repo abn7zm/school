@@ -495,7 +495,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        fetch('https://docs.google.com/spreadsheets/d/1-IAOaZT6c75rKXqoPGgBTlTjt_SpcgfOXMWowSnx20o/export?format=csv')
+        fetch('https://docs.google.com/spreadsheets/d/1QO30uTyTHb3xUQSKBYi9evPRIWvx5zwYXKoK-nRlbrs/export?format=csv')
             .then(response => {
                 if (!response.ok) throw new Error('sheet error');
                 return response.text();
