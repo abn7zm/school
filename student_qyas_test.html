@@ -260,12 +260,22 @@ header {
     <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
   </div>
 <script>
-const TESTS_API_URL = "https://script.google.com/macros/s/AKfycbxw2vzEv0X1A9reYmnlm5hJzqPUHAs-swEefQTerhLYNyHICztUwv24GG_hwUBOdaQ_rA/exec";
+const TESTS_API_URL = "https://script.google.com/macros/s/AKfycbzIVehheUfCfQvlK2P7CWi_3dmZRJ0ZAF2DUME6ajtQUxnINOVcCo7d7ZTw2XkV53G0VA/exec";
 const PASSWORD_API_URL = "https://script.google.com/macros/s/AKfycbw3oYxS1tiDzPp352QxnyoMS101eDxrLsiqpa30HfIxLoOL4M4_Y4ZgBLnxXsdcGsZ8/exec";
+const RETAKE_DELAY = 7 * 24 * 60 * 60 * 1000; // 7 أيام
 
 const studentName = localStorage.getItem("userName") || "غير معروف";
 let currentTestTitle = null;
 let currentCard = null;
+
+function formatRemaining(ms){
+  const totalSeconds = Math.floor(ms / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+  return `المتبقي: ${days} أيام ${hours} ساعة ${minutes} دقيقة`;
+}
 
 // --- تعيين لون الصعوبة ---
 function levelClass(l){
@@ -393,14 +403,49 @@ function showLastScores(){
     .then(r=>r.json())
     .then(scores=>{
       scores.forEach(s=>{
-        if(s.student === studentName){
-          const id = "lastScore_" + s.test.replace(/\s+/g,'_');
-          const el = document.getElementById(id);
-          if(el) el.innerText = "آخر درجة: " + s.score;
+        if(s.student !== studentName) return;
+
+        const id = "lastScore_" + s.test.replace(/\s+/g,'_');
+        const el = document.getElementById(id);
+        if(!el) return;
+
+        el.innerText = "آخر درجة: " + s.score;
+
+        const now = Date.now();
+        const diff = now - s.date;
+
+        if(diff < RETAKE_DELAY){
+          const remaining = RETAKE_DELAY - diff;
+
+          // منع الضغط
+          const card = el.closest(".test-card");
+          const top = card.querySelector(".card-top");
+
+          top.style.pointerEvents = "none";
+          top.style.opacity = "0.6";
+
+          const countdown = document.createElement("div");
+          countdown.style.color = "#c00";
+          countdown.style.fontSize = "14px";
+          countdown.style.padding = "5px 15px";
+          countdown.innerText = formatRemaining(remaining);
+
+          card.appendChild(countdown);
+
+          // تحديث العد التنازلي كل دقيقة
+          setInterval(()=>{
+            const newRemaining = RETAKE_DELAY - (Date.now() - s.date);
+            if(newRemaining <= 0){
+              location.reload(); // يرجع الاختبار تلقائي
+            } else {
+              countdown.innerText = formatRemaining(newRemaining);
+            }
+          }, 60000);
         }
       });
     });
 }
+
 
 // --- تحديث آخر درجة تحت البطاقة ---
 function updateLastScore(testTitle, scoreText){
