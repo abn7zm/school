@@ -244,7 +244,7 @@ header {
   <div id="scoreBox">
     <h3>أدخل درجة الإختبار</h3>
    <input type="number" min="0" id="scoreInput" placeholder="الدرجة التي حصلت عليها">
-   <input type="text" min="0" id="scoreInput" placeholder="كلمة المرور (خاص بالمعلم )">
+   <input type="password" id="teacherPassword" placeholder="كلمة المرور (خاص بالمعلم)">
 <p id="scoreMaxText" style="margin-top:10px;">من أصل 0</p>
 
     <button id="saveScoreBtn">حفظ الدرجة</button>
@@ -260,7 +260,9 @@ header {
     <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
   </div>
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbxw2vzEv0X1A9reYmnlm5hJzqPUHAs-swEefQTerhLYNyHICztUwv24GG_hwUBOdaQ_rA/exec"; // ضع رابط Google Apps Script هنا
+const TESTS_API_URL = "https://script.google.com/macros/s/AKfycbxw2vzEv0X1A9reYmnlm5hJzqPUHAs-swEefQTerhLYNyHICztUwv24GG_hwUBOdaQ_rA/exec";
+const PASSWORD_API_URL = "https://script.google.com/macros/s/AKfycbw3oYxS1tiDzPp352QxnyoMS101eDxrLsiqpa30HfIxLoOL4M4_Y4ZgBLnxXsdcGsZ8/exec";
+
 const studentName = localStorage.getItem("userName") || "غير معروف";
 let currentTestTitle = null;
 let currentCard = null;
@@ -277,7 +279,7 @@ function loadTests(){
   loading.style.display="block";
   cardsContainer.innerHTML="";
 
-  fetch(API_URL)
+  fetch(TESTS_API_URL)
     .then(r=>r.json())
     .then(data=>{
       loading.style.display="none";
@@ -329,12 +331,18 @@ function showScoreModal(){
 
 function hideScoreModal(){document.getElementById("scoreModal").style.display="none";}
 
-// حفظ الدرجة
 document.getElementById("saveScoreBtn").addEventListener("click", ()=>{
   const scoreInput = document.getElementById("scoreInput");
-  const score = Number(scoreInput.value); // الدرجة التي أدخلها الطالب
+  const passwordInput = document.getElementById("teacherPassword");
 
-  // تحقق من صحة الدرجة مقابل الدرجة القصوى
+  const score = Number(scoreInput.value);
+  const teacherPassword = passwordInput.value.trim();
+
+  if(teacherPassword === ""){
+    alert("❌ أدخل كلمة مرور المعلم");
+    return;
+  }
+
   if(score === "" || score < 0 || score > currentTestMaxScore){
     alert(`يرجى إدخال درجة صحيحة من 0 إلى ${currentTestMaxScore}`);
     return;
@@ -345,19 +353,43 @@ document.getElementById("saveScoreBtn").addEventListener("click", ()=>{
   fd.append("student", studentName);
   fd.append("test", currentTestTitle);
   fd.append("score", score + " من " + currentTestMaxScore);
+  fd.append("password", teacherPassword); // 👈 إرسال كلمة المرور
 
-  fetch(API_URL,{method:"POST",body:fd})
-    .then(()=>{
-      alert("✅ تم حفظ درجتك");
-      scoreInput.value="";
-      hideScoreModal();
-      updateLastScore(currentTestTitle, score + " من " + currentTestMaxScore);
-    });
+  fetch(PASSWORD_API_URL, {
+  method: "POST",
+  body: new URLSearchParams({
+    action: "checkPassword",
+    password: teacherPassword
+  })
+})
+.then(r => r.text())
+.then(res => {
+  if (res !== "OK") {
+    alert("❌ كلمة المرور غير صحيحة");
+    return;
+  }
+
+  // ✅ كلمة المرور صحيحة → نحفظ الدرجة
+  const fd2 = new FormData();
+  fd2.append("action","saveScore");
+  fd2.append("student", studentName);
+  fd2.append("test", currentTestTitle);
+  fd2.append("score", score + " من " + currentTestMaxScore);
+
+  return fetch(TESTS_API_URL,{ method:"POST", body:fd2 });
+})
+.then(r => r.text())
+.then(()=>{
+  alert("✅ تم حفظ الدرجة");
+  hideScoreModal();
+  updateLastScore(currentTestTitle, score + " من " + currentTestMaxScore);
+});
+
 });
 
 // --- جلب آخر درجات الطالب عند تحميل الصفحة ---
 function showLastScores(){
-  fetch(API_URL + "?action=getScores")
+  fetch(TESTS_API_URL + "?action=getScores")
     .then(r=>r.json())
     .then(scores=>{
       scores.forEach(s=>{
