@@ -159,11 +159,16 @@ header {
   margin-top:10px;
   width:100%;
   padding:8px;
-  background:#28a745;
+  background:#c48d01;
   color:#fff;
   border:none;
   border-radius:6px;
-  cursor:pointer
+  cursor:pointer ;
+   transition: 0.3s;
+}
+#scoreBox button:hover {
+  background: #966d07;
+  transition: 0.3s;
 }
 .footer {
       background-color: #005d7e;
@@ -237,8 +242,9 @@ header {
 <!-- Score Modal -->
 <div id="scoreModal">
   <div id="scoreBox">
-    <h3>أدخل درجتك للاختبار</h3>
+    <h3>أدخل درجة الإختبار</h3>
    <input type="number" min="0" id="scoreInput" placeholder="الدرجة التي حصلت عليها">
+   <input type="text" min="0" id="scoreInput" placeholder="كلمة المرور (خاص بالمعلم )">
 <p id="scoreMaxText" style="margin-top:10px;">من أصل 0</p>
 
     <button id="saveScoreBtn">حفظ الدرجة</button>
