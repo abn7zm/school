@@ -486,35 +486,44 @@ document.addEventListener('DOMContentLoaded', function() {
     console.info = function() {};
     console.debug = function() {};
 
-    function checkIDNumberInSystem() {
-        const idNumberValue = idNumber.value.trim();
+    // دالة تحقق مدمجة من الشيتين
+    function checkIDInBothSheets() {
+        const idValue = idNumber.value.trim();
 
-        if (idNumberValue === '') {
+        if (idValue === '') {
             idCheckMessage.style.display = 'none';
             createAccountButton.disabled = true;
             return;
         }
 
-        fetch('https://docs.google.com/spreadsheets/d/1QO30uTyTHb3xUQSKBYi9evPRIWvx5zwYXKoK-nRlbrs/export?format=csv')
-            .then(response => {
-                if (!response.ok) throw new Error('sheet error');
-                return response.text();
-            })
-            .then(csv => {
-                const lines = csv.split('\n').map(line => line.trim());
-                const foundInSheet = lines.some(line => {
+        const sheet1 = fetch('https://docs.google.com/spreadsheets/d/1QO30uTyTHb3xUQSKBYi9evPRIWvx5zwYXKoK-nRlbrs/export?format=csv')
+            .then(r => r.text());
+        const sheet2 = fetch('https://docs.google.com/spreadsheets/d/1C-A95XiQUBfXn7O3DI5FO_xu9heSeZ6xNmWjSs4AvIw/export?format=csv')
+            .then(r => r.text());
+
+        Promise.all([sheet1, sheet2])
+            .then(([csv1, csv2]) => {
+                const inSheet1 = csv1.split('\n').some(line => {
                     const cols = line.split(',');
-                    return cols[1] && cols[1].trim() === idNumberValue;
+                    return cols[1] && cols[1].trim() === idValue;
                 });
 
-                if (foundInSheet) {
+                const inSheet2 = csv2.split('\n').some(line => {
+                    const cols = line.split(',');
+                    return cols[0] && cols[0].trim() === idValue;
+                });
+
+                if (inSheet1) {
                     idCheckMessage.style.display = 'block';
                     idCheckMessage.textContent = 'رقم الهوية مستخدم من قبل';
+                    createAccountButton.disabled = true;
+                } else if (!inSheet2) {
+                    idCheckMessage.style.display = 'block';
+                    idCheckMessage.textContent = 'رقم الهوية غير موجود في الشيت الثاني، لا يمكن إنشاء حساب';
                     createAccountButton.disabled = true;
                 } else {
                     idCheckMessage.style.display = 'none';
 
-                   
                     const idValid = validateIDNumber(false);
                     const passwordValid = validatePassword(false);
                     const confirmPasswordValid = validateConfirmPassword(false);
@@ -522,13 +531,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     const fullNameValid = validateFullName(false);
 
                     const isValid = idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid;
-
                     createAccountButton.disabled = !isValid;
                 }
             })
-            .catch(err => {
-                console.error('خطأ في قراءة Google Sheet:', err);
-            });
+            .catch(err => console.error('خطأ في قراءة الشيتات:', err));
     }
 
     function validatePassword(showError = true) {
@@ -613,7 +619,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleInput() {
         validateIDNumber(false);
-        checkIDNumberInSystem(); 
+        checkIDInBothSheets(); 
         validatePassword(false);
         validateConfirmPassword(false);
         validateFullName(false);
@@ -625,7 +631,6 @@ document.addEventListener('DOMContentLoaded', function() {
     password.addEventListener('input', handleInput);
     confirmPassword.addEventListener('input', handleInput);
     fullName.addEventListener('input', handleInput);
-
     privacyPolicy.addEventListener('change', handleInput);
 
     togglePasswordButton.addEventListener('click', function() {
@@ -655,13 +660,12 @@ document.addEventListener('DOMContentLoaded', function() {
             fetch('https://script.google.com/macros/s/AKfycbyud8NS18rOn7W1YngyRv4cuCFjvnBMQi-gwH_tUsfzIZpKcOENZ6ekH_wINN4wSu-78Q/exec', {
                 method: 'POST',
                 body: new URLSearchParams({
-    'name': fullName.value,
-    'id': idNumber.value,
-    'email': email.value,
-    'phone': phone.value,
-    'pass': password.value
-})
-
+                    'name': fullName.value,
+                    'id': idNumber.value,
+                    'email': email.value,
+                    'phone': phone.value,
+                    'pass': password.value
+                })
             })
             .then(response => {
                 if (response.ok) {
@@ -697,12 +701,6 @@ document.addEventListener('keydown', function(event) {
 document.addEventListener('contextmenu', function(event) {
     event.preventDefault();
 });
-
-console.log = function() {};
-console.warn = function() {};
-console.error = function() {};
-console.info = function() {};
-console.debug = function() {};
 </script>
 
 </html>
