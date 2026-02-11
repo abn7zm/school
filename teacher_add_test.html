@@ -335,6 +335,16 @@ input:focus {
       <div onclick="sortByType('تحصيلي-قدرات')" style="padding:10px; cursor:pointer;">من التحصيلي إلى القدرات</div>
     </div>
   </div>
+  <button id="clearScoresBtn" style="
+  background:#dc2626;
+  color:#fff;
+  padding:10px 20px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+">
+🗑 حذف الدرجات السابقة
+</button>
 </div>
 
 
@@ -347,6 +357,7 @@ input:focus {
 <div id="cardsContainer" class="cards"></div>
 
 <!-- Modal -->
+ 
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3>إضافة / تعديل اختبار</h3>
@@ -367,11 +378,16 @@ input:focus {
       <option value="متوسط">متوسط</option>
       <option value="صعب">صعب</option>
     </select>
+    
     <button class="saveBtn" onclick="saveTest(this)">حفظ</button>
   <div class="statusText" style="display:none"></div>
+  
 </div>
+
   </div>
+  
 </div>
+
 <div class="footer">
     <h3>معلومات الاتصال</h3>
     <ul class="contact-list">
@@ -382,7 +398,7 @@ input:focus {
     <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
   </div>
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbzIVehheUfCfQvlK2P7CWi_3dmZRJ0ZAF2DUME6ajtQUxnINOVcCo7d7ZTw2XkV53G0VA/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwWz-EqBiu8vg5F7yMmLJUelnzbwHOd-52s8mFmuIcMKkCDEpf1heC9384X19W1m-VIVQ/exec";
 
 let editIndex = null;      // لتحديد إذا كان تعديل أم إضافة
 let testsData = [];        // لتخزين البيانات محليًا للفرز
@@ -573,6 +589,30 @@ function sortByType(orderType){
 // -------------------- تحميل البيانات عند فتح الصفحة --------------------
 document.addEventListener("DOMContentLoaded", () => {
   loadTests();
+});
+
+// -------------------- حذف جميع الدرجات --------------------
+document.getElementById("clearScoresBtn").addEventListener("click", function(){
+
+  if(!confirm("هل أنت متأكد من حذف جميع درجات الطلاب؟ لا يمكن التراجع!")){
+    return;
+  }
+
+  const fd = new FormData();
+  fd.append("action","clearScores");
+
+  fetch(API_URL,{
+    method:"POST",
+    body:fd
+  })
+  .then(res => res.text())
+  .then(()=>{
+    alert("تم حذف جميع الدرجات بنجاح ✅");
+  })
+  .catch(()=>{
+    alert("حدث خطأ أثناء الحذف ❌");
+  });
+
 });
 
 </script>

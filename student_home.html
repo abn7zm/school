@@ -9,6 +9,27 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
+const ADS_API = "https://script.google.com/macros/s/AKfycbwzOgVuNafanPBhxcv3xUlZXVJ0-dCwlF_dsN-r2BGkEgsLXMKzALgtCIJH9zzauv0dNg/exec?action=count";
+
+fetch(ADS_API)
+  .then(res => res.json())
+  .then(data => {
+
+    const currentCount = data.count;
+    const lastSeen = parseInt(localStorage.getItem("lastSeenAds")) || 0;
+
+    if(currentCount > lastSeen){
+      const diff = currentCount - lastSeen;
+
+      const badge = document.getElementById("adsBadge");
+      badge.textContent = diff;
+      badge.style.display = "flex";
+    }
+
+  })
+  .catch(err => console.error("خطأ في جلب عدد الإعلانات:", err));
+
+
  
   var userName = localStorage.getItem('userName');
   if (userName) {
@@ -429,6 +450,23 @@ window.addEventListener("pageshow", function (event) {
       }
       
     }
+    .ads-badge{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:red;
+  color:white;
+  border-radius:50%;
+  width:28px;
+  height:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  font-weight:bold;
+  box-shadow:0 0 10px rgba(0,0,0,0.4);
+}
+
   </style>
 </head>
 <body>
@@ -467,9 +505,13 @@ window.addEventListener("pageshow", function (event) {
     <a href="student_date.html"><button class="bu">
       <img src="https://i.postimg.cc/MKsyHss0/detep.png" alt="Button 1" />
     </button></a>
-    <a href="student_ads.html"><button class="bu">
-      <img src="https://i.postimg.cc/zBZJjrfC/adsp.png" alt="Button 2" />
-    </button></a>
+    <a href="student_ads.html" style="position:relative;">
+  <button class="bu">
+    <img src="https://i.postimg.cc/zBZJjrfC/adsp.png" alt="Button 2" />
+  </button>
+  <span id="adsBadge" class="ads-badge" style="display:none;">0</span>
+</a>
+
     <a href="before.html"><button class="bu">
       <img src="https://i.postimg.cc/bJ73rm3N/cryp.png" alt="Button 3" />
     </button>

@@ -365,6 +365,12 @@
       }
     }
 
+    fetch("https://script.google.com/macros/s/AKfycbwzOgVuNafanPBhxcv3xUlZXVJ0-dCwlF_dsN-r2BGkEgsLXMKzALgtCIJH9zzauv0dNg/exec?action=count")
+  .then(res => res.json())
+  .then(data => {
+    localStorage.setItem("lastSeenAds", data.count);
+  });
+
     fetchData();
   </script>
 </body>
