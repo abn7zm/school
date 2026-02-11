@@ -313,10 +313,14 @@
     transform: scale(1);
   }
 }
-
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
   </style>
 </head>
 <body>
+  
   <img src="https://i.postimg.cc/Y0YGqTrW/logo1.png" alt="Logo" id="logo" />
   <div class="form-container" role="main" aria-label="نموذج إنشاء حساب جديد">
     <h2>إنشاء حساب جديد</h2>
@@ -433,7 +437,26 @@
   </div>
      <a href="#" onclick="window.history.back();" class="return-home-button">العودة</a>
 
+<div id="loadingOverlay" style="
+  display: none;
+  position: fixed;
+  top:0; left:0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4);
+  z-index: 50;
+  justify-content: center;
+  align-items: center;
+">
 
+  <div style="
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #00e6f6;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+  "></div>
+</div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const idNumber = document.getElementById('idNumber');
@@ -519,7 +542,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     createAccountButton.disabled = true;
                 } else if (!inSheet2) {
                     idCheckMessage.style.display = 'block';
-                    idCheckMessage.textContent = 'رقم الهوية غير موجود في الشيت الثاني، لا يمكن إنشاء حساب';
+                    idCheckMessage.textContent = 'رقم الهوية غير مسجل في النظام , الرجاء مراجعة الإدارة';
                     createAccountButton.disabled = true;
                 } else {
                     idCheckMessage.style.display = 'none';
@@ -647,42 +670,48 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    createAccountButton.addEventListener('click', function(event) {
-        event.preventDefault();
+   createAccountButton.addEventListener('click', function(event) {
+    event.preventDefault();
 
-        const idValid = validateIDNumber(true);
-        const passwordValid = validatePassword(true);
-        const confirmPasswordValid = validateConfirmPassword(true);
-        const privacyPolicyValid = validatePrivacyPolicy(true);
-        const fullNameValid = validateFullName(true);
+    const idValid = validateIDNumber(true);
+    const passwordValid = validatePassword(true);
+    const confirmPasswordValid = validateConfirmPassword(true);
+    const privacyPolicyValid = validatePrivacyPolicy(true);
+    const fullNameValid = validateFullName(true);
 
-        if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid && idCheckMessage.style.display === 'none') {
-            fetch('https://script.google.com/macros/s/AKfycbyud8NS18rOn7W1YngyRv4cuCFjvnBMQi-gwH_tUsfzIZpKcOENZ6ekH_wINN4wSu-78Q/exec', {
-                method: 'POST',
-                body: new URLSearchParams({
-                    'name': fullName.value,
-                    'id': idNumber.value,
-                    'email': email.value,
-                    'phone': phone.value,
-                    'pass': password.value
-                })
+    if (idValid && passwordValid && confirmPasswordValid && privacyPolicyValid && fullNameValid && idCheckMessage.style.display === 'none') {
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        loadingOverlay.style.display = 'flex'; // اظهار التحميل
+
+        fetch('https://script.google.com/macros/s/AKfycbyud8NS18rOn7W1YngyRv4cuCFjvnBMQi-gwH_tUsfzIZpKcOENZ6ekH_wINN4wSu-78Q/exec', {
+            method: 'POST',
+            body: new URLSearchParams({
+                'name': fullName.value,
+                'id': idNumber.value,
+                'email': email.value,
+                'phone': phone.value,
+                'pass': password.value
             })
-            .then(response => {
-                if (response.ok) {
-                    successMessage.style.display = 'block';
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 1500); 
-                } else {
-                    throw new Error('Network response was not ok.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                successMessage.style.display = 'none';
-            });
-        }
-    });
+        })
+        .then(response => {
+            loadingOverlay.style.display = 'none'; // إخفاء التحميل بعد الانتهاء
+            if (response.ok) {
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500); 
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            loadingOverlay.style.display = 'none';
+            successMessage.style.display = 'none';
+        });
+    }
+});
+
 
     idNumber.addEventListener('input', function (e) {
         if (this.value.length > 15) {
