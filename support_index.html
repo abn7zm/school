@@ -253,6 +253,54 @@
     </ul>
     <p class="end">©2023-<span id="year"></span> جميع الحقوق الفكرية والتطبيقية محفوظة باسم ثانوية ابن حزم التعليمية</p>
   </div>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();
+    document.addEventListener('keydown', function(e) {
+    // F12
+    if(e.key === 'F12') e.preventDefault();
+    // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C
+    if(e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key)) e.preventDefault();
+    // Ctrl+U (عرض مصدر الصفحة)
+    if(e.ctrlKey && e.key === 'u') e.preventDefault();
+    // Ctrl+S (حفظ الصفحة)
+    if(e.ctrlKey && e.key === 's') e.preventDefault();
+    // Ctrl+Shift+S
+    if(e.ctrlKey && e.shiftKey && e.key === 'S') e.preventDefault();
+});
+
+// ======== منع كليك يمين ========
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+
+// ======== محاولة كشف DevTools المفتوح ========
+let devtools = { open: false };
+const threshold = 160; // ارتفاع/عرض الافتراضي
+setInterval(() => {
+    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+    devtools.open = widthThreshold || heightThreshold;
+    if(devtools.open) {
+        alert("🚫 تم كشف أدوات المطور!");
+        // يمكن إعادة توجيه الصفحة أو تعطيل المحتوى
+        window.location.href = "about:blank";
+    }
+}, 500);
+
+// ======== منع استخدام console ========
+(function() {
+    const originalConsole = console.log;
+    console.log = function() {
+        alert("🚫 لا يمكنك استخدام console!");
+        return originalConsole.apply(console, arguments);
+    }
+})();
+
+// ======== تحريك النافذة لإرباك DevTools ========
+setInterval(() => {
+    if(devtools.open){
+        window.resizeTo(100,100); // يصغر النافذة لو DevTools مفتوح
+    }
+}, 1000);
+  </script>
 </body>
 </html>
